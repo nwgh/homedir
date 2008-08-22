@@ -1,0 +1,28 @@
+# -*- mode: sh; sh-shell: zsh -*-
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:/usr/kerberos/bin:/usr/games
+if [ -d $HOME/bin ] ; then
+    PATH=$PATH:$HOME/bin
+    if [ -d $HOME/bin/perl ] ; then
+	PATH=$PATH:$HOME/bin/perl
+    fi
+fi
+if [ -d /opt/local/bin ] ; then
+   PATH=/opt/local/bin:/opt/local/sbin:$PATH
+fi
+export PATH
+
+if [ -d /opt/local/share/man ] ; then
+	export MANPATH=/opt/local/share/man:$MANPATH
+fi
+if [ -d /opt/local/share/info ] ; then
+	export INFOPATH=/opt/local/share/info:$INFOPATH
+fi
+
+export HISTFILE=~/.zsh_history
+export HISTSIZE=500
+export SAVEHIST=500
+export CVS_RSH=ssh
+export LD_LIBRARY_PATH=/usr/local/lib
+export LANG=C
+export LANGUAGE=C
+export PAGER=less

@@ -1,0 +1,5 @@
+# -*- mode: sh; sh-shell: zsh -*-
+alias l='/bin/ls -F'
+alias ls='/bin/ls -F'
+alias la='/bin/ls -AF'
+alias ll='/bin/ls -AlF'

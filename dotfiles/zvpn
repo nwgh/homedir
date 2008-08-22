@@ -1,0 +1,50 @@
+# -*- mode: sh; sh-shell: zsh -*-
+# ZSH functions for controlling Cisco VPN connections
+
+PROFILEDIR="/etc/opt/cisco-vpnclient/Profiles"
+BINDIR="/usr/local/bin"
+VPNBIN="vpnclient"
+
+function vpnon {
+	local _conn=$(echo "$1" | tr a-z A-Z)
+	local _profile
+
+	case "${_conn}" in
+		"A2")
+			_profile="A2 VPN"
+			;;
+		"A2INT")
+			_profile="A2 VPN Internal"
+			;;
+		"LEX")
+			_profile="Lex VPN"
+			;;
+		"LEXINT")
+			_profile="Lex VPN Internal"
+			;;
+		*)
+			_profile="$_conn"
+			;;
+	esac
+
+	if [[ ! -f "${PROFILEDIR}/${_profile}.pcf" ]]; then
+		print "Invalid profile: ${_profile}"
+		return 1
+	fi
+
+	${BINDIR}/${VPNBIN} connect "${_profile}"
+
+	return 0
+}
+
+function vpnoff {
+	${BINDIR}/${VPNBIN} disconnect
+
+	return 0
+}
+
+function vpnstat {
+	${BINDIR}/${VPNBIN} stat
+
+	return 0
+}
