@@ -1,0 +1,208 @@
+;; -*- mode: emacs-lisp -*-
+;; emacs by Nick Hurley - Ideas taken from all over the place.
+(setq load-path (cons "~/elisp" load-path))
+;(load-library "pyrex-mode")
+;(require 'mwheel)
+;(require 'csharp-mode)
+(require 'generic-x)
+(when window-system
+  (require 'color-theme)
+  (color-theme-dark-laptop))
+
+(defun nwh/save-buffers-kill-emacs ()
+  (interactive)
+  (cond ((yes-or-no-p "Really quit? ") (save-buffers-kill-emacs))
+	(t (progn
+	     (message "Good Choice!")
+	     (sit-for 1)
+	     (message nil)))))
+
+(defun nwh/ps-print-buffer ()
+  "Saves buffer as PS to a user-defined file"
+  (interactive)
+  (ps-print-buffer (read-from-minibuffer "File to save PS to: ")))
+
+(defun nwh/womanual ()
+  "Run WoMan on a user-given command"
+  (interactive)
+  (woman (read-from-minibuffer "Womanual entry: ")))
+
+(global-set-key (kbd "C-x C-c") 'nwh/save-buffers-kill-emacs)
+(global-set-key [f12] 'nwh/ps-print-buffer)
+(tool-bar-mode nil)
+(menu-bar-mode nil)
+(scroll-bar-mode nil)
+(setq require-final-newline t)
+
+(define-key global-map "\M-g" 'goto-line)
+
+;; Get rid of .saves files
+(setq auto-save-list-file-prefix "/dev/null/")
+
+;; Give me all sorts of nifty stuff
+;(global-set-key (kbd "TAB") 'self-insert-command)
+(global-font-lock-mode t)
+(show-paren-mode t)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+ '(blink-cursor nil)
+ '(column-number-mode t)
+ '(compile-command "bmake ")
+ '(default-major-mode (quote text-mode))
+ '(line-number-mode t)
+ '(query-user-mail-address nil)
+ '(show-paren-delay 0)
+ '(show-paren-style (quote mixed))
+ ;'(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120)))
+ '(transient-mark-mode t)
+ '(user-full-name "Nick Hurley")
+ '(user-mail-address "hurley@todesschaf.org"))
+
+;; Setup for C, C++ code how I like it
+(defun my-c-mode-common-hook ()
+  (c-set-style "bsd")
+  (setq tab-width 4)
+;;	indent-tabs-mode t)
+  (setq c-basic-offset 4)
+  (define-key c-mode-base-map (kbd "TAB") 'tab-to-tab-stop)
+  (define-key c-mode-base-map "\C-m" 'newline-and-indent))
+
+;; Setup text mode to not tab to the space
+;(defun my-text-mode-hook()
+;  (define-key text-mode-map (kbd "TAB") 'tab-to-tab-stop))
+
+;; OpenBSD Kernel Normal Form style parameters for cc-mode.
+(c-add-style "openbsd"
+	     '((comment-column . 40)
+	       (c-basic-offset . 8)
+	       (c-comment-only-line-offset . 0)
+	       (c-hanging-comment-starter-p . nil)
+	       (c-hanging-comment-ender-p . nil)
+	       (c-offsets-alist . ((statement-block-intro . +)
+				   (knr-argdecl-intro . +)
+				   (substatement-open . 0)
+				   (label . 0)
+				   ;; ???
+				   (topmost-intro-cont
+				    . openbsd-nkf-topmost-intro-cont)
+				   (statement . openbsd-knf-lineup-statement)
+				   (statement-cont
+				    . openbsd-knf-lineup-statement-cont)
+				   (arglist-cont-nonempty
+				    . openbsd-knf-arglist-cont-nonempty)
+				   (arglist-close
+				    . openbsd-knf-arglist-cont-nonempty)))))
+
+(defun openbsd-knf-after-for-loop-p (pos)
+  "True if POS is just after `for ('"
+  (save-excursion
+    (goto-char pos)
+    (condition-case ()
+        (progn (forward-char -5)        ; (- (length "for ("))
+               (looking-at "\\bfor ("))
+      (beginning-of-buffer nil))))
+
+(defun openbsd-knf-lineup-statement (langelem)
+  "Lineup statement with handling continuation line in for-loop condition."
+  (cond ((openbsd-knf-after-for-loop-p (cdr langelem))
+         ;; -1 == 4 - 5 == `desired indent level' - `length of "for ("'
+         ;; and desired indent level == (/ c-basic-offset 2)
+         -1)
+        (t 0)))
+
+(defun openbsd-knf-lineup-statement-cont (langelem)
+  "Lineup statement-cont with handling continuation line in for-loop\n\
+condition."
+  (cond ((openbsd-knf-after-for-loop-p (cdr langelem))
+         -1)
+        ;; 4 == (/ c-basic-offset 2)
+        (t 4)))
+
+(defun openbsd-knf-arglist-cont-nonempty (langelem)
+  (cond ((save-excursion (goto-char (cdr langelem)) (bolp))
+         (save-excursion
+           (let ((eol (progn
+                        (goto-char (cdr langelem))
+                        (end-of-line)
+                        (point))))
+             (goto-char (cdr langelem))
+             (if (search-forward "\t" eol t)
+                 (+ (current-column) (/ c-basic-offset 2))
+               (/ c-basic-offset 2)))))
+        (t (/ c-basic-offset 2))))
+
+(defun openbsd-nkf-topmost-intro-cont (langelem)
+  (save-excursion
+    (let ((base (save-excursion (goto-char (cdr langelem)) (current-column))))
+      (back-to-indentation)
+      (- (current-column) base))))
+
+(defun knf-c-mode-common-hook ()
+  ;; use KNF for all C like languages
+  (c-set-style "openbsd")
+  (define-key c-mode-base-map "\C-m" 'newline-and-indent))
+(add-hook 'c-mode-common-hook 'knf-c-mode-common-hook)
+
+(defun my-python-mode-hook()
+  (setq indent-tabs-mode nil)
+  (define-key python-mode-map "\C-m" 'newline-and-indent))
+
+;; Python
+(setq auto-mode-alist (cons '("\\.pyg$" . python-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.pyl$" . python-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.py\\.in$" . python-mode) auto-mode-alist))
+
+;; SQL
+(setq auto-mode-alist (cons '("\\.sql\\.in$" . sql-mode) auto-mode-alist))
+
+;; HTML
+(setq auto-mode-alist (cons '("\\.html\\.in$" . html-mode) auto-mode-alist))
+
+;; PHP
+(setq auto-mode-alist (cons '("\\.inc$" . php-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.php\\.in$" . php-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.inc\\.in$" . php-mode) auto-mode-alist))
+
+;; C
+(setq auto-mode-alist (cons '("\\.c\\.in$" . c-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.h\\.in$" . c-mode) auto-mode-alist))
+
+;; C#
+(setq auto-mode-alist (cons '("\\.cs$" . csharp-mode) auto-mode-alist))
+
+;; ObjC
+(setq auto-mode-alist (cons '("\\.m$" . objc-mode) auto-mode-alist))
+
+;; All sorts of perl stuff
+(setq auto-mode-alist (cons '("\\.pl$" . cperl-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.plx$" . cperl-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.plm$" . cperl-mode) auto-mode-alist))
+
+;; We like lisp and elsip
+(setq auto-mode-alist (cons '("\\.lisp$" . lisp-mode)
+			    auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.el$" . emacs-lisp-mode)
+			    auto-mode-alist))
+
+;; Javascript
+(add-to-list 'generic-extras-enable-list 'javascript-generic-mode)
+
+;; Do some hookin' ... erm ...
+;(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+(add-hook 'font-lock-mode-hook 'font-lock-fontify-buffer)
+(add-hook 'text-mode-hook 'my-text-mode-hook)
+(add-hook 'python-mode-hook 'my-python-mode-hook)
+
+;; Make sure subshells are bash
+(setq shell-file-name "/bin/zsh")
+
+;; Hopefully, this will wrap text!
+(setq text-mode-hook 'turn-on-auto-fill)
+(setq-default fill-column 72)
+
+;; End of .emacs
+(custom-set-faces
+  ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+ )

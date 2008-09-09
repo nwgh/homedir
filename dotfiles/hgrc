@@ -1,0 +1,13 @@
+[ui]
+username = Nick Hurley <hurley@todesschaf.org>
+
+[extensions]
+hgext.extdiff =
+hgext.hbisect =
+hgext.gpg =
+hgext.fetch =
+hgext.transplant =
+
+[extdiff]
+cmd.udiff = diff
+opts.udiff = -NpruU15

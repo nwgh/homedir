@@ -1,0 +1,42 @@
+;; -*- mode: emacs-lisp -*-
+;; emacs by Nick Hurley - Ideas taken from all over the place.
+(menu-bar-mode nil)
+
+;; Get rid of .saves files
+(setq auto-save-list-file-prefix "/dev/null/")
+
+;; Give me all sorts of nifty stuff
+(global-set-key (kbd "TAB") 'self-insert-command)
+(global-font-lock-mode t)
+(show-paren-mode t)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+  ;; Your init file should contain only one such instance.
+ '(blink-cursor nil)
+ '(column-number-mode t)
+ '(default-major-mode (quote text-mode))
+ '(line-number-mode t)
+ '(query-user-mail-address nil)
+ '(show-paren-delay 0)
+ '(show-paren-style (quote mixed))
+ '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120)))
+ '(transient-mark-mode t)
+ '(user-full-name "Nick Hurley")
+ '(user-mail-address "hurley@arbor.net")
+ '(backup-enable-predicate (lambda (name) nil)))
+
+;; Setup text mode to not tab to the space
+(defun my-text-mode-hook()
+  (define-key text-mode-map (kbd "TAB") 'tab-to-tab-stop))
+
+;; Do some hookin' ... erm ...
+(add-hook 'text-mode-hook 'my-text-mode-hook)
+
+;; Make sure subshells are zsh
+(setq shell-file-name "/bin/zsh")
+
+;; Hopefully, this will wrap text!
+(setq text-mode-hook 'turn-on-auto-fill)
+(setq-default fill-column 72)
+
+;; End of .emacs
