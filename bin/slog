@@ -1,0 +1,2 @@
+#!/bin/sh
+/Users/hurley/bin/clog -s "$@"

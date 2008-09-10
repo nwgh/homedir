@@ -1,0 +1,2 @@
+#!/bin/sh
+ssh root@moreh.mow /base/usr/local/sbin/pcommand "$@"

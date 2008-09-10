@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+source "${HOME}/.zvpn"
+
+case "$1" in
+	"on")
+		if [[ -n "$2" ]]; then
+			vpnon "$2"
+		else
+			print "Missing argument for vpn on"
+		fi
+		;;
+	"off")
+		vpnoff
+		;;
+	"stat")
+		vpnstat
+		;;
+	*)
+		print "Invalid command: $1"
+		;;
+esac
+
+exit 0

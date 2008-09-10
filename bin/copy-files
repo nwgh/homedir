@@ -1,0 +1,170 @@
+#!/usr/bin/env python
+
+import getopt, os, re, shutil, stat, sys
+
+MOW_MACHINE = 'moreh.mow'
+BASE_PATH = '/Volumes/moreh/base'
+PACKAGE_PATH = ''
+PYMOW_PATH = '/usr/local/lib/python2.4/site-packages/'
+PYMOW_REGEX = re.compile('^\/.*\/py_mow\/')
+UI_PATH = '/usr/local/share/mow/www/'
+UI_REGEX = re.compile('^\/.*\/ui\/')
+DAEMON_PATH = '/usr/local/sbin/'
+DAEMON_REGEX = re.compile('\.py$')
+
+def usage():
+    print >>sys.stderr, "%s [-b] [-f] [-n] [-r] [-s] [-v] file1 [file2 ... filen]" % sys.argv[0]
+    print >>sys.stderr, "    -b    Backup files as file.orig if file.orig doesn't exist"
+    print >>sys.stderr, "    -f    Backup files as file.orig regardless"
+    print >>sys.stderr, "    -n    Don't actually copy, just print what would happen"
+    print >>sys.stderr, "    -r    Restart any daemons that were copied over, and the ui (if necessary)"
+    print >>sys.stderr, "    -s    Silent mode (not compatible with '-v')"
+    print >>sys.stderr, "    -v    Verbose mode (not compatible with '-s')"
+    sys.exit(35)
+
+def main():
+    global MOW_MACHINE, BASE_PATH, PACKAGE_PATH, PYMOW_PATH, PYMOW_REGEX, UI_PATH, UI_REGEX, DAEMON_PATH, DAEMON_REGEX
+    backup = False
+    force_backup = False
+    silent = False
+    verbose = False
+    doit = True
+    restart = False
+    
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'bfnrsv')
+    except:
+        usage()
+
+    for o, a in opts:
+        if o == '-b':
+            backup = True
+        elif o == '-f':
+            force_backup = True
+        elif o == '-n':
+            verbose = True
+            doit = False
+        elif o == '-r':
+            restart = True
+        elif o == '-s':
+            if verbose:
+                usage()
+            else:
+                silent = True
+        elif o == '-v':
+            if silent:
+                usage()
+            else:
+                verbose = True
+        else:
+            usage()
+
+    # Make sure we have stuff to copy
+    if not args:
+        usage()
+
+    restart_daemons = []
+    start_daemons = []
+    restart_ui = False
+
+    # Find the top level of where to copy to
+    packages = os.listdir(BASE_PATH + '/pkg')
+    for pkg in packages:
+        if pkg.startswith('Peakflow-X_') or pkg.startswith('Proventia-ADS_'):
+            PACKAGE_PATH = BASE_PATH + '/pkg/%s' % pkg
+            break
+    if not PACKAGE_PATH:
+        if not silent:
+            print >>sys.stderr, 'Cannot find a suitable package to install to! Aborting...'
+        sys.exit(35)
+
+    # Now copy the files we were told to copy
+    link = False
+    for f in args:
+        src = os.path.abspath(f)
+
+	# Make sure what we're trying to copy exists
+        if not os.path.exists(src):
+            if not silent:
+                print >>sys.stderr, '%s does not exist... skipping' % src
+            continue
+
+        # See if it lives in py_mow/mow
+        dst = re.sub(PYMOW_REGEX, PACKAGE_PATH + PYMOW_PATH, src)
+        if dst == src:
+	    # See if it lives in ui
+            dst = re.sub(UI_REGEX, PACKAGE_PATH + UI_PATH, src)
+            if dst == src:
+                # It's prolly a daemon or program from its own directory
+                dst = re.sub(DAEMON_REGEX, '', src)
+                if dst == src:
+                    d = os.path.basename(dst)
+                    start_daemons.append(d)
+                    if verbose:
+                        print >>sys.stderr, 'Stop %s' % d
+                    if doit:
+                        os.system('pcommand stop %s > /dev/null 2>&1' % d)
+                elif restart:
+                    restart_daemons.append(os.path.basename(dst))
+                dst = os.path.basename(dst)
+                dst = PACKAGE_PATH + DAEMON_PATH + dst
+            elif restart:
+	        restart_ui = True
+        elif restart:
+            restart_ui = True
+
+	# Make a backup if we've been requested to
+        bdst = '%s.orig' % src
+        if (backup and not os.path.exists(bdst)) or force_backup:
+            if verbose:
+                print >>sys.stderr, 'B: %s' % (dst,)
+            try:
+                if doit:
+                    shutil.copy(dst, bdst)
+            except Exception, e:
+                if not silent:
+                    print >>sys.stderr, 'Could not backup %s: %s' % (dst, e)
+
+        # Copy the file to its proper place in the package tree
+        if verbose:
+            print >>sys.stderr, 'C: %s' % (src,)
+        if doit:
+            try:
+                mode = os.stat(dst)[stat.ST_MODE]
+            except:
+                mode = 0755
+                link = True
+            try:
+                shutil.copy(src, dst)
+                os.chmod(dst, stat.S_IMODE(mode))
+            except Exception, e:
+                if not silent:
+                    print >>sys.stderr, 'Could not copy %s to %s: %s' % (src, dst, e)
+
+    if link:
+        if verbose:
+            print >>sys.stderr, 'Fix package links'
+        if doit:
+            os.system('ssh root@%s /base/usr/local/sbin/fixpkglinks' %
+                      MOW_MACHINE)
+
+    if restart_ui:
+        if verbose:
+            print >>sys.stderr, 'Restart UI'
+        if doit:
+            os.system('pcommand reload httpd > /dev/null 2>&1')
+
+    for d in restart_daemons:
+        if verbose:
+            print >>sys.stderr, 'Restart %s' % d
+        if doit:
+            os.system('pcommand restart %s > /dev/null 2>&1' % d)
+
+    for d in start_daemons:
+        if verbose:
+            print >>sys.stderr, 'Start %s' % d
+        if doit:
+            os.system('pcommand start %s > /dev/null 2>&1' % d)
+
+if __name__ == "__main__":
+    main()

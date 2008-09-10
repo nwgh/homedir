@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/emacs -q -l /Users/hurley/.emacs-cvs $@

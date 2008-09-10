@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/diff -u -U15 -p -r -N "$@"
