@@ -134,29 +134,29 @@ condition."
   (define-key python-mode-map "\C-m" 'newline-and-indent))
 
 ;; Python
-(add-to-list auto-mode-alist '("\\.py\\.in$" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.py\\.in$" . python-mode))
 
 ;; SQL
-(add-to-list auto-mode-alist '("\\.sql\\.in$" . sql-mode))
+(add-to-list 'auto-mode-alist '("\\.sql\\.in$" . sql-mode))
 
 ;; HTML
-(add-to-list auto-mode-alist '("\\.html\\.in$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\.in$" . html-mode))
 
 ;; C
-(add-to-list auto-mode-alist '("\\.c\\.in$" . c-mode))
-(add-to-list auto-mode-alist '("\\.h\\.in$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.c\\.in$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\.in$" . c-mode))
 
 ;; ObjC
-(add-to-list auto-mode-alist '("\\.m$" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.m$" . objc-mode))
 
 ;; All sorts of perl stuff
-(add-to-list auto-mode-alist '("\\.pl$" . cperl-mode))
-(add-to-list auto-mode-alist '("\\.plx$" . cperl-mode))
-(add-to-list auto-mode-alist '("\\.plm$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.pl$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.plx$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.plm$" . cperl-mode))
 
 ;; We like lisp and elsip
-(add-to-list auto-mode-alist '("\\.lisp$" . lisp-mode))
-(add-to-list auto-mode-alist '("\\.el$" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
 ;; Javascript
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))

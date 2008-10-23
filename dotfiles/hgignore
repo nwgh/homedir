@@ -2,3 +2,4 @@ syntax: glob
 .svn
 svn-commit*tmp
 *~
+*.elc
