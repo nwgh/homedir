@@ -9,6 +9,24 @@
     (color-theme-initialize))
   (color-theme-dark-laptop))
 
+;; Put autosave files in one place
+(defvar autosave-dir "~/.emacs.d/autosaves/")
+(make-directory autosave-dir t)
+(defun auto-save-file-name-p (filename)
+  (string-match "^#.*#$" (file-name-nondirectory filename)))
+(defun make-auto-save-file-name ()
+  (concat autosave-dir
+          (if buffer-file-name
+              (concat "#" (file-name-nondirectory buffer-file-name) "#")
+            (expand-file-name (concat "#%" (buffer-name) "#")))))
+
+;; Put backup files in one place
+(defvar backup-dir "~/.emacs.d/backups/")
+(setq backup-directory-alist (list (cons "." backup-dir)))
+
+;; Turn off startup junk
+(setq inhibit-startup-echo-area-message t)
+
 (defun nwh/save-buffers-kill-emacs ()
   (interactive)
   (cond ((yes-or-no-p "Really quit? ") (save-buffers-kill-emacs))
