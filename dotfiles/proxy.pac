@@ -1,4 +1,4 @@
-/* -*- mode: javascript-generic -*- */
+/* -*- mode: js2 -*- */
 
 /* These two are transformed from network/base/src/nsProxyAutoConfig.js from
    the mozilla source code, to work better with my purposes */
@@ -70,8 +70,9 @@ function proxy_work(url, host) {
         }
     }
 
+    var ip = dnsResolve(host);
     for (var i = 0; i < direct_nets.length; i++) {
-        if (ip_in_net(host, direct_nets[i].net, direct_nets[i].mask)) {
+        if (ip_in_net(ip, direct_nets[i].net, direct_nets[i].mask)) {
             return "DIRECT;";
         }
     }
@@ -85,8 +86,8 @@ function FindProxyForURL(url, host) {
     var myip = myIpAddress();
     if (ip_in_net(myip, "192.168.0.0", "255.255.255.0")) {
         return proxy_home(url, host);
-    } else if (ip_in_net(myip, "10.1.6.0", "255.255.254.0")) {
-        // TODO - get the VPN net for here
+    } else if (ip_in_net(myip, "10.1.6.0", "255.255.254.0") ||
+               ip_in_net(myip, "10.1.14.0", "255.255.254.0")) {
         return proxy_work(url, host);
     } else {
         // Not at home, not at work == ALWAYS proxy
