@@ -148,7 +148,7 @@ nil, zero or negative means none.
 (defcustom js2-basic-offset (if (and (boundp 'c-basic-offset)
                                      (numberp c-basic-offset))
                                 c-basic-offset
-                              2)
+                              4)
   "Number of spaces to indent nested statements.
 Similar to `c-basic-offset'."
   :group 'js2-mode

@@ -3,6 +3,7 @@
 (setq load-path (cons "~/elisp" load-path))
 (require 'show-tabs-mode)
 (autoload 'js2-mode "js2" nil t)
+
 (when window-system
   (require 'color-theme)
   (when (fboundp 'color-theme-initialize)
@@ -72,6 +73,7 @@
  '(show-paren-delay 0)
  '(show-paren-style (quote mixed))
  '(transient-mark-mode t)
+ '(show-tabs-mode 'mark)
  '(user-full-name "Nick Hurley")
  '(user-mail-address "hurley@todesschaf.org"))
 
