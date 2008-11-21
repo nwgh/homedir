@@ -2,7 +2,7 @@
 ;; emacs by Nick Hurley - Ideas taken from all over the place.
 (setq load-path (cons "~/elisp" load-path))
 (require 'show-tabs-mode)
-(autoload 'js2-mode "js2" nil t)
+(autoload 'javascript-mode "javascript" nil t)
 
 (when window-system
   (require 'color-theme)
@@ -73,7 +73,7 @@
  '(show-paren-delay 0)
  '(show-paren-style (quote mixed))
  '(transient-mark-mode t)
- '(show-tabs-mode 'mark)
+ '(show-tab-style 'mark)
  '(user-full-name "Nick Hurley")
  '(user-mail-address "hurley@todesschaf.org"))
 
@@ -191,14 +191,14 @@ condition."
   (setq indent-tabs-mode nil)
   (turn-on-show-tabs-mode)
   (font-lock-add-keywords nil nwh/tab-keyword)
-  (define-key js2-mode-map "\C-m" 'newline-and-indent))
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+  (define-key javascript-mode-map "\C-m" 'newline-and-indent))
+(add-to-list 'auto-mode-alist '("\\.js$" . javascript-mode))
 
 ;; Do some hookin' ... erm ...
 (add-hook 'font-lock-mode-hook 'font-lock-fontify-buffer)
 (add-hook 'text-mode-hook 'my-text-mode-hook)
 (add-hook 'python-mode-hook 'my-python-mode-hook)
-(add-hook 'js2-mode-hook 'my-javascript-mode-hook)
+(add-hook 'javascript-mode-hook 'my-javascript-mode-hook)
 
 ;; Make sure subshells are bash
 (setq shell-file-name "/bin/zsh")
