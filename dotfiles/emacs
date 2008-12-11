@@ -2,6 +2,7 @@
 ;; emacs by Nick Hurley - Ideas taken from all over the place.
 (setq load-path (cons "~/elisp" load-path))
 (require 'show-tabs-mode)
+(require 'tabbar)
 (autoload 'javascript-mode "javascript" nil t)
 
 (when window-system
@@ -59,6 +60,7 @@
 (setq auto-save-list-file-prefix "/dev/null/")
 
 ;; Give me all sorts of nifty stuff
+(tabbar-mode t)
 (global-font-lock-mode t)
 (show-paren-mode t)
 (custom-set-variables
