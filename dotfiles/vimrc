@@ -1,127 +1,126 @@
-if version >= 600
-  set foldmethod=manual
-endif
-set notitle
-set noautoindent
-set noexpandtab
-set nohlsearch
-set incsearch
-set ruler
-set showmatch
-set nosmartindent
-set tabstop=8
-set viminfo=""
 set visualbell
-set wcm=<C-Z>
-set wildmenu
+set textwidth=1000 "should be 79
+set showmatch
+set showmode
+set ignorecase
+set backspace=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set modeline
+
+set smartcase
+set hidden
+set history=1000
+set scrolloff=2
+set incsearch
+set nohlsearch
+
+" see :help smartindent for inoremap details
+set smartindent
+set smarttab
+set expandtab
+
+" turn off annoying X-window title renaming
+" handle window crap
+set notitle
+set ruler
+set laststatus=2
+"
+set nobackup
 set writebackup
 
-:if &term =~ "xterm"
-:  if has("terminfo")
-:    set t_Co=8
-:    set t_Sf=^[[3%p1%dm
-:    set t_Sb=^[[4%p1%dm
-:  else
-:    set t_Co=8
-:    set t_Sf=^[[3%dm
-:    set t_Sb=^[[4%dm
-:  endif
+:if filereadable("Jamfile")
+:  set makeprg=jam
+:else
+:  set makeprg=bmake
 :endif
 
-" Enable filetype detection
-filetype on
-" Load filetype plugins
+" :fixdel
+
+" xml-plugin opts before ftplugins turned on
+let xml_use_html = 1
+
 filetype plugin on
-" Load indent files for specific filetypes
-filetype indent on
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tlist plugin for ctags (requires exuberant ctags)
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" Order tags by
-let Tlist_Sort_Type="name"
-" Split to the bottom of the screen
-let Tlist_Use_Horiz_Window=1
-" Show small menu
-let Tlist_Compact_Format=1
-" Exit when leacing the last window
-let Tlist_Exist_OnlyWindow=1
-" Do not close tags for other files
-let Tlist_File_Fold_Auto_Close=0
-" Do not show folding tree
-let Tlist_Enable_Fold_Column=0
-" Set the window height to 15
-let Tlist_WinHeight=15
-" Display prototypes
-let Tlist_Display_Prototype=1
-
-""""""""""""""""""""""""
-" Python syntax settings
-""""""""""""""""""""""""
-let python_highlight_exceptions=1
-let python_highlight_indent_errors=1
-let python_highlight_space_errors=1
-
-autocmd!
+autocmd!        
 syntax on
-autocmd BufNewFile,BufRead calendar             so $HOME/.vim/syntax/cal.vim
-autocmd BufNewFile,BufRead *.pyx                so $HOME/.vim/syntax/pyrex.vim
-autocmd BufNewFile,BufRead *.hog,*.rules,snort.conf so $HOME/.vim/syntax/hog.vim
+autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
+autocmd BufNewFile,BufRead *.l,*.lex		so $HOME/.vim/lex.vim
+autocmd BufNewFile,BufRead *.tex		so $HOME/.vim/tex.vim
+autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim
+autocmd BufNewFile,BufRead *.cc,*.hh		so $HOME/.vim/cpp.vim
+autocmd BufNewFile,BufRead *.cpp,*.hpp		so $HOME/.vim/cpp.vim
+autocmd BufNewFile,BufRead *.x			so $VIMRUNTIME/syntax/rpcgen.vim
+autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim 
+autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim
+autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim
+autocmd BufNewFile,BufRead calendar		so $HOME/.vim/cal.vim
+autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim
+autocmd BufNewFile,BufRead *.rsc,*.rcp		so $VIMRUNTIME/syntax/rc.vim
+autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim
+autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim
+autocmd BufNewFile,BufRead *.php,*.inc		so $VIMRUNTIME/syntax/php.vim
+autocmd BufNewFile,BufRead *.php,*.inc		so $HOME/.vim/php.vim
+autocmd BufNewFile,BufRead Jam*			so $HOME/.vim/jam.vim
+autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim
+autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|set list listchars=tab:>>
+autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim
+autocmd BufNewFile,BufRead *.tcl		so $HOME/.vim/tcl.vim
 
-" F3 performs ctag magic
-map <F3> :TlistToggle<CR>
 
-" F4 displays console menus
-map <F4> :emenu <C-Z>
+"	hi Comment ctermfg=5
+"	hi Cursor term=reverse
+"	hi clear Folded 
+"	hi Folded ctermfg=DarkRed
+"	hi Type ctermfg=2
+"	hi Normal ctermfg=7
+"
 
-" F8 runs ispell
-map <F8> :!ispell -t %<CR>:e<CR><CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" Setup key mappings for commenting out blocks of code/markup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" add
-map ,, :s/^/,/<CR>
-map ,# :s/^/#/<CR>
-map ,/ :s/^/\/\//<CR>
-map ,> :s/^/> /<CR>
-map ," :s/^/\"/<CR> 
-map ,% :s/^/%/<CR>   
-map ,! :s/^/!/<CR>
-map ,; :s/^/;/<CR>
-map ,- :s/^/--/<CR>
-map ,<tab> :s/^/<TAB>/<CR>
-map ,<space> :s/^/ /<CR>
+" according to smartindent help, this makes comments align as i wish
+inoremap # X#
 
-" remove
-map ,,, :s/^,//<CR>
-map ,,# :s/^#//<CR>
-map ,,/ :s/^\/\///<CR>
-map ,,> :s/^> //<CR>
-map ,," :s/^\"//<CR> 
-map ,,% :s/^%//<CR>   
-map ,,! :s/^!//<CR>
-map ,,; :s/^;//<CR>
-map ,,- :s/^--//<CR>
-map ,,<tab> :s/^<TAB>//<CR>
-map ,,<space> :s/^ //<CR>
-" removes all of the above
-map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR>
+" CTRL-a does paragraph reformat
+map  gqa
 
-""""""""""""""""""""""""""""""""""""""""""
-" Setup key mappings for wrapping comments
-""""""""""""""""""""""""""""""""""""""""""
-" add
-map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR>
-map ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR>
-map ,< :s/^\(.*\)$/<!-- \1 -->/<CR>
-map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR>
+map  :set paste
+map  :set nopaste 
 
-" remove
-map ,,* :s/^\/\* \(.*\) \*\/$/\1/<CR>
-map ,,( :s/^(\* \(.*\) \*)$/\1/<CR>
-map ,,< :s/^<!-- \(.*\) -->/\1/<CR>
-" removes all of the above
-map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR>
+map <F4> :!cd /data/src/rm_trunk/src/ui && bmake local
+map <F5> :!cd /data/src/rm_trunk/src/py_mow && bmake local
+map <F6> :!cd /data/src/man-o-war/man-o-war/src/python-scripts && test_reports.sh
+map <F8> :!kill -CONT `pidof httpd`
+map <F9> :!echo "select * from running_queries" > /tmp/mq && pgwrap psql mow < /tmp/mq
+map <F10> :cc
+command Sptags :!cd $HOME/src/sp; ectags -R *
 
-" vim: expandtab:sw=4:ts=4
+" http://www.vim.org/tips/tip.php?tip_id=94
+set tags=tags;/
+
+" if we're in $HOME/src/FOO/../../..., set a top level tag file of
+" $HOME/src/FOO/tags
+"let src = $HOME . "/src"
+"let cwd = getcwd()
+"if stridx(cwd, src) == 0
+"  let sub = strpart(cwd, strlen(src) + 1)
+"  if stridx(sub, "/") >= 0
+"    let sub = strpart(sub, 0, stridx(sub, "/"))
+"  endif
+"  let &tags = "tags," . src . "/" . sub . "/tags"
+"endif
+
+map - :bp
+map = :bn
+map _ :bd
+
+" CTL-left does close
+map O5D :fold
+
+" CTL-right does open
+map O5C :foldopen!
+
+" set foldmethod=manual
+
+" use my cvs .cvsrc instead of defaults
+let CVSCommandDiffOpt=''
