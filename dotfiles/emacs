@@ -8,7 +8,8 @@
   (require 'color-theme)
   (when (fboundp 'color-theme-initialize)
     (color-theme-initialize))
-  (color-theme-dark-laptop))
+  (color-theme-dark-laptop)
+  (scroll-bar-mode nil))
 
 ;; Put autosave files in one place
 (defvar autosave-dir "~/.emacs.d/autosaves/")
@@ -50,7 +51,6 @@
 (global-set-key [f12] 'nwh/ps-print-buffer)
 (tool-bar-mode nil)
 (menu-bar-mode nil)
-(scroll-bar-mode nil)
 (setq require-final-newline t)
 
 (define-key global-map "\M-g" 'goto-line)
