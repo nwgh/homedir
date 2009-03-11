@@ -9,6 +9,9 @@ fi
 if [ -d /opt/local/bin ] ; then
    PATH=/opt/local/bin:/opt/local/sbin:$PATH
 fi
+if [ -d /todesschaf/bin ] ; then
+   PATH=/todesschaf/bin:$PATH
+fi
 export PATH
 
 if [ -d /opt/local/share/man ] ; then
