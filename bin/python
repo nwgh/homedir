@@ -1,0 +1,14 @@
+#!/bin/sh
+
+export PYTHONSTARTUP=${HOME}/.pythonrc
+
+if [[ -x /opt/local/bin/python ]]; then
+    exec /opt/local/bin/python
+elif [[ -x /usr/local/bin/python ]]; then
+    exec /usr/local/bin/python
+elif [[ -x /usr/bin/python ]]; then
+    exec /usr/bin/python
+else
+    echo "Could not find python"
+    exit 1
+fi
