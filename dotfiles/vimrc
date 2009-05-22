@@ -1,5 +1,5 @@
 set visualbell
-set textwidth=79 "should be 79
+set textwidth=1000 "should be 79
 set showmatch
 set showmode
 set ignorecase

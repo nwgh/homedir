@@ -6,3 +6,9 @@ except ImportError:
 else:
     import rlcompleter
     readline.parse_and_bind("tab: complete")
+
+try:
+    import warnings
+    warnings.simplefilter("ignore", DeprecationWarning)
+except:
+    pass
