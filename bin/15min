@@ -1,0 +1,2 @@
+#!/bin/sh
+/home/hurley/bin/update_feeds.py
