@@ -3,3 +3,4 @@ syntax: glob
 svn-commit*tmp
 *~
 *.elc
+random_seed
