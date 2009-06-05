@@ -48,25 +48,25 @@ syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.l,*.lex		so $HOME/.vim/lex.vim
 autocmd BufNewFile,BufRead *.tex		so $HOME/.vim/tex.vim
-autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim
-autocmd BufNewFile,BufRead *.cc,*.hh		so $HOME/.vim/cpp.vim
-autocmd BufNewFile,BufRead *.cpp,*.hpp		so $HOME/.vim/cpp.vim
+autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
+autocmd BufNewFile,BufRead *.cc,*.hh		so $HOME/.vim/cpp.vim|set nolist
+autocmd BufNewFile,BufRead *.cpp,*.hpp		so $HOME/.vim/cpp.vim|set nolist
 autocmd BufNewFile,BufRead *.x			so $VIMRUNTIME/syntax/rpcgen.vim
-autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim 
-autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim
-autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim
+autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
+autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
+autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
 autocmd BufNewFile,BufRead calendar		so $HOME/.vim/cal.vim
 autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim
 autocmd BufNewFile,BufRead *.rsc,*.rcp		so $VIMRUNTIME/syntax/rc.vim
-autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim
-autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim
-autocmd BufNewFile,BufRead *.php,*.inc		so $VIMRUNTIME/syntax/php.vim
-autocmd BufNewFile,BufRead *.php,*.inc		so $HOME/.vim/php.vim
+autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|set nolist
+autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim|set nolist
+autocmd BufNewFile,BufRead *.php,*.inc		so $VIMRUNTIME/syntax/php.vim|set nolist
+autocmd BufNewFile,BufRead *.php,*.inc		so $HOME/.vim/php.vim|set nolist
 autocmd BufNewFile,BufRead Jam*			so $HOME/.vim/jam.vim
-autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim
+autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim|set nolist
 autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|set list listchars=tab:>>
-autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim
-autocmd BufNewFile,BufRead *.tcl		so $HOME/.vim/tcl.vim
+autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listchars=tab:>>
+autocmd BufNewFile,BufRead *.tcl		so $HOME/.vim/tcl.vim|set nolist
 
 
 "	hi Comment ctermfg=5
