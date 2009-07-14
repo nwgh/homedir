@@ -92,6 +92,7 @@ map - :tabp<CR>
 map = :tabn<CR>
 map _ :tabc<CR>
 nmap <C-n> :tabnew <C-R>=expand("%:p:h") . "/"<CR>
+map ,e :e <C-R>=expand("%:p:h") . "/"<CR>
 
 map <F5> :!cd /data/src/TRUNK/sls/src/python/sls && bmake local && cd /data/src/TRUNK/sls/src/python/xm && bmake local && cd /data/src/TRUNK/sls/src/python/xmui && bmake local && cd /data/src/TRUNK/sls/src/python/api && bmake local && cd /data/src/TRUNK/sls/src/ui/xm && bmake local
 
