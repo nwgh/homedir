@@ -12,6 +12,12 @@ fi
 if [ -d /todesschaf/bin ] ; then
    PATH=/todesschaf/bin:$PATH
 fi
+if [ -d /opt/PalmSDK/Current/bin ] ; then
+    PATH=/opt/PalmSDK/Current/bin:$PATH
+fi
+if [ -d /opt/nova/bin ] ; then
+    PATH=/opt/nova/bin:$PATH
+fi
 export PATH
 
 if [ -d /opt/local/share/man ] ; then

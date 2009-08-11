@@ -1,0 +1,2 @@
+#!/bin/sh
+/opt/local/bin/rdesktop -T "rdesktop - ashtoreth" chava.todesschaf.net:3404 > /dev/null 2>&1 &
