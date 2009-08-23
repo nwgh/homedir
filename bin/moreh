@@ -1,0 +1,1 @@
+exec /usr/bin/xterm +bc -uc -T moreh -n moreh -e /usr/bin/ssh -ladmin moreh.tb.arbor.net
