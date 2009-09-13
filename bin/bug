@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+import os
+import sys
+import urllib
+
+cmd = '/usr/bin/firefox-3.5'
+arg = urllib.quote(' '.join(sys.argv[1:])) if len(sys.argv) > 1 else ''
+url = 'https://bugs.arbor.net/bugzilla/show_bug.cgi?id=%s' % arg
+args = [cmd, '-new-tab', url]
+
+os.execv(cmd, args)
+
+sys.exit(1)

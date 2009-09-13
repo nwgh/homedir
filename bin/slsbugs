@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+import os
+import sys
+import urllib
+
+cmd = '/usr/bin/firefox-3.5'
+arg = urllib.quote(' '.join(sys.argv[1:])) if len(sys.argv) > 1 else ''
+url = 'https://bugs.arbor.net/bugzilla/buglist.cgi?component=XM&query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=e100_Apps&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&found_version=%s&soc_ticket_num_type=substring&soc_ticket_num=&long_desc_type=substring&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&keywords_type=allwords&keywords=&emailassigned_to1=1&emailtype1=substring&emailassigned_to2=1&emailreporter2=1&emailqa_contact2=1&emailcc2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=' % arg
+args = [cmd, '-new-tab', url]
+
+os.execv(cmd, args)
+
+sys.exit(1)
