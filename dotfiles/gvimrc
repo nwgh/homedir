@@ -1,5 +1,6 @@
 set go-=T
-set bg=dark
-if &background == "dark"
-    hi normal guibg=black
-endif
+set go-=m
+set go-=r
+set bg=light
+hi normal guibg=black
+hi normal guifg=white

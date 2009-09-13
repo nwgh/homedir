@@ -1,1 +1,13 @@
-exec /usr/bin/xterm +bc -uc -geometry 80x60 -T Development -n Development -e /usr/bin/ssh -t -lroot moreh.tb.arbor.net /base/usr/bin/run-zsh
+#!/bin/sh
+
+cd /home/hurley
+
+DHOST="$(host moreh.tb.arbor.net | grep 'not found')"
+
+if [ -n "$DHOST" ]; then
+    TCMD=vim
+else
+    TCMD="/usr/bin/ssh -t -lroot moreh.tb.arbor.net /base/usr/bin/run-zsh"
+fi
+
+exec /usr/bin/xterm +bc -uc -geometry 80x60-495+0 -T Development -n Development -e $TCMD

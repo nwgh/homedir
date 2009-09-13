@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /home/hurley
+exec /usr/bin/xterm +bc -uc -geometry 80x25-0+0

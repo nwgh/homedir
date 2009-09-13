@@ -1,1 +1,2 @@
-exec /usr/bin/xterm +bc -uc -geometry 80x35 -T Todesschaf -n Todesschaf -e /usr/bin/ssh todesschaf.org
+#!/bin/sh
+exec /usr/bin/xterm +bc -uc -geometry 80x35-472-0 -T Todesschaf -n Todesschaf -e /usr/bin/ssh todesschaf.org

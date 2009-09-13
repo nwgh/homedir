@@ -2,7 +2,7 @@
 
 DHOST="$(host detroit.arbor.net | grep 'not found')"
 
-if [[ -n "$DHOST" ]]; then
+if [ -n "$DHOST" ]; then
 	exec /usr/bin/ssh -t hurley@first.arbor.net ssh hurley@detroit
 else
 	exec /usr/bin/ssh detroit

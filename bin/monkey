@@ -1,1 +1,2 @@
-exec /usr/bin/xterm +bc -uc -geometry 80x35 -T Monkey -n Monkey -e /usr/bin/ssh monkey.org
+#!/bin/sh
+exec /usr/bin/xterm +bc -uc -geometry 80x35-1000-0 -T Monkey -n Monkey -e /usr/bin/ssh monkey.org
