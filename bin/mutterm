@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/xterm +bc -uc -geometry 100x60-0-0 -T mutt -n mutt -e /usr/bin/mutt
