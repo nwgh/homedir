@@ -6,8 +6,10 @@ DHOST="$(host moreh.tb.arbor.net | grep 'not found')"
 
 if [ -n "$DHOST" ]; then
     TCMD=vim
+    TITLE=vim
 else
     TCMD="/usr/bin/ssh -t -lroot moreh.tb.arbor.net /base/usr/bin/run-zsh"
+    TITLE=Development
 fi
 
-exec /usr/bin/xterm +bc -uc -geometry 80x60-495+0 -T Development -n Development -e $TCMD
+exec /usr/bin/xterm +bc -uc -geometry 80x60-495+0 -T $TITLE -n $TITLE -e $TCMD
