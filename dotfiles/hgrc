@@ -8,6 +8,9 @@ hgext.extdiff =
 hgext.gpg =
 hgext.fetch =
 hgext.transplant =
+rebase = 
+svn = /usr/local/lib/python2.6/dist-packages/hgsubversion-0.0.1-py2.6.egg/hgsubversion
+hggit = 
 
 [extdiff]
 cmd.udiff = diff

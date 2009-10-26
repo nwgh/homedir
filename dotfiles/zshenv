@@ -1,5 +1,14 @@
 # -*- mode: sh; sh-shell: zsh -*-
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:/usr/kerberos/bin:/usr/games
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+if [ -d /usr/X11R6/bin -a ! -L /usr/X11R6/bin ] ; then
+    PATH=$PATH:/usr/X11R6/bin
+fi
+if [ -d /usr/kerberos/bin ] ; then
+    PATH=$PATH:/usr/kerberos/bin
+fi
+if [ -d /usr/games ] ; then
+    PATH=$PATH:/usr/games
+fi
 if [ -d $HOME/bin ] ; then
     PATH=$PATH:$HOME/bin
     if [ -d $HOME/bin/perl ] ; then
