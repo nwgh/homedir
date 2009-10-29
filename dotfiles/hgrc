@@ -9,7 +9,7 @@ hgext.gpg =
 hgext.fetch =
 hgext.transplant =
 rebase = 
-svn = /usr/local/lib/python2.6/dist-packages/hgsubversion-0.0.1-py2.6.egg/hgsubversion
+svn = /home/hurley/.hg_ext/hgsubversion/hgsubversion
 hggit = 
 
 [extdiff]
