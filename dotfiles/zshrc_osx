@@ -8,10 +8,3 @@ alias l="/bin/ls ${SPECIFIER}"
 alias ls="/bin/ls ${SPECIFIER}"
 alias la="/bin/ls -A ${SPECIFIER}"
 alias ll="/bin/ls -Al ${SPECIFIER}"
-
-source "${HOME}/.zvpn"
-
-alias a2vpn="screen ${HOME}/bin/vpn on a2"
-alias a2int="screen ${HOME}/bin/vpn on a2int"
-alias lexvpn="screen ${HOME}/bin/vpn on lex"
-alias lexint="screen ${HOME}/bin/vpn on lexint"
