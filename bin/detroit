@@ -1,2 +1,0 @@
-#!/bin/sh
-exec /usr/bin/xterm +bc -uc -geometry 80x35-0-0 -T Detroit -n Detroit -e /home/hurley/bin/dssh

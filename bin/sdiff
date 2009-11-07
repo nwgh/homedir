@@ -1,2 +1,0 @@
-#!/bin/sh
-/Users/hurley/bin/cdiff -s "$@"
