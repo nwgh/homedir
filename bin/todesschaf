@@ -1,2 +1,6 @@
 #!/bin/sh
-exec /usr/bin/xterm +bc -uc -geometry 80x35-0-0 -T Todesschaf -n Todesschaf -e /usr/bin/ssh todesschaf.org
+if hostname | grep palm1 ; then
+    exec /usr/bin/gnome-terminal --geometry=80x35-0-0 -t Todesschaf -e "/usr/bin/ssh todesschaf.org"
+else
+    exec /usr/bin/xterm +bc -uc -geometry 80x35-0-0 -T Todesschaf -n Todesschaf -e /usr/bin/ssh todesschaf.org
+fi
