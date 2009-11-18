@@ -9,8 +9,6 @@ hgext.gpg =
 hgext.fetch =
 hgext.transplant =
 rebase = 
-svn = /home/hurley/.hg_ext/hgsubversion/hgsubversion
-hggit = 
 
 [extdiff]
 cmd.udiff = diff
