@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/bin/grep "$@" | /usr/bin/grep -v "/\.svn/"
+exec /bin/grep "$@" | /bin/grep -v "/\.svn/"
