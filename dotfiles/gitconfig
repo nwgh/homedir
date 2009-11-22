@@ -5,3 +5,5 @@
 	excludesfile = ~/.gitignore
 [svn]
 	edit = true
+[push]
+	default = matching
