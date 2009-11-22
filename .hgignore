@@ -1,4 +1,0 @@
-syntax: glob
-imaps:*
-dotfiles/mutt/headers/*
-dotfiles/vim/.netrwhist
