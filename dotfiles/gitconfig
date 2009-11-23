@@ -3,6 +3,7 @@
 	email = hurley@todesschaf.org
 [core]
 	excludesfile = ~/.gitignore
+	editor = vi
 [svn]
 	edit = true
 [push]
