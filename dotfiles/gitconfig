@@ -8,3 +8,7 @@
 	edit = true
 [push]
 	default = matching
+[color]
+	branch = auto
+	status = auto
+	diff = auto
