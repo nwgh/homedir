@@ -1,10 +1,14 @@
 [user]
 	name = Nick Hurley
-	email = hurley@todesschaf.org
+	email = nick.hurley@palm.com
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /home/hurley/.gitignore
 	editor = vi
 [svn]
 	edit = true
 [push]
 	default = matching
+[color]
+	branch = auto
+	status = auto
+	diff = auto
