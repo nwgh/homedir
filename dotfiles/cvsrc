@@ -1,3 +1,0 @@
-checkout -P
-update -Pd
-diff -u -U15 -N
