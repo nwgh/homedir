@@ -43,7 +43,12 @@ setopt AUTO_CD
 # autoload -U colors
 #colors
 export PROMPT="%n@%m:%~%(!.#.$) "
-#export RPROMPT="(%y%)"
+setopt prompt_subst
+function parse_git_branch {
+    ref=$(git symbolic-ref HEAD 2>/dev/null) || return
+    echo "("${ref#refs/heads/}")"
+}
+export RPROMPT="\$(parse_git_branch)"
 
 alias sdiff="${HOME}/bin/sdiff"
 
