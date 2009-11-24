@@ -45,7 +45,7 @@ setopt AUTO_CD
 export PROMPT="%n@%m:%~%(!.#.$) "
 setopt prompt_subst
 function parse_git_branch {
-    ref=$(git symbolic-ref HEAD 2>/dev/null) || return
+    ref=$(git symbolic-ref HEAD 2>/dev/null) || (echo ""; return)
     echo "("${ref#refs/heads/}")"
 }
 export RPROMPT="\$(parse_git_branch)"
