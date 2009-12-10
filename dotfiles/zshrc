@@ -6,6 +6,24 @@
 
 autoload -U compinit
 compinit
+autoload colors
+colors
+autoload vcs_info
+
+# Easy-to-use colors
+# TODO
+PR_RED="%{$fg_bold[red]%}"
+PR_BLUE="%{$fg_bold[blue]%}"
+PR_GREEN="%{$fg_bold[green]%}"
+PR_YELLOW="%{$fg_bold[yellow]%}"
+PR_RESET="%{$reset_color%}"
+
+# vcs info config
+zstyle ':vcs_info:*' enable git hg svn
+zstyle ':vcs_info:*:prompt:*' formats "%r:%S"
+zstyle ':vcs_info:*:prompt:*' actionformats "%r:%S:%a"
+zstyle ':vcs_info:*:rprompt:*' formats "%b"
+zstyle ':vcs_info:*:rprompt:*' actionformats "%b"
 
 #allow tab completion in the middle of a word
 setopt COMPLETE_IN_WORD
@@ -40,15 +58,38 @@ setopt NO_CORRECT
 setopt NO_CORRECT_ALL
 setopt AUTO_CD
 
-# autoload -U colors
-#colors
-export PROMPT="%n@%m:%~%(!.#.$) "
+# Prompt and such
 setopt prompt_subst
-function parse_git_branch {
-    ref=$(git symbolic-ref HEAD 2>/dev/null) || (echo ""; return)
-    echo "("${ref#refs/heads/}")"
+
+function make_prompt {
+	vcs_info prompt
+
+	if [[ -n "$vcs_info_msg_0_" ]] ; then
+		repo="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
+		rpath="$(echo "$vcs_info_msg_0_" | cut -d: -f2 | sed -e 's/^\./\//')"
+		act="$(echo "$vcs_info_msg_0_" | cut -d: -f3)"
+		rval="$PR_GREEN$repo$PR_RESET:$PR_BLUE$rpath$PR_RESET"
+		if [[ -n "$act" ]] ; then
+			rval="$rval$PR_RED($act)$PR_RESET"
+		fi
+	else
+		rval="%n@%m:%~"
+	fi
+
+	echo "$rval"
 }
-export RPROMPT="\$(parse_git_branch)"
+
+function make_rprompt {
+	vcs_info rprompt
+	if [[ -n "$vcs_info_msg_0_" ]] ; then
+		echo "$PR_YELLOW($vcs_info_msg_0_)$PR_RESET"
+	else
+		echo ""
+	fi
+}
+
+export PROMPT="\$(make_prompt)%(!.#.$) "
+export RPROMPT="\$(make_rprompt)"
 
 alias sdiff="${HOME}/bin/sdiff"
 
