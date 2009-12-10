@@ -59,8 +59,18 @@ if __name__ == '__main__':
     tx.execute('SELECT * FROM feed_times')
     last_times = tx.dictfetchone()
 
-    ljentries, ljtstamp = get_lj(last_times['livejournal'])
-    twentries, twtstamp = get_twitter(last_times['twitter'])
+    try:
+        ljentries, ljtstamp = get_lj(last_times['livejournal'])
+    except:
+        ljentries = []
+        ljtstamp = last_times['livejournal']
+
+    try:
+        twentries, twtstamp = get_twitter(last_times['twitter'])
+    except:
+        twentries = []
+        twtstamp = last_times['twitter']
+
     entries = ljentries + twentries
     entries.sort(key=lambda x: x['tstamp'], reverse=True)
 
