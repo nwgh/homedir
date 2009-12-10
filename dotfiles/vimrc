@@ -50,8 +50,6 @@ autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchar
 autocmd BufNewFile,BufRead *.l,*.lex		so $HOME/.vim/lex.vim
 autocmd BufNewFile,BufRead *.tex		so $HOME/.vim/tex.vim
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
-autocmd BufNewFile,BufRead *.cc,*.hh		so $HOME/.vim/cpp.vim|set nolist
-autocmd BufNewFile,BufRead *.cpp,*.hpp		so $HOME/.vim/cpp.vim|set nolist
 autocmd BufNewFile,BufRead *.x			so $VIMRUNTIME/syntax/rpcgen.vim
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist

@@ -6,3 +6,4 @@ hi normal guibg=black
 hi normal guifg=white
 hi search guibg=red
 set guitablabel=%t
+set mouse=""
