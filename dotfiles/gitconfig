@@ -6,8 +6,6 @@
 	editor = vi
 [svn]
 	edit = true
-[push]
-	default = matching
 [color]
 	branch = auto
 	status = auto
