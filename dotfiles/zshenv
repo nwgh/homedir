@@ -29,11 +29,6 @@ if [ -d /opt/nova/bin ] ; then
 fi
 if [ -d $HOME/cross/arm-2007q3/bin ] ; then
 	PATH=$HOME/cross/arm-2007q3/bin:$PATH
-
-    # Can use this as an indicator that I'm at a palm machine, and thus should
-    # commit to git with my palm email address.
-    GIT_CONFIG=$HOME/.gitconfig_palm
-    export GIT_CONFIG
 fi
 export PATH
 
