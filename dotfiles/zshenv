@@ -43,7 +43,6 @@ export PYTHONSTARTUP=~/.pythonrc
 export HISTFILE=~/.zsh_history
 export HISTSIZE=500
 export SAVEHIST=500
-export CVS_RSH=ssh
 export LD_LIBRARY_PATH=/usr/local/lib
 export LANG=C
 export LANGUAGE=C
