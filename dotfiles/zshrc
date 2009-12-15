@@ -72,7 +72,7 @@ function make_prompt {
 			rval="$rval$PR_RED($act)$PR_RESET"
 		fi
 	else
-		rval="%n@%m:%~"
+		rval="%n:$PR_BLUE%~$PR_RESET"
 	fi
 
 	echo "$rval"
@@ -83,7 +83,11 @@ function make_rprompt {
 	if [[ -n "$vcs_info_msg_0_" ]] ; then
 		echo "$PR_YELLOW($vcs_info_msg_0_)$PR_RESET"
 	else
-		echo ""
+        if [[ -n "$SSH_CONNECTION" ]] ; then
+            echo "$PR_RED($(hostname -s))$PR_RESET"
+        else
+		    echo ""
+        fi
 	fi
 }
 
