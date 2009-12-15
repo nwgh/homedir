@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd /home/hurley
-
-exec /usr/bin/xterm +bc -uc -geometry 80x60-495+0 -T vim -n vim -e vim

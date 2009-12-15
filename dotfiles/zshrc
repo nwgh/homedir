@@ -1,16 +1,12 @@
 # -*- mode: sh; sh-shell: zsh -*-
-# .zshrc is sourced in interactive shells.
-# It should contain commands to set up aliases,
-# functions, options, key bindings, etc.
-#
 
+# Initialize completion subsystem
 autoload -U compinit
 compinit
+
+# Easy-to-use colors for prompts
 autoload colors
 colors
-autoload vcs_info
-
-# Easy-to-use colors
 PR_RED="%{$fg_bold[red]%}"
 PR_BLUE="%{$fg_bold[blue]%}"
 PR_GREEN="%{$fg_bold[green]%}"
@@ -18,6 +14,7 @@ PR_YELLOW="%{$fg_bold[yellow]%}"
 PR_RESET="%{$reset_color%}"
 
 # vcs info config
+autoload vcs_info
 zstyle ':vcs_info:*' enable git hg svn
 zstyle ':vcs_info:*:prompt:*' formats "%r:%S"
 zstyle ':vcs_info:*:prompt:*' actionformats "%r:%S:%a"
@@ -25,37 +22,30 @@ zstyle ':vcs_info:*:rprompt:*' formats "%b"
 zstyle ':vcs_info:*:rprompt:*' actionformats "%b"
 
 #allow tab completion in the middle of a word
-setopt COMPLETE_IN_WORD
+setopt complete_in_word
 
-## keep background processes at full speed
-#setopt NOBGNICE
-## restart running processes on exit
-#setopt HUP
+# Don't remove slashes from tab-completed things
+setopt no_auto_remove_slash
 
-## history
-#setopt APPEND_HISTORY
-## for sharing history between zsh processes
-#setopt INC_APPEND_HISTORY
-#setopt SHARE_HISTORY
+# Built-in echo is BSD compatible
+setopt bsd_echo
 
-## never ever beep ever
-#setopt NO_BEEP
+# If the name of a dir is typed as a command, CD to that dir
+setopt auto_cd
 
-## automatically decide when to page a list of completions
-#LISTMAX=0
+# Don't try to correct spelling of commands/args
+setopt no_correct
+setopt no_correct_all
 
-## disable mail checking
-#MAILCHECK=0
-setopt NO_AUTO_REMOVE_SLASH
-setopt BSD_ECHO
-setopt AUTO_PUSHD
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt PUSHD_SILENT
-setopt PUSHD_TO_HOME
-setopt NO_CORRECT
-setopt NO_CORRECT_ALL
-setopt AUTO_CD
+# No duplicates anywhere in history
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+
+# Do a pushd every time I cd, don't tell me about it, and don't push dupes
+setopt auto_pushd
+setopt pushd_silent
+setopt pushd_to_home
+setopt pushd_ignore_dups
 
 # Prompt and such
 setopt prompt_subst
@@ -94,8 +84,7 @@ function make_rprompt {
 export PROMPT="\$(make_prompt)%(!.#.>) "
 export RPROMPT="\$(make_rprompt)"
 
-alias sdiff="${HOME}/bin/sdiff"
-
+# Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
 		source "${HOME}/.zshrc_linux"

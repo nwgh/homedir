@@ -1,2 +1,0 @@
-#!/bin/sh
-exec /bin/grep "$@" | /bin/grep -v "/\.svn/"
