@@ -84,6 +84,9 @@ function make_rprompt {
 export PROMPT="\$(make_prompt)%(!.#.>) "
 export RPROMPT="\$(make_rprompt)"
 
+# Aliases
+alias ggrep='git grep'
+
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
