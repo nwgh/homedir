@@ -7,6 +7,6 @@
 [svn]
 	edit = true
 [color]
-	branch = auto
-	status = auto
-	diff = auto
+	ui = auto
+[merge]
+	tool = meld
