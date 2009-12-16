@@ -48,4 +48,3 @@ export LANG=C
 export LANGUAGE=C
 export PAGER=less
 export RSYNC_RSH=ssh
-export EDITOR=vi
