@@ -1,7 +1,7 @@
 #!/bin/sh
 CPUBOOT=/opt/nova/bin/cpuboot
 NOVACOM=/opt/Palm/novacom/novacom
-VPATH=/home/hurley/src/windsor/validation
+VPATH=/home/hurley/src/validation
 
 if [ ! -e "$NOVACOM" ] ; then
 	echo "Can't find $NOVACOM. Exiting"
