@@ -31,12 +31,6 @@ set autochdir
 set nobackup
 set writebackup
 
-:if filereadable("Jamfile")
-:  set makeprg=jam
-:else
-:  set makeprg=bmake
-:endif
-
 " :fixdel
 
 " xml-plugin opts before ftplugins turned on
@@ -48,9 +42,8 @@ autocmd!
 syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.l,*.lex		so $HOME/.vim/lex.vim
-autocmd BufNewFile,BufRead *.tex		so $HOME/.vim/tex.vim
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
-autocmd BufNewFile,BufRead *.x			so $VIMRUNTIME/syntax/rpcgen.vim
+autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h		so $HOME/.vim/c_linux.vim|set nolist
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
@@ -61,30 +54,12 @@ autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|set nolist
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim|set nolist
 autocmd BufNewFile,BufRead *.php,*.inc		so $VIMRUNTIME/syntax/php.vim|set nolist
 autocmd BufNewFile,BufRead *.php,*.inc		so $HOME/.vim/php.vim|set nolist
-autocmd BufNewFile,BufRead Jam*			so $HOME/.vim/jam.vim
 autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim|set nolist
 autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listchars=tab:>>
-autocmd BufNewFile,BufRead *.tcl		so $HOME/.vim/tcl.vim|set nolist
-
-
-"	hi Comment ctermfg=5
-"	hi Cursor term=reverse
-"	hi clear Folded 
-"	hi Folded ctermfg=DarkRed
-"	hi Type ctermfg=2
-"	hi Normal ctermfg=7
-"
-
 
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
-
-" CTRL-a does paragraph reformat
-map  gqa
-
-map  :set paste
-map  :set nopaste 
 
 map - :tabp<CR>
 map = :tabn<CR>
