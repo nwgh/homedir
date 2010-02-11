@@ -1,0 +1,26 @@
+#!/bin/sh
+
+MEAT=$1
+if [[ -z "$MEAT" ]] ; then
+	echo "Must give me some meat first!"
+	exit 1
+fi
+
+echo "=================================================="
+echo "make mrproper"
+echo "=================================================="
+make mrproper
+
+echo ""
+echo "=================================================="
+echo "make ${MEAT}_defconfig"
+echo "=================================================="
+make ${MEAT}_defconfig
+
+echo ""
+echo "=================================================="
+echo "make uImage"
+echo "=================================================="
+make -j8 uImage
+
+exit $?
