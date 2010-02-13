@@ -9,6 +9,8 @@ hgext.gpg =
 hgext.fetch =
 hgext.transplant =
 rebase = 
+hgext.bookmarks =
+hggit =
 
 [extdiff]
 cmd.udiff = diff

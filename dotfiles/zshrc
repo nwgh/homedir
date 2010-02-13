@@ -16,8 +16,8 @@ PR_RESET="%{$reset_color%}"
 # vcs info config
 autoload vcs_info
 zstyle ':vcs_info:*' enable git hg svn
-zstyle ':vcs_info:*:prompt:*' formats "%r:%S"
-zstyle ':vcs_info:*:prompt:*' actionformats "%r:%S:%a"
+zstyle ':vcs_info:*:prompt:*' formats "%s:%r:%S"
+zstyle ':vcs_info:*:prompt:*' actionformats "%s:%r:%S:%a"
 zstyle ':vcs_info:*:rprompt:*' formats "%b"
 zstyle ':vcs_info:*:rprompt:*' actionformats "%b"
 
@@ -54,10 +54,16 @@ function make_prompt {
 	vcs_info prompt
 
 	if [[ -n "$vcs_info_msg_0_" ]] ; then
-		repo="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
-		rpath="$(echo "$vcs_info_msg_0_" | cut -d: -f2 | sed -e 's/^\./\//')"
-		act="$(echo "$vcs_info_msg_0_" | cut -d: -f3)"
-		rval="$PR_GREEN$repo$PR_RESET:$PR_BLUE$rpath$PR_RESET"
+        vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
+		repo="$(echo "$vcs_info_msg_0_" | cut -d: -f2)"
+		rpath="$(echo "$vcs_info_msg_0_" | cut -d: -f3 | sed -e 's/^\./\//')"
+		act="$(echo "$vcs_info_msg_0_" | cut -d: -f4)"
+        if [[ $vtype = "git" ]] ; then
+            vtype="$(echo -e -n \\xc2\\xb1)"
+        elif [[ $vtype = "hg" ]] ; then
+            vtype="$(echo -e -n \\xe2\\x98\\xbf)"
+        fi
+		rval="$vtype:$PR_GREEN$repo$PR_RESET:$PR_BLUE$rpath$PR_RESET"
 		if [[ -n "$act" ]] ; then
 			rval="$rval$PR_RED($act)$PR_RESET"
 		fi
