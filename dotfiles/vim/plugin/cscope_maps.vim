@@ -88,14 +88,14 @@ if has("cscope")
     " go back to where you were before the search.  
     "
 
-    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>	
-    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-\>s :tab split<CR>:cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g :tab split<CR>:cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c :tab split<CR>:cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t :tab split<CR>:cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e :tab split<CR>:cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f :tab split<CR>:cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-\>i :tab split<CR>:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d :tab split<CR>:cs find d <C-R>=expand("<cword>")<CR><CR>
 
 
     " Using 'CTRL-spacebar' (intepreted as CTRL-@ by vim) then a search type
