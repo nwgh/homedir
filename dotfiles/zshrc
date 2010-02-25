@@ -16,10 +16,8 @@ PR_RESET="%{$reset_color%}"
 # vcs info config
 autoload vcs_info
 zstyle ':vcs_info:*' enable git hg svn
-zstyle ':vcs_info:*:prompt:*' formats "%s:%r:%S"
-zstyle ':vcs_info:*:prompt:*' actionformats "%s:%r:%S:%a"
-zstyle ':vcs_info:*:rprompt:*' formats "%b"
-zstyle ':vcs_info:*:rprompt:*' actionformats "%b"
+zstyle ':vcs_info:*:prompt:*' formats "%s:%r:%S:%b"
+zstyle ':vcs_info:*:prompt:*' actionformats "%s:%r:%S:%b:%a"
 
 #allow tab completion in the middle of a word
 setopt complete_in_word
@@ -54,41 +52,31 @@ function make_prompt {
 	vcs_info prompt
 
 	if [[ -n "$vcs_info_msg_0_" ]] ; then
-        vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
+		vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
 		repo="$(echo "$vcs_info_msg_0_" | cut -d: -f2)"
-		rpath="$(echo "$vcs_info_msg_0_" | cut -d: -f3 | sed -e 's/^\./\//')"
-		act="$(echo "$vcs_info_msg_0_" | cut -d: -f4)"
-        if [[ $vtype = "git" ]] ; then
-            vtype="$(echo -e -n \\xc2\\xb1)"
-        elif [[ $vtype = "hg" ]] ; then
-            vtype="$(echo -e -n \\xe2\\x98\\xbf)"
-        fi
-		rval="$vtype:$PR_GREEN$repo$PR_RESET:$PR_BLUE$rpath$PR_RESET"
-		if [[ -n "$act" ]] ; then
-			rval="$rval$PR_RED($act)$PR_RESET"
+		rpath="/$(echo "$vcs_info_msg_0_" | cut -d: -f3 | sed -e 's/^\.//')"
+		branch="$(echo "$vcs_info_msg_0_" | cut -d: -f4)"
+		act="$(echo "$vcs_info_msg_0_" | cut -d: -f5)"
+		if [[ $vtype = "git" ]] ; then
+			vtype="$(echo -e -n \\xc2\\xb1)"
+		elif [[ $vtype = "hg" ]] ; then
+			vtype="$(echo -e -n \\xe2\\x98\\xbf)"
+		else
+			vtype="o"
 		fi
+		rval="$vtype:$PR_GREEN$repo$PR_RESET:$PR_YELLOW$branch$PR_RESET"
+		if [[ -n "$act" ]] ; then
+			rval="$rval $PR_RED($act)$PR_RESET"
+		fi
+		rval="$rval\n%n:$PR_BLUE$rpath$PR_RESET"
 	else
-		rval="%n:%~"
+		rval="%M (%T 20%D)\n%n:%~"
 	fi
 
-	echo "$rval"
-}
-
-function make_rprompt {
-	vcs_info rprompt
-	if [[ -n "$vcs_info_msg_0_" ]] ; then
-		echo "$PR_YELLOW($vcs_info_msg_0_)$PR_RESET"
-	else
-        if [[ -n "$SSH_CONNECTION" ]] ; then
-            echo "$PR_RED($(hostname -s))$PR_RESET"
-        else
-		    echo ""
-        fi
-	fi
+	echo -e "$rval"
 }
 
 export PROMPT="\$(make_prompt)%(!.#.>) "
-export RPROMPT="\$(make_rprompt)"
 
 # Aliases
 alias ggrep='git grep'
