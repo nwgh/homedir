@@ -50,6 +50,7 @@ setopt prompt_subst
 
 function make_prompt {
 	vcs_info prompt
+	rval="%n@%B%m%b"
 
 	if [[ -n "$vcs_info_msg_0_" ]] ; then
 		vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
@@ -64,13 +65,13 @@ function make_prompt {
 		else
 			vtype="o"
 		fi
-		rval="$vtype:$PR_GREEN$repo$PR_RESET:$PR_YELLOW$branch$PR_RESET"
+		rval="$rval $vtype $PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
 		if [[ -n "$act" ]] ; then
 			rval="$rval $PR_RED($act)$PR_RESET"
 		fi
-		rval="$rval\n%n:$PR_BLUE$rpath$PR_RESET"
+		rval="$rval\n$rpath"
 	else
-		rval="%M (%T 20%D)\n%n:%~"
+		rval="$rval\n%~"
 	fi
 
 	echo -e "$rval"
