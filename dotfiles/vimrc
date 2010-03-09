@@ -43,7 +43,7 @@ syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.l,*.lex		so $HOME/.vim/lex.vim
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
-autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h		so $HOME/.vim/c_linux.vim|set nolist
+autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvkernel*/*.h		so $HOME/.vim/c_linux.vim|set nolist
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
