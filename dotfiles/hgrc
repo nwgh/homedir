@@ -12,6 +12,7 @@ hggit =
 color =
 parentrevspec =
 record =
+pager =
 localbranch = /home/hurley/hgext/localbranch.py
 attic = /home/hurley/hgext/attic.py
 
@@ -21,3 +22,6 @@ opts.udiff = -NpruU15
 
 [bookmarks]
 track.current = True
+
+[pager]
+pager = LESS='-FSRX' less
