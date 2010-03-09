@@ -1,26 +1,63 @@
-#!/bin/sh
+#!/usr/bin/env python
 
-MEAT=$1
-if [[ -z "$MEAT" ]] ; then
-	echo "Must give me some meat first!"
-	exit 1
-fi
+import optparse
+import os
+import shutil
+import subprocess
+import sys
 
-echo "=================================================="
-echo "make mrproper"
-echo "=================================================="
-make mrproper
+__build_root = '/home/hurley/src/rhbuild/%s'
 
-echo ""
-echo "=================================================="
-echo "make ${MEAT}_defconfig"
-echo "=================================================="
-make ${MEAT}_defconfig
+def linux_build(meat, force_rebuild=False):
+    git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
+        shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    branch, _ = git.communicate()
+    branch = branch.strip()
+    if not branch:
+        if git.returncode:
+            raise Exception, 'Could not determine git branch!'
+        branch = 'onetime'
 
-echo ""
-echo "=================================================="
-echo "make uImage"
-echo "=================================================="
-make uImage
+    buildroot = __build_root % branch
 
-exit $?
+    if os.path.exists(buildroot) and force_rebuild:
+        print "=================================================="
+        print "make mrproper O=%s" % buildroot
+        print "=================================================="
+        os.system("make mrproper O=%s" % buildroot)
+    elif not os.path.exists(buildroot):
+        os.mkdir(buildroot)
+
+    print ""
+    print "=================================================="
+    print "make %s_defconfig O=%s" % (meat, buildroot)
+    print "=================================================="
+    os.system("make %s_defconfig O=%s" % (meat, buildroot))
+
+    print ""
+    print "=================================================="
+    print "make uImage O=%s" % buildroot
+    print "=================================================="
+    os.system("make uImage O=%s" % buildroot)
+
+    if branch == 'onetime':
+        shutil.rmtree(buildroot)
+
+if __name__ == '__main__':
+    parser = optparse.OptionParser()
+    parser.add_option('-f', '--force', dest='force', help='force rebuild',
+        default=False, action='store_true')
+
+    opts, args = parser.parse_args()
+
+    if not args:
+        print 'Need a defconfig to build!'
+        sys.exit(1)
+
+    try:
+        linux_build(args[0], opts.force)
+    except Exception, e:
+        print str(e)
+        sys.exit(1)
+
+    sys.exit(0)
