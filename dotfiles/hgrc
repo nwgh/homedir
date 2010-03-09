@@ -25,3 +25,4 @@ track.current = True
 
 [pager]
 pager = LESS='-FSRX' less
+ignore = update, push, pull, merge, fetch, convert, clone, record, crecord
