@@ -11,7 +11,7 @@ def linux_putk(filename='memory'):
     git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     branch, _ = git.communicate()
-    branch = branch.strip()
+    branch = branch.strip().replace('/', ':')
     if not branch:
         if git.returncode:
             raise Exception, 'Could not determine git branch!'
