@@ -39,6 +39,10 @@ if [ -d /opt/local/share/info ] ; then
 	export INFOPATH=/opt/local/share/info:$INFOPATH
 fi
 
+if [ -d /home/palmadmin ] ; then
+    export GIT_AUTHOR_EMAIL=nick.hurley@palm.com
+fi
+
 export PYTHONSTARTUP=~/.pythonrc
 export HISTFILE=~/.zsh_history
 export HISTSIZE=500
