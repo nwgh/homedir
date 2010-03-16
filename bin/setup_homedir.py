@@ -1,8 +1,30 @@
 #!/usr/bin/env python
+"""setup_homedir.py
+
+A simple script for setting up a home directory from an SCM repository.
+
+It's pretty simple, just run
+
+setup_homedir.py -h <HOME> -s <SOURCE>
+
+The layout of <SOURCE> should be something like:
+<SOURCE>/dotfiles - Any files that should be dotfiles in <HOME>
+<SOURCE>/<anything> - All other files
+
+If you really feel like being lazy, <HOME> will default to $HOME, and <SOURCE>
+will default to the current directory.
+
+Note that this will NOT link ANY file ANYWHERE under <SOURCE> that has a
+filename starting with a dot (.).
+"""
 
 import getopt
 import os
 import sys
+
+__author__ = "Nick Hurley <hurley@todesschaf.org>"
+__copyright__ = "Copyright 2010, Nick Hurley"
+__license__ = "BSD"
 
 def __safelink(src, dst, verbose=False):
     """Like os.symlink, but does't behave badly if dst already exists
