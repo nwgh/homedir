@@ -83,3 +83,6 @@ hi Comment ctermfg=5
 
 set gcr=a:blinkwait0-blinkoff0-blinkon0
 set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
+
+hi LineTooLong guibg=red ctermbg=red
+au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
