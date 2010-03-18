@@ -98,6 +98,6 @@ let g:miniBufExplModeSelTarget = 1
 "let g:miniBufExplForceSyntaxEnable = 1
 
 let NERDTreeWinPos = "right"
-let NERDTreeWinSize = 30
+let NERDTreeWinSize = 50
 
 let Tlist_WinWidth = 50
