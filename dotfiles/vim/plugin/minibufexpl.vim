@@ -274,7 +274,6 @@
 " Has this plugin already been loaded? {{{
 "
 "disable completely for now
-finish
 if exists('loaded_minibufexplorer')
   finish
 endif

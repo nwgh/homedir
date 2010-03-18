@@ -88,13 +88,15 @@ hi Comment ctermfg=5
 set gcr=a:blinkwait0-blinkoff0-blinkon0
 set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 
-hi LineTooLong guibg=red ctermbg=red
+hi LineTooLong guibg=grey ctermbg=grey
 au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
 
-let g:miniBufExplorerMoreThanOne = 2
-let g:miniBufExplMapWindoNavVim = 1
+let g:miniBufExplorerMoreThanOne = 1
+let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplModeSelTarget = 1
 "let g:miniBufExplForceSyntaxEnable = 1
+"let g:miniBufExplorerDebugLevel=10
+"let g:miniBufExplorerDebugMode=2
 
 let NERDTreeWinPos = "right"
 let NERDTreeWinSize = 50
