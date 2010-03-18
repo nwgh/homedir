@@ -47,7 +47,6 @@ autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvk
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
-autocmd BufNewFile,BufRead calendar		so $HOME/.vim/cal.vim
 autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim
 autocmd BufNewFile,BufRead *.rsc,*.rcp		so $VIMRUNTIME/syntax/rc.vim
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|set nolist
