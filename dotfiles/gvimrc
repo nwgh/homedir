@@ -7,3 +7,4 @@ hi normal guifg=white
 hi search guibg=red
 set guitablabel=%t
 "set mouse=""
+let g:miniBufExplorerMoreThanOne = 1

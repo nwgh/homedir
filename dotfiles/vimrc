@@ -91,7 +91,6 @@ set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 hi LineTooLong guibg=grey ctermbg=grey
 au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
 
-let g:miniBufExplorerMoreThanOne = 1
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplModeSelTarget = 1
 "let g:miniBufExplForceSyntaxEnable = 1
