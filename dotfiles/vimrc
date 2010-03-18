@@ -61,11 +61,16 @@ autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listcha
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
 
-map - :tabp<CR>
-map = :tabn<CR>
-map _ :tabc<CR>
-nmap <C-n> :tabnew <C-R>=expand("%:p:h") . "/"<CR>
+"map - :tabp<CR>
+"map = :tabn<CR>
+"map _ :tabc<CR>
+"nmap <C-n> :tabnew <C-R>=expand("%:p:h") . "/"<CR>
 map ,e :e <C-R>=expand("%:p:h") . "/"<CR>
+map - :bprevious<CR>
+map = :bnext<CR>
+
+nnoremap <silent> <F6> :NERDTreeToggle<CR>
+nnoremap <silent> <F5> :TlistToggle<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/
@@ -86,3 +91,13 @@ set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 
 hi LineTooLong guibg=red ctermbg=red
 au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
+
+let g:miniBufExplorerMoreThanOne = 2
+let g:miniBufExplMapWindoNavVim = 1
+let g:miniBufExplModeSelTarget = 1
+"let g:miniBufExplForceSyntaxEnable = 1
+
+let NERDTreeWinPos = "right"
+let NERDTreeWinSize = 30
+
+let Tlist_WinWidth = 50
