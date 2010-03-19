@@ -92,7 +92,7 @@ hi LineTooLong guibg=grey ctermbg=grey
 au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
 
 let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplModeSelTarget = 1
+let g:miniBufExplModSelTarget = 1
 "let g:miniBufExplForceSyntaxEnable = 1
 "let g:miniBufExplorerDebugLevel=10
 "let g:miniBufExplorerDebugMode=2
