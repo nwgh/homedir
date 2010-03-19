@@ -98,6 +98,6 @@ let g:miniBufExplModeSelTarget = 1
 "let g:miniBufExplorerDebugMode=2
 
 let NERDTreeWinPos = "right"
-let NERDTreeWinSize = 50
+let NERDTreeWinSize = 45
 
-let Tlist_WinWidth = 50
+let Tlist_WinWidth = 45
