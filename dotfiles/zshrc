@@ -62,8 +62,14 @@ function make_prompt {
 			vtype="$(echo -e -n \\xc2\\xb1)"
 		elif [[ $vtype = "hg" ]] ; then
 			vtype="$(echo -e -n \\xe2\\x98\\xbf)"
+		elif [[ $vtype = "git-svn" ]] ; then
+			vtype="$(echo -e -n \\xc2\\xb1)-s"
+		elif [[ $vtype = "svn" ]] ; then
+			vtype="s"
+			branch="${branch}@${act}"
+			act=""
 		else
-			vtype="o"
+			vtype="?"
 		fi
 		rval="$rval $vtype $PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
 		if [[ -n "$act" ]] ; then
