@@ -101,3 +101,4 @@ let NERDTreeWinPos = "right"
 let NERDTreeWinSize = 45
 
 let Tlist_WinWidth = 45
+let Tlist_File_Fold_Auto_Close = 1
