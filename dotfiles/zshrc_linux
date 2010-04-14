@@ -6,3 +6,6 @@ alias ll='/bin/ls -Al --color=auto'
 open() {
     xdg-open "$@" 2>>/tmp/open-${USER}
 }
+if [ -x /usr/local/bin/git ] ; then
+    alias git=/usr/local/bin/git
+fi
