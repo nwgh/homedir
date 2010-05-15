@@ -1,10 +1,31 @@
+" Remove toolbar, menubar, right-hand scrollbar
 set go-=T
 set go-=m
 set go-=r
+
+" Don't let the cursor blink ever. EVER
+set gcr=a:blinkwait0-blinkoff0-blinkon0
+
+" Default to the light bg colors
 set bg=light
-hi normal guibg=black
-hi normal guifg=white
-hi search guibg=red
+
+" However, I REALLY want a dark bg, so override a bunch of stuff to make it
+" look good (and also to mesh with the color terminal colors)
+hi Normal guibg=black
+hi Normal guifg=white
+hi Search gui=reverse
+hi PreProc guifg=Blue
+hi Statement guifg=DarkYellow gui=NONE
+hi Type guifg=Green gui=NONE
+hi Cursor NONE
+hi Cursor gui=reverse
+hi vimOption guifg=Cyan
+hi LineTooLong gui=reverse
+hi TrailingWhitespace guibg=red
+hi CursorLine guibg=#222222
+
+" Label tabs with just the filename (no path)
 set guitablabel=%t
-"set mouse=""
+
+" Want to show minibuf whenever there's more than one buffer open
 let g:miniBufExplorerMoreThanOne = 1

@@ -31,6 +31,9 @@ set autochdir
 set nobackup
 set writebackup
 
+" Want the current line hilighted
+set cursorline
+
 " :fixdel
 
 " xml-plugin opts before ftplugins turned on
@@ -41,13 +44,12 @@ filetype plugin on
 autocmd!        
 syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
-autocmd BufNewFile,BufRead *.l,*.lex		so $HOME/.vim/lex.vim
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
 autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvkernel*/*.h		so $HOME/.vim/c_linux.vim|set nolist
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
-autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim
+autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim|set nolist
 autocmd BufNewFile,BufRead *.rsc,*.rcp		so $VIMRUNTIME/syntax/rc.vim
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|set nolist
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim|set nolist
@@ -56,9 +58,6 @@ autocmd BufNewFile,BufRead *.php,*.inc		so $HOME/.vim/php.vim|set nolist
 autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim|set nolist
 autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listchars=tab:>>
-
-set cursorline
-hi CursorLine cterm=NONE ctermbg=darkgrey guibg=darkgrey
 
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
@@ -71,9 +70,6 @@ map ,e :e <C-R>=expand("%:p:h") . "/"<CR>
 map - :bprevious<CR>
 map = :bnext<CR>
 
-nnoremap <silent> <F6> :NERDTreeToggle<CR>
-nnoremap <silent> <F5> :TlistToggle<CR>
-
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/
 
@@ -85,24 +81,39 @@ map O5C :foldopen!
 
 " set foldmethod=manual
 
-" Makes comments better color
-hi Comment ctermfg=5
+" Make colors mesh with gvime and other things I like
+hi Comment ctermfg=20
+hi PreProc ctermfg=20
+hi Statement ctermfg=Yellow
+hi Type ctermfg=40
+hi Constant ctermfg=200 cterm=NONE
+hi LineTooLong cterm=reverse term=reverse
+hi TrailingWhitespace ctermbg=red term=underline
+hi CursorLine term=bold cterm=NONE ctermbg=233
+hi vimOption ctermfg=Cyan
+hi Search NONE
+hi Search term=reverse cterm=reverse
 
-set gcr=a:blinkwait0-blinkoff0-blinkon0
+" Have the status line show the filename, whether or not it's modified,
+" read-only, a help buffer, and type on the left. Show line number, column
+" number, and percentage through file on right
 set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 
-hi LineTooLong guibg=grey ctermbg=grey
+" Setup hilighting for certain line conditions
 au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
-
-hi TrailingWhitespace guibg=red ctermbg=red
 au BufWinEnter * let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
+" General settings for miniBufExplorer (gvim overrides some of these)
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 100
 "let g:miniBufExplForceSyntaxEnable = 1
 "let g:miniBufExplorerDebugLevel=10
 "let g:miniBufExplorerDebugMode=2
+
+" Setup NERDTree and Taglist
+nnoremap <silent> <F6> :NERDTreeToggle<CR>
+nnoremap <silent> <F5> :TlistToggle<CR>
 
 let NERDTreeWinPos = "right"
 let NERDTreeWinSize = 45
