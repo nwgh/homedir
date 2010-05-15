@@ -57,6 +57,9 @@ autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim|set nolist
 autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listchars=tab:>>
 
+set cursorline
+hi CursorLine cterm=NONE ctermbg=darkgrey guibg=darkgrey
+
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
 
@@ -90,6 +93,9 @@ set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 
 hi LineTooLong guibg=grey ctermbg=grey
 au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
+
+hi TrailingWhitespace guibg=red ctermbg=red
+au BufWinEnter * let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplModSelTarget = 1
