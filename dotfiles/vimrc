@@ -82,15 +82,15 @@ map O5C :foldopen!
 " set foldmethod=manual
 
 " Make colors mesh with gvime and other things I like
-hi Comment ctermfg=20
-hi PreProc ctermfg=20
+hi Comment ctermfg=Cyan
+hi PreProc ctermfg=Cyan
 hi Statement ctermfg=Yellow
 hi Type ctermfg=40
 hi Constant ctermfg=200 cterm=NONE
 hi LineTooLong cterm=reverse term=reverse
 hi TrailingWhitespace ctermbg=red term=underline
 hi CursorLine term=bold cterm=NONE ctermbg=233
-hi vimOption ctermfg=Cyan
+hi vimOption ctermfg=Blue
 hi Search NONE
 hi Search term=reverse cterm=reverse
 

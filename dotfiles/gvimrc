@@ -14,12 +14,13 @@ set bg=light
 hi Normal guibg=black
 hi Normal guifg=white
 hi Search gui=reverse
-hi PreProc guifg=Blue
+hi PreProc guifg=Cyan
+hi Comment guifg=Cyan
 hi Statement guifg=DarkYellow gui=NONE
 hi Type guifg=#009900 gui=NONE
 hi Cursor NONE
 hi Cursor gui=reverse
-hi vimOption guifg=Cyan
+hi vimOption guifg=Blue
 hi LineTooLong gui=reverse
 hi TrailingWhitespace guibg=red
 hi CursorLine guibg=#222222
