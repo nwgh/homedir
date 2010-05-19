@@ -62,13 +62,13 @@ autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listcha
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
 
-"map - :tabp<CR>
-"map = :tabn<CR>
+map - :tabp<CR>
+map = :tabn<CR>
 "map _ :tabc<CR>
-"nmap <C-n> :tabnew <C-R>=expand("%:p:h") . "/"<CR>
+nmap ,n :tabnew <C-R>=expand("%:p:h") . "/"<CR>
 map ,e :e <C-R>=expand("%:p:h") . "/"<CR>
-map - :bprevious<CR>
-map = :bnext<CR>
+"map - :bprevious<CR>
+"map = :bnext<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/
