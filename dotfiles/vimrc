@@ -16,6 +16,8 @@ set scrolloff=2
 set incsearch
 set hlsearch
 
+set mouse=a
+
 " see :help smartindent for inoremap details
 set smartindent
 set smarttab
