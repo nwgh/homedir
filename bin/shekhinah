@@ -1,2 +1,0 @@
-#!/bin/sh
-/opt/local/bin/rdesktop -T "rdesktop - shekhinah" chava.todesschaf.net:3403 > /dev/null 2>&1 &

@@ -1,2 +1,0 @@
-#!/bin/sh
-exec /usr/bin/xterm +bc -uc -geometry 112x60-0-0 -T mutt -n mutt -e /usr/bin/screen -c ~/.screenrc_mail
