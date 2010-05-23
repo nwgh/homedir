@@ -93,6 +93,7 @@ hi CursorLine term=bold cterm=NONE ctermbg=233
 hi vimOption ctermfg=Blue
 hi Search NONE
 hi Search term=reverse cterm=reverse
+let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
 " read-only, a help buffer, and type on the left. Show line number, column
@@ -104,7 +105,7 @@ au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
 au BufWinEnter * let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
 " General settings for miniBufExplorer (gvim overrides some of these)
-let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 100
 "let g:miniBufExplForceSyntaxEnable = 1
