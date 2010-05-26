@@ -2,5 +2,5 @@
 if hostname | grep salome > /dev/null 2>&1 ; then
     exec /usr/bin/gnome-terminal --geometry=80x35-2565-0 -t Monkey -e "/usr/bin/ssh monkey.org"
 else
-    exec /usr/bin/gnome-terminal --geometry=80x35-472-0 -t Monkey -e "/usr/bin/ssh monkey.org"
+    exec /usr/bin/gnome-terminal --geometry=80x35-484-0 -t Monkey -e "/usr/bin/ssh monkey.org"
 fi
