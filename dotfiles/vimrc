@@ -67,11 +67,9 @@ inoremap # X#
 map <C-k> :tabp<CR>
 map <C-j> :tabn<CR>
 map ,e :tabnew <C-R>=expand("%:p:h") . "/"<CR>
-"map - :bprevious<CR>
-"map = :bnext<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
-set tags=tags;/
+set tags=tags;/,~/src/*/tags
 
 " CTL-left does close
 map O5D :fold
@@ -107,18 +105,13 @@ au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
 au BufWinEnter * let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
 " General settings for miniBufExplorer (gvim overrides some of these)
-"let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 100
-"let g:miniBufExplForceSyntaxEnable = 1
-"let g:miniBufExplorerDebugLevel=10
-"let g:miniBufExplorerDebugMode=2
 
 " Setup NERDTree and Taglist
 nnoremap <silent> <F6> :NERDTreeToggle<CR>
 nnoremap <silent> <F5> :TlistToggle<CR>
 
-let NERDTreeWinPos = "right"
 let NERDTreeWinSize = 45
 
 let Tlist_WinWidth = 45
