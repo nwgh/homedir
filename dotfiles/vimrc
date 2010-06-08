@@ -43,12 +43,12 @@ let xml_use_html = 1
 
 filetype plugin on
 
-autocmd!        
+autocmd!
 syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
-autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvkernel*/*.h		so $HOME/.vim/c_linux.vim|set nolist
-autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist 
+"autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvkernel*/*.h		so $HOME/.vim/c_linux.vim|set nolist
+autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
 autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim|set nolist
@@ -93,6 +93,8 @@ hi CursorLine term=bold cterm=NONE ctermbg=233
 hi vimOption ctermfg=Blue
 hi Search NONE
 hi Search term=reverse cterm=reverse
+hi Pmenu ctermbg=165
+hi PmenuSel ctermbg=200
 let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
