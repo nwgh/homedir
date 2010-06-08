@@ -24,6 +24,8 @@ hi vimOption guifg=Blue
 hi LineTooLong gui=reverse
 hi TrailingWhitespace guibg=red
 hi CursorLine guibg=#222222
+hi Pmenu guibg=purple
+hi PmenuSel guibg=magenta
 
 " Label tabs with just the filename (no path)
 set guitablabel=%t
