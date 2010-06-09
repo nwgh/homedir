@@ -29,14 +29,15 @@ set notitle
 set ruler
 set laststatus=2
 set autochdir
-"
 set nobackup
 set writebackup
 
 " Want the current line hilighted
 set cursorline
 
-" :fixdel
+" Some configuration for omnicompletion
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
 
 " xml-plugin opts before ftplugins turned on
 let xml_use_html = 1
