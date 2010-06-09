@@ -38,6 +38,7 @@ set cursorline
 " Some configuration for omnicompletion
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <Nul> "\<C-x>\<C-o>\<C-n>\<C-p>"
 
 " xml-plugin opts before ftplugins turned on
 let xml_use_html = 1
