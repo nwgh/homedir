@@ -6,15 +6,15 @@ ignore = ~/.hgignore
 extdiff =
 gpg =
 transplant =
-rebase = 
+rebase =
 bookmarks =
 hggit =
 color =
 parentrevspec =
 record =
 pager =
-localbranch = /home/hurley/hgext/localbranch.py
-attic = /home/hurley/hgext/attic.py
+localbranch = /home/hurley/.hgext/localbranch.py
+attic = /home/hurley/.hgext/attic.py
 
 [extdiff]
 cmd.udiff = diff
