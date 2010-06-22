@@ -6,6 +6,9 @@ set go-=r
 " Don't let the cursor blink ever. EVER
 set gcr=a:blinkwait0-blinkoff0-blinkon0
 
+" Terminus is awesome. Suck it.
+set gfn=Terminus\ 10
+
 " Default to the light bg colors
 set bg=light
 
