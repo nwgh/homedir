@@ -1,10 +1,10 @@
-set smartindent
-set noet
-set sts=0
-set sw=8
-set ts=8
-set tw=78
-set noexpandtab
+setlocal smartindent
+setlocal noet
+setlocal sts=0
+setlocal sw=8
+setlocal ts=8
+setlocal tw=78
+setlocal noexpandtab
 
 syn keyword     cType   u_char u_short u_int u_long off_t ssize_t key_t pid_t 
 syn keyword     cType   int64_t int32_t int16_t int8_t 

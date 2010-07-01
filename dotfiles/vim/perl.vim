@@ -1,4 +1,4 @@
-set cindent
-set tw=78
-set sts=0
-set noexpandtab
+setlocal cindent
+setlocal tw=78
+setlocal sts=0
+setlocal noexpandtab
