@@ -49,6 +49,7 @@ autocmd!
 syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
+autocmd BufNewFile,BufRead *.cpp        so $HOME/.vim/cpp.vim|set nolist
 "autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvkernel*/*.h		so $HOME/.vim/c_linux.vim|set nolist
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist
 autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
@@ -118,3 +119,5 @@ let NERDTreeWinSize = 45
 
 let Tlist_WinWidth = 45
 let Tlist_File_Fold_Auto_Close = 1
+
+let g:EclimCValidate = 0
