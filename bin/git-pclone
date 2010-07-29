@@ -9,7 +9,7 @@
 # git maintainer.
 #
 
-USAGE='[-s|--ignore-submissions] [-b|--ignore-branches] [-f|--foss] module [...]'
+USAGE='[-s|--ignore-submissions] [-b|--ignore-branches] [-f|--foss] [-e|--expand-path] module [...]'
 
 # This must be capable of running outside of git directory, so
 # the vanilla git-sh-setup should not be used.
@@ -28,6 +28,7 @@ check_palm_repo()
 SUBMISSIONS="--tags=submissions"
 BRANCHES="--branches=branches"
 TLREPO="palm"
+EXPANDPATH=""
 
 while test $# != 0
 do
@@ -40,6 +41,9 @@ do
         ;;
     -f|--foss)
         TLREPO="foss"
+        ;;
+    -e|--expand-path)
+        EXPANDPATH="yes"
         ;;
 	--)
 	    break
@@ -64,6 +68,10 @@ do
     if check_palm_repo "$1"
     then
         DEST="$(basename "$1")"
+        if test -n "$EXPANDPATH"
+        then
+            DEST="$(echo "$1" | sed -e 's/\//_/g')"
+        fi
         echo "Checking out $TLREPO/$REPO to $DEST"
         ${CLI} "${URL_BASE}$TLREPO/$REPO" "$DEST"
     else
