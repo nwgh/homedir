@@ -121,3 +121,4 @@ let Tlist_WinWidth = 45
 let Tlist_File_Fold_Auto_Close = 1
 
 let g:EclimCValidate = 0
+let g:EclimCSearchSingleResult = 'edit'
