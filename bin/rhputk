@@ -5,7 +5,20 @@ import os
 import subprocess
 import sys
 
-__uimage = '/home/hurley/src/rhbuild/%s/arch/arm/boot/uImage'
+__uimage = '/home/hurley/src/rockhopper/build/%s/%s/arch/arm/boot/uImage'
+
+def __find_target():
+    startdir = curdir = os.getcwd()
+    rval = 'unknown'
+    while curdir.startswith(__linux_root):
+        if os.path.exists(os.path.join(curdir, '.git')):
+            rval = os.path.split(curdir)[1]
+            break
+        curdir, _ = os.path.split(curdir)
+        print 'c =', curdir
+        os.chdir(curdir)
+    os.chdir(startdir)
+    return rval
 
 def linux_putk(filename='memory'):
     git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
@@ -17,7 +30,8 @@ def linux_putk(filename='memory'):
             raise Exception, 'Could not determine git branch!'
         branch = 'onetime'
 
-    uimage = __uimage % branch
+    target = __find_target()
+    uimage = __uimage % (target, branch)
 
     if not os.path.exists(uimage):
         raise Exception, 'uImage %s does not appear to exist!' % uimage

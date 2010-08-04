@@ -6,7 +6,21 @@ import shutil
 import subprocess
 import sys
 
-__build_root = '/home/hurley/src/rhbuild/%s'
+__linux_root = '/home/hurley/src/rockhopper'
+__build_root = __linux_root + '/build'
+
+def __find_target():
+    startdir = curdir = os.getcwd()
+    rval = 'unknown'
+    while curdir.startswith(__linux_root):
+        if os.path.exists(os.path.join(curdir, '.git')):
+            rval = os.path.split(curdir)[1]
+            break
+        curdir, _ = os.path.split(curdir)
+        print 'c =', curdir
+        os.chdir(curdir)
+    os.chdir(startdir)
+    return rval
 
 def linux_build(meat, force_reconfig=False, force_rebuild=False):
     git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
@@ -18,7 +32,12 @@ def linux_build(meat, force_reconfig=False, force_rebuild=False):
             raise Exception, 'Could not determine git branch!'
         branch = 'onetime'
 
-    buildroot = __build_root % branch
+    target = __find_target()
+    targetroot = os.path.join(__build_root, target)
+    buildroot = os.path.join(targetroot, branch)
+
+    if not os.path.exists(targetroot):
+        os.mkdir(targetroot)
 
     if branch == 'onetime':
         try:
@@ -32,10 +51,10 @@ def linux_build(meat, force_reconfig=False, force_rebuild=False):
         print "=================================================="
         os.system("make mrproper O=%s" % buildroot)
         print ""
-	force_reconfig = True
+        force_reconfig = True
     elif not os.path.exists(buildroot):
         os.mkdir(buildroot)
-	force_reconfig = True
+        force_reconfig = True
 
     if force_reconfig:
         print "=================================================="
