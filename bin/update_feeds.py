@@ -16,15 +16,15 @@ def get_lj(since=None):
         return []
 
     entries = []
-    for entry in feed['entries']:
-        tstamp = time.mktime(entry['updated_parsed'])
-        if since and tstamp <= since:
-            # We've reached the end of what we care about
-            break
-        entries.append({'title':str(entry['title']),
-                        'content':str(entry['content']),
-                        'tstamp':tstamp, 'link':entry['link'],
-                        'source':'livejournal'})
+    #for entry in feed['entries']:
+    #    tstamp = time.mktime(entry['updated_parsed'])
+    #    if since and tstamp <= since:
+    #        # We've reached the end of what we care about
+    #        break
+    #    entries.append({'title':str(entry['title']),
+    #                    'content':str(entry['content']),
+    #                    'tstamp':tstamp, 'link':entry['link'],
+    #                    'source':'livejournal'})
 
     return entries, time.mktime(feed['updated'])
 
