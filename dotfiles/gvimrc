@@ -24,7 +24,7 @@ hi Type guifg=#009900 gui=NONE
 hi Cursor NONE
 hi Cursor gui=reverse
 hi vimOption guifg=Blue
-hi LineTooLong gui=reverse
+hi LineTooLong gui=underline
 hi TrailingWhitespace guibg=red
 hi CursorLine guibg=#222222
 hi Pmenu guibg=blue

@@ -88,7 +88,7 @@ hi PreProc ctermfg=Cyan
 hi Statement ctermfg=Yellow
 hi Type ctermfg=40
 hi Constant ctermfg=200 cterm=NONE
-hi LineTooLong cterm=reverse term=reverse
+hi LineTooLong cterm=underline term=underline
 hi TrailingWhitespace ctermbg=red term=underline
 hi CursorLine term=bold cterm=NONE ctermbg=233
 hi vimOption ctermfg=Blue
