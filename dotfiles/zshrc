@@ -88,6 +88,15 @@ export PROMPT="\$(make_prompt)%(!.#.>) "
 # Aliases
 alias ggrep='git grep'
 
+# Change keybindings to vim-like
+#bindkey -v
+
+# I prefer incremental searches in vim command mode
+bindkey -a -r '/'
+bindkey -a -r '?'
+bindkey -a '/' history-incremental-search-backward
+bindkey -a '?' history-incremental-search-forward
+
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
