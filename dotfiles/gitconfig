@@ -2,7 +2,7 @@
 	name = Nick Hurley
 	email = hurley@todesschaf.org
 [core]
-	excludesfile = /home/hurley/.gitignore
+	excludesfile = ~/.gitignore
 	editor = vi
 [svn]
 	edit = true

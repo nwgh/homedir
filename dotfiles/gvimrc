@@ -18,7 +18,7 @@ hi Normal guibg=black
 hi Normal guifg=white
 hi Search gui=reverse
 hi PreProc guifg=Cyan
-hi Comment guifg=Cyan
+hi Comment guifg=Cyan gui=NONE
 hi Statement guifg=DarkYellow gui=NONE
 hi Type guifg=#009900 gui=NONE
 hi Cursor NONE
@@ -29,6 +29,11 @@ hi TrailingWhitespace guibg=red
 hi CursorLine guibg=#222222
 hi Pmenu guibg=blue
 hi PmenuSel guibg=magenta
+" These next 3 lines are because macvim is run by a bunch of turds that have
+" to do things differently from regular vim
+hi clear String
+hi link String Constant
+hi Constant guifg=magenta
 
 " Label tabs with just the filename (no path)
 set guitablabel=%t
