@@ -41,6 +41,7 @@ fi
 
 if [ -d /home/palmadmin ] ; then
     export GIT_AUTHOR_EMAIL=nick.hurley@palm.com
+    export GIT_COMMITTER_EMAIL=nick.hurley@palm.com
 fi
 
 export PYTHONSTARTUP=~/.pythonrc
