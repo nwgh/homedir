@@ -11,4 +11,4 @@
 [merge]
 	tool = meld
 [alias]
-	stat = status -s
+	stat = status -sb
