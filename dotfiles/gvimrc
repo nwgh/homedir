@@ -7,7 +7,11 @@ set go-=r
 set gcr=a:blinkwait0-blinkoff0-blinkon0
 
 " Terminus is awesome. Suck it.
-set gfn=Terminus\ 10
+if has("macunix")
+    set gfn=Consolas:h12
+else
+    set gfn=Terminus\ 10
+endif
 
 " Default to the light bg colors
 set bg=light
