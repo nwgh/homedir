@@ -1,5 +1,5 @@
 # -*- mode: sh; sh-shell: zsh -*-
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
 if [ -d /usr/X11R6/bin -a ! -L /usr/X11R6/bin ] ; then
     PATH=$PATH:/usr/X11R6/bin
 fi
@@ -12,7 +12,7 @@ fi
 if [ -d $HOME/bin ] ; then
     PATH=$PATH:$HOME/bin
     if [ -d $HOME/bin/perl ] ; then
-	PATH=$PATH:$HOME/bin/perl
+        PATH=$PATH:$HOME/bin/perl
     fi
 fi
 if [ -d /opt/local/bin ] ; then
