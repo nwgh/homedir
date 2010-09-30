@@ -5,7 +5,8 @@ import os
 import subprocess
 import sys
 
-__uimage = '/home/hurley/src/rockhopper/build/%s/%s/arch/arm/boot/uImage'
+__linux_root = '/home/hurley/src/rockhopper'
+__uimage = __linux_root + '/build/%s/%s/%s/arch/arm/boot/uImage'
 
 def __find_target():
     startdir = curdir = os.getcwd()
@@ -20,7 +21,7 @@ def __find_target():
     os.chdir(startdir)
     return rval
 
-def linux_putk(filename='memory'):
+def linux_putk(meat, filename='memory', addr=None):
     git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     branch, _ = git.communicate()
@@ -31,13 +32,15 @@ def linux_putk(filename='memory'):
         branch = 'onetime'
 
     target = __find_target()
-    uimage = __uimage % (target, branch)
+    uimage = __uimage % (target, branch, meat)
 
     if not os.path.exists(uimage):
         raise Exception, 'uImage %s does not appear to exist!' % uimage
 
     if filename == 'memory':
-        dest = 'mem://0x04000000'
+        if not addr:
+            raise Exception, 'Need an address to load uImage to!'
+        dest = 'mem://%s' % addr
     else:
         dest = 'file://%s' % filename
 
@@ -49,11 +52,17 @@ if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('-f', '--file', dest='file', default='memory',
         help=' filename to put kernel image in (defaults to memory)')
+    parser.add_option('-a', '--address', dest='addr', default=None,
+        help=' address to load image to if loading to memory')
 
     opts, args = parser.parse_args()
 
+    if not args:
+        print 'Need a defconfig to load!'
+        sys.exit(1)
+
     try:
-        linux_putk(opts.file)
+        linux_putk(args[0], opts.file, opts.addr)
     except Exception, e:
         print str(e)
         sys.exit(1)

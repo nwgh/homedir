@@ -34,10 +34,14 @@ def linux_build(meat, force_reconfig=False, force_rebuild=False):
 
     target = __find_target()
     targetroot = os.path.join(__build_root, target)
-    buildroot = os.path.join(targetroot, branch)
+    branchroot = os.path.join(targetroot, branch)
+    buildroot = os.path.join(branchroot, meat)
 
     if not os.path.exists(targetroot):
         os.mkdir(targetroot)
+
+    if not os.path.exists(branchroot):
+        os.mkdir(branchroot)
 
     if branch == 'onetime':
         try:
