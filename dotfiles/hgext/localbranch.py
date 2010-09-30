@@ -6,10 +6,10 @@
 # of the GNU General Public License, incorporated herein by reference.
 
 from mercurial.i18n import _
-from mercurial import hg, encoding, store, util, cmdutil
+from mercurial import hg, encoding, store, util
 from mercurial.node import *
 
-import os, shutil, stat
+import os, shutil
 
 # force import errors immediately
 store.store
@@ -23,7 +23,6 @@ def lbranchroot(ui):
     """root of localbranch repository"""
     # HACK HACK HACK
     return ui.config('bundle', 'mainreporoot')
-
 
 class localbranchrepo(object):
     def instance(ui, path, create):
@@ -73,8 +72,7 @@ def reposetup(ui, repo):
                     branches.append(encoding.tolocal(store.decodefilename(d)))
             return branches
 
-        def localbranch(self, name, ui, repo, force=False):
-            purge(ui, repo, force)
+        def localbranch(self, name):
             # switch to local branch, creating if necessary
             def checkdir(d):
                 if not os.path.isdir(d):
@@ -126,11 +124,11 @@ def reposetup(ui, repo):
             ctx = repo.changectx('tip')
             wlock = self.wlock()
             try:
-                self.refreshdirstate(ctx, omf, ui, repo)
+                self.refreshdirstate(ctx, omf)
             finally:
                 wlock.release()
 
-        def refreshdirstate(self, ctx, omf, ui, repo):
+        def refreshdirstate(self, ctx, omf):
             """Refresh dirstate by invalidating changed entries between
             old manifest omf and new manifest mf"""
             self.dirstate.setparents(ctx.node())
@@ -150,9 +148,6 @@ def reposetup(ui, repo):
                     continue
                 if self.dirstate[f] == 'n':
                     self.dirstate.normallookup(f)
-            #finally purge any untracked/added files left over from the other branch
-            purge(ui, repo)
-
 
         def getlocalbranch(self):
             try:
@@ -169,6 +164,7 @@ def reposetup(ui, repo):
                 self.store = store.store(self.getrequirements(), spath, util.opener)
                 self.spath = self.store.path
                 self.sopener = self.store.opener
+                self.sopener.options = {}
 
     repo.__class__ = lbrepo
 
@@ -191,7 +187,7 @@ def reposetup(ui, repo):
         return ep
     ui.expandpath = expandpath
 
-def lbranch(ui, repo, branch=None, delete=False, force=False):
+def lbranch(ui, repo, branch=None, delete=False):
     """create or switch to a local branch
     """
     if branch is not None:
@@ -202,25 +198,16 @@ def lbranch(ui, repo, branch=None, delete=False, force=False):
                 raise util.Abort(_('cannot delete default branch'))
             cur = repo.getlocalbranch()
             if cur == branch:
-                repo.localbranch('',ui ,repo)
+                repo.localbranch('')
             bpath = repo.localbranchpath(branch)
             if not os.path.isdir(bpath):
                 raise util.Abort(_('local branch %s not found') % branch)
             shutil.rmtree(bpath)
             return
-        return repo.localbranch(branch,ui, repo, force)
+        return repo.localbranch(branch)
     elif delete:
         raise util.Abort(_('need a branch name to delete'))
 
-    branch = repo.getlocalbranch() or 'default'
-    branches = repo.localbranches()
-    branches.sort()
-    branches.insert(0, 'default')
-    for b in branches:
-        if b == branch:
-            ui.write('%s\n' % b)
-
-def lbranches(ui, repo, branch=None):
     branch = repo.getlocalbranch() or 'default'
     branches = repo.localbranches()
     branches.sort()
@@ -231,49 +218,8 @@ def lbranches(ui, repo, branch=None):
         else:
             ui.write('%s\n' % b)
 
-
-def purge(ui, repo, force=True):
-    """ this is used to delete untracked and/or added files.
-        Essentially this is a more aggressive version of hgext.purge 
-        which does not delete added files.
-    """ 
-    def remove(remove_func, name):
-        try:
-            remove_func(repo.wjoin(name))
-        except OSError:
-            m = _('%s cannot be removed') % name
-            if opts['abort_on_err']:
-                raise util.Abort(m)
-            ui.warn(_('warning: %s\n') % m)
-
-    def removefile(path):
-        try:
-            os.remove(path)
-        except OSError:
-            # read-only files cannot be unlinked under Windows
-            s = os.stat(path)
-            if (s.st_mode & stat.S_IWRITE) != 0:
-                raise
-            os.chmod(path, stat.S_IMODE(s.st_mode) | stat.S_IWRITE)
-            os.remove(path)
-
-    match = cmdutil.match(repo, [], {'exclude':[],'include':[]})
-    status = repo.status(match=match, unknown=True)
-    # get untracked files included added ones
-    file_list = status[1]+status[4]+status[5]
-    if len(file_list) > 0:
-        if force is not None:
-            for f in sorted(file_list):
-                remove (removefile, f)
-            ui.write(_('%s files removed\n') % len(file_list))
-        else:
-            raise util.Abort('outstanding uncommitted changes')
-
-
 cmdtable = {
     "lbranch": (lbranch,
-                [('d', 'delete', None, _('delete branch')), ('f', 'force', None, _('force switching'
-                    ))],
-                _('hg lbranch [-df] [BRANCH]')),
-    "lbranches": (lbranches,[])
+                [('d', 'delete', None, _('delete branch'))],
+                _('hg lbranch [BRANCH]'))
     }
