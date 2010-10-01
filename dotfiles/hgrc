@@ -13,6 +13,7 @@ color =
 parentrevspec =
 record =
 pager =
+mq =
 localbranch = /home/hurley/.hgext/localbranch.py
 attic = /home/hurley/.hgext/attic.py
 
@@ -26,3 +27,6 @@ track.current = True
 [pager]
 pager = LESS='-FSRX' less
 ignore = update, push, pull, merge, fetch, convert, clone, record, crecord
+
+[alias]
+log = log -f
