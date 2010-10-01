@@ -119,3 +119,14 @@ let NERDTreeWinSize = 45
 
 let Tlist_WinWidth = 45
 let Tlist_File_Fold_Auto_Close = 1
+
+" Make editing in command-line mode simpler for me - emacs-style
+:cnoremap <C-A> <Home>
+:cnoremap <C-E> <End>
+:cnoremap <C-F> <Right>
+:cnoremap <C-B> <Left>
+:cnoremap <Esc>b <S-Left>
+:cnoremap <Esc>f <S-Right>
+:cnoremap <C-D> <Del>
+:cnoremap <C-N> <Down>
+:cnoremap <C-P> <Up>
