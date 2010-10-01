@@ -109,3 +109,5 @@ case "$(uname)" in
 		source "${HOME}/.zshrc_generic"
 		;;
 esac
+
+[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
