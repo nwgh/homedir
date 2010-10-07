@@ -14,8 +14,8 @@ parentrevspec =
 record =
 pager =
 mq =
-localbranch = /home/hurley/.hgext/localbranch.py
-attic = /home/hurley/.hgext/attic.py
+localbranch = ~/.hgext/localbranch.py
+attic = ~/.hgext/attic.py
 
 [extdiff]
 cmd.udiff = diff
