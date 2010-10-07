@@ -6,22 +6,31 @@ import subprocess
 import sys
 
 __linux_root = '/home/hurley/src/rockhopper'
-__uimage = __linux_root + '/build/%s/%s/%s/arch/arm/boot/uImage'
+__uimage = os.path.join(__linux_root, 'build/%s/%s/%s/arch/arm/boot/uImage')
+__meatfile = '.lastmeat'
 
-def __find_target():
-    startdir = curdir = os.getcwd()
+def __find_toplevel():
+    git = subprocess.Popen("git rev-parse --show-toplevel", shell=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    toplevel, _ = git.communicate()
+    return toplevel.strip()
+
+def __find_meat(toplevel):
+    if not toplevel:
+        return None
+    meat = None
+    meatfile = os.path.join(toplevel, __meatfile)
+    if os.path.exists(meatfile):
+        meat = file(meatfile).read()
+    return meat
+
+def __find_target(toplevel):
     rval = 'unknown'
-    while curdir.startswith(__linux_root):
-        if os.path.exists(os.path.join(curdir, '.git')):
-            rval = os.path.split(curdir)[1]
-            break
-        curdir, _ = os.path.split(curdir)
-        print 'c =', curdir
-        os.chdir(curdir)
-    os.chdir(startdir)
+    if toplevel:
+        rval = os.path.split(toplevel)[1]
     return rval
 
-def linux_bootk(meat):
+def linux_bootk(toplevel, meat):
     git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     branch, _ = git.communicate()
@@ -31,7 +40,7 @@ def linux_bootk(meat):
             raise Exception, 'Could not determine git branch!'
         branch = 'onetime'
 
-    target = __find_target()
+    target = __find_target(toplevel)
     uimage = __uimage % (target, branch, meat)
 
     if not os.path.exists(uimage):
@@ -45,13 +54,23 @@ if __name__ == '__main__':
     parser = optparse.OptionParser()
 
     opts, args = parser.parse_args()
+    meat = None
+    toplevel = __find_toplevel()
 
-    if not args:
-        print 'Need a defconfig to load!'
+    if not toplevel:
+        print "Can't find top of git repo!"
         sys.exit(1)
 
+    if not args:
+        meat = __find_meat(toplevel)
+        if not meat:
+            print 'Need a defconfig to load!'
+            sys.exit(1)
+    else:
+        meat = args[0]
+
     try:
-        linux_bootk(args[0])
+        linux_bootk(toplevel, meat)
     except Exception, e:
         print str(e)
         sys.exit(1)
