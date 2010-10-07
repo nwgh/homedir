@@ -21,7 +21,7 @@ def __find_target():
     os.chdir(startdir)
     return rval
 
-def linux_putk(meat, filename='/boot/uImage'):
+def linux_bootk(meat):
     git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     branch, _ = git.communicate()
@@ -37,14 +37,12 @@ def linux_putk(meat, filename='/boot/uImage'):
     if not os.path.exists(uimage):
         raise Exception, 'uImage %s does not appear to exist!' % uimage
 
-    cmd = 'novacom put file://%s < %s' % (filename, uimage)
+    cmd = 'novacom boot mem:// < %s' % uimage
     print cmd
     os.system(cmd)
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
-    parser.add_option('-f', '--file', dest='file', default='/boot/uImage',
-        help=' filename to put kernel image in (defaults to /boot/uImage)')
 
     opts, args = parser.parse_args()
 
@@ -53,7 +51,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     try:
-        linux_putk(args[0], opts.file)
+        linux_bootk(args[0])
     except Exception, e:
         print str(e)
         sys.exit(1)
