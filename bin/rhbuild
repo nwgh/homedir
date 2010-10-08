@@ -71,9 +71,14 @@ def linux_build(toplevel, meat, force_reconfig=False, force_rebuild=False):
 
     if force_reconfig:
         print "=================================================="
-        print "make %s_defconfig O=%s" % (meat, buildroot)
+        print "cp %s/arch/arm/configs/%s_defconfig %s/.config" % (toplevel, meat, buildroot)
         print "=================================================="
-        os.system("make %s_defconfig O=%s" % (meat, buildroot))
+        os.system("cp %s/arch/arm/configs/%s_defconfig %s/.config" % (toplevel, meat, buildroot))
+        print ""
+        print "=================================================="
+        print "make oldconfig O=%s" % buildroot
+        print "=================================================="
+        os.system("make oldconfig O=%s" % buildroot)
         print ""
 
     print "=================================================="
