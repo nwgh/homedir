@@ -2,8 +2,9 @@ set visualbell
 set textwidth=1000 "should be 79
 set showmatch
 set showmode
+set showcmd
 set ignorecase
-set backspace=2
+set backspace=indent,eol,start
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -15,6 +16,7 @@ set history=1000
 set scrolloff=2
 set incsearch
 set hlsearch
+set ttyfast
 
 set mouse=a
 
@@ -28,12 +30,15 @@ set expandtab
 set notitle
 set ruler
 set laststatus=2
-"set autochdir
 set nobackup
 set writebackup
 
 " Want the current line hilighted
 set cursorline
+
+" Better filename completion (more like the shell)
+set wildmode=longest:list
+set wildmenu
 
 " Some configuration for omnicompletion
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
@@ -69,22 +74,14 @@ inoremap # X#
 
 map <C-k> :tabp<CR>
 map <C-j> :tabn<CR>
+
 let mapleader = ","
-"map ,e :tabnew <C-R>=expand("%:p:h") . "/"<CR>
 map <leader>e :tabnew <C-R>=getcwd() . "/"<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/,~/src/*/tags
 
-" CTL-left does close
-"map O5D :fold
-
-" CTL-right does open
-"map O5C :foldopen!
-
-" set foldmethod=manual
-
-" Make colors mesh with gvime and other things I like
+" Make colors mesh with gvim and other things I like
 hi Comment ctermfg=Cyan
 hi PreProc ctermfg=Cyan
 hi Statement ctermfg=Yellow
@@ -133,4 +130,8 @@ cnoremap <C-D> <Del>
 cnoremap <C-N> <Down>
 cnoremap <C-P> <Up>
 
+" Enable nproject
 let g:NProjectEnableHooks = 1
+
+" Easy way to clear hilight from search
+nnoremap <leader><space> :noh<CR>
