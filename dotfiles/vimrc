@@ -28,7 +28,7 @@ set expandtab
 set notitle
 set ruler
 set laststatus=2
-set autochdir
+"set autochdir
 set nobackup
 set writebackup
 
@@ -69,16 +69,18 @@ inoremap # X#
 
 map <C-k> :tabp<CR>
 map <C-j> :tabn<CR>
-map ,e :tabnew <C-R>=expand("%:p:h") . "/"<CR>
+let mapleader = ","
+"map ,e :tabnew <C-R>=expand("%:p:h") . "/"<CR>
+map <leader>e :tabnew <C-R>=getcwd() . "/"<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/,~/src/*/tags
 
 " CTL-left does close
-map O5D :fold
+"map O5D :fold
 
 " CTL-right does open
-map O5C :foldopen!
+"map O5C :foldopen!
 
 " set foldmethod=manual
 
@@ -131,66 +133,4 @@ cnoremap <C-D> <Del>
 cnoremap <C-N> <Down>
 cnoremap <C-P> <Up>
 
-" Setup some project-like stuff
-"
-"let g:NwhProjDefault = [['<none>', '/']]
-"let g:NwhProjs = g:NwhProjDefault
-"
-"function! g:NwhSetupProj()
-" Loop through g:NwhProjs, find one that has a directory that is a parent of
-" cwd, and set t:ProjCwd and t:ProjName appropriately. If nothing matches, set
-" t:ProjName to <none>
-"endfunction
-"
-"function! g:NwhOnTabEnter()
-"  if !exists('t:ProjName')
-"    call g:NwhSetupProj()
-"  end
-"
-"  if match(t:ProjName, '<none>') != 0
-"    let t:OldCwd = getcwd()
-"    exec 'cd ' . t:ProjCwd
-"    if exists('t:ProjVim')
-"      exec 'so ' . t:ProjVim
-"    end
-"  end
-"endfunction
-"
-"function! g:NwhOnTabLeave()
-"  if exists('t:OldCwd')
-"    exec 'cd ' . t:OldCwd
-"  end
-"endfunction
-"
-"function! g:NwhReadProjFile()
-"  if filereadable(expand(g:NwhProjFile))
-"    return readfile(expand(g:NwhProjFile))
-"  else
-"    return []
-"  end
-"endfunction
-"
-"function! g:NwhProjAdd(name, dir)
-"  let item = [a:name . '|' . a:dir]
-"  let cur = g:NwhReadProjFile()
-"  if len(cur)
-"    let lines = cur + item
-"  else
-"    let lines = item
-"  end
-"  call writefile(lines, expand(g:NwhProjFile))
-"endfunction
-"
-"function! g:NwhProjLoad()
-"  let g:NwhProjs = []
-"  let projs = g:NwhReadProjFile()
-"  for line in projs
-"    let pname = split(line, '|')[0]
-"    let pdir = split(line, '|')[1]
-"    let g:NwhProjs = g:NwhProjs + [[pname, pdir]]
-"  endfor
-"  let g:NwhProjs = g:NwhProjs + g:NwhProjDefault
-"endfunction
-"
-"au TabEnter * silent call g:NwhOnTabEnter()
-"au TabLeave * silent call g:NwhOnTabLeave()
+let g:NProjectEnableHooks = 1
