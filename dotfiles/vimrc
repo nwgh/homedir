@@ -40,6 +40,8 @@ set cursorline
 set wildmode=longest:list
 set wildmenu
 
+set directory^=~/.vimswap//
+
 " Some configuration for omnicompletion
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
