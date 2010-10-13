@@ -12,3 +12,4 @@
 	tool = meld
 [alias]
 	stat = status -sb
+	cdiff = diff --cached
