@@ -57,17 +57,9 @@ syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|set nolist
 autocmd BufNewFile,BufRead *.cpp        so $HOME/.vim/cpp.vim|set nolist
-"autocmd BufNewFile,BufRead *rockhopper*/*.c,*rockhopper*/*.h,*nvkernel*/*.c,*nvkernel*/*.h		so $HOME/.vim/c_linux.vim|set nolist
-autocmd BufNewFile,BufRead *.lsp,*.lisp		so $VIMRUNTIME/syntax/lisp.vim|set nolist
-autocmd BufNewFile,BufRead *.lsp,*.lisp		so $HOME/.vim/lsp.vim|set nolist
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|set nolist
-autocmd BufNewFile,BufRead mutt*,*letter*	so $HOME/.vim/mail.vim|set nolist
-autocmd BufNewFile,BufRead *.rsc,*.rcp		so $VIMRUNTIME/syntax/rc.vim
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|set nolist
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim|set nolist
-autocmd BufNewFile,BufRead *.php,*.inc		so $VIMRUNTIME/syntax/php.vim|set nolist
-autocmd BufNewFile,BufRead *.php,*.inc		so $HOME/.vim/php.vim|set nolist
-autocmd BufNewFile,BufRead *.pl,*.perl		so $HOME/.vim/perl.vim|set nolist
 autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|set list listchars=tab:>>
 autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|set list listchars=tab:>>
 
