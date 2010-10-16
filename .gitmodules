@@ -1,0 +1,21 @@
+[submodule "dotfiles/vim/bundle/fugitive"]
+	path = dotfiles/vim/bundle/fugitive
+	url = http://github.com/tpope/vim-fugitive.git
+[submodule "dotfiles/vim/bundle/nerdtree"]
+	path = dotfiles/vim/bundle/nerdtree
+	url = http://github.com/scrooloose/nerdtree.git
+[submodule "dotfiles/vim/bundle/nproject"]
+	path = dotfiles/vim/bundle/nproject
+	url = git@github.com:todesschaf/nproject.git
+[submodule "dotfiles/vim/bundle/nerdcommenter"]
+	path = dotfiles/vim/bundle/nerdcommenter
+	url = http://github.com/scrooloose/nerdcommenter.git
+[submodule "dotfiles/vim/bundle/bufexplorer"]
+	path = dotfiles/vim/bundle/bufexplorer
+	url = http://github.com/vim-scripts/bufexplorer.zip.git
+[submodule "dotfiles/vim/bundle/bufkill"]
+	path = dotfiles/vim/bundle/bufkill
+	url = http://github.com/vim-scripts/bufkill.vim.git
+[submodule "dotfiles/vim/bundle/taglist"]
+	path = dotfiles/vim/bundle/taglist
+	url = http://github.com/vim-scripts/taglist.vim.git

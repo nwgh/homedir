@@ -1,3 +1,11 @@
+" Set up pathogen
+filetype plugin off
+filetype off
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+filetype on
+filetype plugin on
+
 set visualbell
 set textwidth=1000 "should be 79
 set showmatch
@@ -49,8 +57,6 @@ inoremap <expr> <Nul> "\<C-x>\<C-o>\<C-n>\<C-p>"
 
 " xml-plugin opts before ftplugins turned on
 let xml_use_html = 1
-
-filetype plugin on
 
 autocmd!
 syntax on
