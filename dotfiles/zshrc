@@ -110,4 +110,8 @@ case "$(uname)" in
 		;;
 esac
 
+if [[ -f "${HOME}/.zshrc_local" ]] ; then
+    source "${HOME}/.zshrc_local"
+fi
+
 [[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
