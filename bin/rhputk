@@ -51,6 +51,10 @@ def linux_putk(toplevel, meat, filename='/boot/uImage'):
     os.system(cmd)
 
 if __name__ == '__main__':
+    if os.uname()[0] != 'Linux':
+        print "This must be run on linux!"
+        sys.exit(1)
+
     parser = optparse.OptionParser()
     parser.add_option('-f', '--file', dest='file', default='/boot/uImage',
         help=' filename to put kernel image in (defaults to /boot/uImage)')

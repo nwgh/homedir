@@ -51,6 +51,10 @@ def linux_bootk(toplevel, meat):
     os.system(cmd)
 
 if __name__ == '__main__':
+    if os.uname()[0] != 'Linux':
+        print "This must be run on linux!"
+        sys.exit(1)
+
     parser = optparse.OptionParser()
 
     opts, args = parser.parse_args()

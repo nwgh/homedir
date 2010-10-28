@@ -87,6 +87,10 @@ def linux_build(toplevel, meat, force_reconfig=False, force_rebuild=False):
     os.system("make uImage O=%s" % buildroot)
 
 if __name__ == '__main__':
+    if os.uname()[0] != 'Linux':
+        print "This must be run on linux!"
+        sys.exit(1)
+
     parser = optparse.OptionParser()
     parser.add_option('-f', '--force', dest='force', help='force rebuild',
         default=False, action='store_true')
