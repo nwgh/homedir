@@ -13,3 +13,6 @@
 [submodule "dotfiles/vim/bundle/taglist"]
 	path = dotfiles/vim/bundle/taglist
 	url = http://github.com/vim-scripts/taglist.vim.git
+[submodule "dotfiles/vim/bundle/bufexplorer"]
+	path = dotfiles/vim/bundle/bufexplorer
+	url = http://github.com/vim-scripts/bufexplorer.zip.git
