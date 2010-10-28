@@ -6,7 +6,7 @@ import shutil
 import subprocess
 import sys
 
-__linux_root = '/home/hurley/src/rockhopper'
+__linux_root = os.path.expanduser('~/src/rockhopper')
 __build_root = os.path.join(__linux_root, 'build')
 __meatfile = '.lastmeat'
 

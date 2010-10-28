@@ -5,8 +5,8 @@ import os
 import shutil
 import sys
 
-__linux_root = '/home/hurley/src/rockhopper/%s'
-__git_root = __linux_root % 'git/.git/%s'
+__linux_root = os.path.expanduser('~/src/rockhopper/%s')
+__git_root = '../../git/.git/%s'
 shared = ('branches', 'config', 'hooks', 'info', 'objects', 'refs',
           'packed-refs')
 

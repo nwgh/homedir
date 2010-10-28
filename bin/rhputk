@@ -5,7 +5,7 @@ import os
 import subprocess
 import sys
 
-__linux_root = '/home/hurley/src/rockhopper'
+__linux_root = os.path.expanduser('~/src/rockhopper')
 __uimage = os.path.join(__linux_root, 'build/%s/%s/%s/arch/arm/boot/uImage')
 __meatfile = '.lastmeat'
 
