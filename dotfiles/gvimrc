@@ -9,6 +9,7 @@ set gcr=a:blinkwait0-blinkoff0-blinkon0
 " Terminus is awesome. Suck it.
 if has("macunix")
     set gfn=Consolas:h12
+    set transparency=20
 else
     set gfn=Terminus\ 10
 endif
