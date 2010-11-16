@@ -9,6 +9,7 @@ import sys
 __linux_root = os.path.expanduser('~/src/rockhopper')
 __build_root = os.path.join(__linux_root, 'build')
 __meatfile = '.lastmeat'
+__branchfile = '.lastbranch'
 
 def __find_toplevel():
     git = subprocess.Popen("git rev-parse --show-toplevel", shell=True,
@@ -31,17 +32,29 @@ def __find_target(toplevel):
         rval = os.path.split(toplevel)[1]
     return rval
 
-def linux_build(toplevel, meat, force_reconfig=False, force_rebuild=False):
-    git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
-        shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    branch, _ = git.communicate()
-    branch = branch.strip().replace('/', '_')
-    if not branch:
-        if git.returncode:
-            raise Exception, 'Could not determine git branch!'
-        branch = 'onetime'
+def linux_build(toplevel, target, meat, force_reconfig=False,
+                force_rebuild=False, force_branch=False):
+    branchfile = os.path.join(toplevel, __branchfile)
+    if force_branch or not os.path.exists(branchfile):
+        git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
+            shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        branch, _ = git.communicate()
+        branch = branch.strip().replace('/', '_')
+        if not branch:
+            if git.returncode:
+                raise Exception, 'Could not determine git branch!'
+            branch = 'onetime'
+        print 'Determined branch: %s' % (branch,)
+        with file(branchfile, 'w') as bf:
+            bf.write(branch)
+    else:
+        with file(branchfile) as bf:
+            branch = bf.read()
+        if not branch:
+            # Force a re-lookup of the branch name to try to gracefully recover
+            linux_build(toplevel, meat, force_reconfig, force_rebuild, True)
+            return
 
-    target = __find_target(toplevel)
     targetroot = os.path.join(__build_root, target)
     branchroot = os.path.join(targetroot, branch)
     buildroot = os.path.join(branchroot, meat)
@@ -96,6 +109,8 @@ if __name__ == '__main__':
         default=False, action='store_true')
     parser.add_option('-c', '--config', dest='config', help='force reconfig',
         default=False, action='store_true')
+    parser.add_option('-b', '--branch', dest='branch', help='force branch determination',
+        default=False, action='store_true')
 
     opts, args = parser.parse_args()
     meat = None
@@ -104,6 +119,8 @@ if __name__ == '__main__':
     if not toplevel:
         print "Can't find top of git repo!"
         sys.exit(1)
+
+    target = __find_target(toplevel)
 
     if not args:
         meat = __find_meat(toplevel)
@@ -116,7 +133,7 @@ if __name__ == '__main__':
             f.write(meat)
 
     try:
-        linux_build(toplevel, meat, opts.config, opts.force)
+        linux_build(toplevel, target, meat, opts.config, opts.force, opts.branch)
     except Exception, e:
         print str(e)
         sys.exit(1)

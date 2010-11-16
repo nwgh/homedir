@@ -8,12 +8,22 @@ import sys
 __linux_root = os.path.expanduser('~/src/rockhopper')
 __uimage = os.path.join(__linux_root, 'build/%s/%s/%s/arch/arm/boot/uImage')
 __meatfile = '.lastmeat'
+__branchfile = '.lastbranch'
 
 def __find_toplevel():
     git = subprocess.Popen("git rev-parse --show-toplevel", shell=True,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     toplevel, _ = git.communicate()
     return toplevel.strip()
+
+def __find_branch(toplevel):
+    if not toplevel:
+        return None
+    branch = None
+    branchfile = os.path.join(toplevel, __branchfile)
+    if os.path.exists(branchfile):
+        branch = file(branchfile).read()
+    return branch
 
 def __find_meat(toplevel):
     if not toplevel:
@@ -30,19 +40,8 @@ def __find_target(toplevel):
         rval = os.path.split(toplevel)[1]
     return rval
 
-def linux_bootk(toplevel, meat):
-    git = subprocess.Popen("git status | grep 'On branch' | cut -d' ' -f4",
-        shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    branch, _ = git.communicate()
-    branch = branch.strip().replace('/', '_')
-    if not branch:
-        if git.returncode:
-            raise Exception, 'Could not determine git branch!'
-        branch = 'onetime'
-
-    target = __find_target(toplevel)
+def linux_bootk(target, meat, branch):
     uimage = __uimage % (target, branch, meat)
-
     if not os.path.exists(uimage):
         raise Exception, 'uImage %s does not appear to exist!' % uimage
 
@@ -56,25 +55,40 @@ if __name__ == '__main__':
         sys.exit(1)
 
     parser = optparse.OptionParser()
+    parser.add_option('-b', '--branch', dest='branch', help='boot from branch',
+        default='')
+    parser.add_option('-m', '--meat', dest='meat', help='boot for meat',
+        default='')
 
     opts, args = parser.parse_args()
     meat = None
+    branch = None
     toplevel = __find_toplevel()
 
     if not toplevel:
         print "Can't find top of git repo!"
         sys.exit(1)
 
-    if not args:
+    target = __find_target(toplevel)
+
+    if not opts.meat:
         meat = __find_meat(toplevel)
         if not meat:
             print 'Need a defconfig to load!'
             sys.exit(1)
     else:
-        meat = args[0]
+        meat = opts.meat
+
+    if not opts.branch:
+        branch = __find_branch(toplevel)
+        if not branch:
+            print 'Need to know what branch to boot from!'
+            sys.exit(1)
+    else:
+        branch = opts.branch
 
     try:
-        linux_bootk(toplevel, meat)
+        linux_bootk(target, meat, branch)
     except Exception, e:
         print str(e)
         sys.exit(1)
