@@ -48,6 +48,14 @@ setopt pushd_ignore_dups
 # Prompt and such
 setopt prompt_subst
 
+# Show whether I'm in normal or insert mode
+VIMODE="INSERT"
+function zle-keymap-select {
+    VIMODE="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
+    zle reset-prompt
+}
+zle -N zle-keymap-select
+
 function make_prompt {
 	vcs_info prompt
 	rval="%n@%B%m%b"
@@ -75,9 +83,9 @@ function make_prompt {
 		if [[ -n "$act" ]] ; then
 			rval="$rval $PR_RED($act)$PR_RESET"
 		fi
-		rval="$rval\n$rpath"
+		rval="$rval [-- $VIMODE --]\n$rpath"
 	else
-		rval="$rval\n%~"
+		rval="$rval [-- $VIMODE --]\n%~"
 	fi
 
 	echo -e "$rval"
@@ -89,7 +97,7 @@ export PROMPT="\$(make_prompt)%(!.#.>) "
 alias ggrep='git grep'
 
 # Change keybindings to vim-like
-#bindkey -v
+bindkey -v
 
 # I prefer incremental searches in vim command mode
 bindkey -a -r '/'
