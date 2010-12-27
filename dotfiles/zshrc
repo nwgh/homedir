@@ -104,6 +104,15 @@ bindkey -a -r '/'
 bindkey -a -r '?'
 bindkey -a '/' history-incremental-search-backward
 bindkey -a '?' history-incremental-search-forward
+# Enable these if muscle memory just cannot be overcome...
+#bindkey -v '^N' down-line-or-history
+#bindkey -v '^P' up-line-or-history
+#bindkey -v '^A' beginning-of-line
+#bindkey -v '^E' end-of-line
+#bindkey -v '^K' kill-line
+#bindkey -v '^B' backward-char
+#bindkey -v '^F' forward-char
+#bindkey -v '^T' transpose-chars
 
 # Load OS-specific zsh configuration
 case "$(uname)" in
