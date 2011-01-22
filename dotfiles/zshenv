@@ -21,6 +21,12 @@ fi
 if [ -d /todesschaf/bin ] ; then
    PATH=/todesschaf/bin:$PATH
 fi
+if [ -d /opt/PalmPDK/arm-gcc/bin ] ; then
+    PATH=/opt/PalmPDK/arm-gcc/bin:$PATH
+fi
+if [ -d /opt/PalmPDK/bin ] ; then
+    PATH=/opt/PalmPDK/bin:$PATH
+fi
 if [ -d /opt/PalmSDK/Current/bin ] ; then
     PATH=/opt/PalmSDK/Current/bin:$PATH
 fi
