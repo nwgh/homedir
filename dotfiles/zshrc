@@ -49,12 +49,12 @@ setopt pushd_ignore_dups
 setopt prompt_subst
 
 # Show whether I'm in normal or insert mode
-VIMODE="INSERT"
-function zle-keymap-select {
-    VIMODE="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
-    zle reset-prompt
-}
-zle -N zle-keymap-select
+#VIMODE="INSERT"
+#function zle-keymap-select {
+#    VIMODE="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
+#    zle reset-prompt
+#}
+#zle -N zle-keymap-select
 
 function make_prompt {
 	vcs_info prompt
@@ -83,9 +83,11 @@ function make_prompt {
 		if [[ -n "$act" ]] ; then
 			rval="$rval $PR_RED($act)$PR_RESET"
 		fi
-		rval="$rval [-- $VIMODE --]\n$rpath"
+		#rval="$rval [-- $VIMODE --]\n$rpath"
+		rval="$rval\n$rpath"
 	else
-		rval="$rval [-- $VIMODE --]\n%~"
+		#rval="$rval [-- $VIMODE --]\n%~"
+		rval="$rval\n%~"
 	fi
 
 	echo -e "$rval"
@@ -97,14 +99,15 @@ export PROMPT="\$(make_prompt)%(!.#.>) "
 alias ggrep='git grep'
 
 # Change keybindings to vim-like
-bindkey -v
+#bindkey -v
 
 # I prefer incremental searches in vim command mode
-bindkey -a -r '/'
-bindkey -a -r '?'
-bindkey -a '/' history-incremental-search-backward
-bindkey -a '?' history-incremental-search-forward
-# Enable these if muscle memory just cannot be overcome...
+#bindkey -a -r '/'
+#bindkey -a -r '?'
+#bindkey -a '/' history-incremental-search-backward
+#bindkey -a '?' history-incremental-search-forward
+
+# Muscle memory!
 #bindkey -v '^N' down-line-or-history
 #bindkey -v '^P' up-line-or-history
 #bindkey -v '^A' beginning-of-line
