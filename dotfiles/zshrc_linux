@@ -1,4 +1,3 @@
-# -*- mode: sh; sh-shell: zsh -*-
 alias l='/bin/ls --color=auto'
 alias ls='/bin/ls --color=auto'
 alias la='/bin/ls -A --color=auto'
@@ -7,3 +6,5 @@ open() {
     xdg-open "$@" 2>>/tmp/open-${USER}
 }
 export NWH_ZSH_CONFIG="linux"
+
+# vim: set noexpandtab:
