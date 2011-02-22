@@ -46,14 +46,6 @@ setopt pushd_ignore_dups
 # Prompt and such
 setopt prompt_subst
 
-# Show whether I'm in normal or insert mode
-#VIMODE="INSERT"
-#function zle-keymap-select {
-#    VIMODE="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
-#    zle reset-prompt
-#}
-#zle -N zle-keymap-select
-
 function make_prompt {
 	vcs_info prompt
 	rval="%n@%B%m%b"
@@ -81,10 +73,8 @@ function make_prompt {
 		if [[ -n "$act" ]] ; then
 			rval="$rval $PR_RED($act)$PR_RESET"
 		fi
-		#rval="$rval [-- $VIMODE --]\n$rpath"
 		rval="$rval\n$rpath"
 	else
-		#rval="$rval [-- $VIMODE --]\n%~"
 		rval="$rval\n%~"
 	fi
 
