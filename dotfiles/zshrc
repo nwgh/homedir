@@ -83,27 +83,19 @@ function make_prompt {
 
 export PROMPT="\$(make_prompt)%(!.#.>) "
 
-# Aliases
-alias ggrep='git grep'
-
-# Change keybindings to vim-like
-#bindkey -v
-
-# I prefer incremental searches in vim command mode
-#bindkey -a -r '/'
-#bindkey -a -r '?'
-#bindkey -a '/' history-incremental-search-backward
-#bindkey -a '?' history-incremental-search-forward
-
-# Muscle memory!
-#bindkey -v '^N' down-line-or-history
-#bindkey -v '^P' up-line-or-history
-#bindkey -v '^A' beginning-of-line
-#bindkey -v '^E' end-of-line
-#bindkey -v '^K' kill-line
-#bindkey -v '^B' backward-char
-#bindkey -v '^F' forward-char
-#bindkey -v '^T' transpose-chars
+# Do the smart thing when grepping, but leave plain ol' grep available if
+# necessary
+ggrep() {
+	if type ack > /dev/null 2>&1 ; then
+		ack --noheading --nobreak --pager='less -Ri' --color-match='bold red' --color-lineno=reset --color-filename=reset "$@"
+	else
+		if git rev-parse --show-toplevel > /dev/null 2>&1 ; then
+			git grep -n "$@"
+		else
+			grep --color=auto -n -r "$@" . | less -Ri
+		fi
+	fi
+}
 
 # Load OS-specific zsh configuration
 case "$(uname)" in
