@@ -37,6 +37,9 @@ if [ -d /usr/local/cross-compile/current/bin ] ; then
 fi
 export PATH
 
+if [ -d /usr/local/share/man ] ; then
+	export MANPATH=/usr/local/share/man:$MANPATH
+fi
 if [ -d /opt/local/share/man ] ; then
 	export MANPATH=/opt/local/share/man:$MANPATH
 fi
