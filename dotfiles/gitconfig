@@ -4,6 +4,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	editor = vi
+	pager = less -FRSXi
 [svn]
 	edit = true
 	authorsprog = /usr/local/bin/svnauthors
