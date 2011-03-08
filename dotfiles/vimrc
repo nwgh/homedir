@@ -63,6 +63,7 @@ syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|setl list listchars=tab:>>
 autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim
 autocmd BufNewFile,BufRead *.cpp        so $HOME/.vim/cpp.vim
+autocmd BufNewFile,BufRead **/mozilla-central*/*.cpp,**/mozilla-central*/*.h so $HOME/.vim/mozilla.vim
 autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim
 autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim
