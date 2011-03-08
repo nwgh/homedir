@@ -8,7 +8,7 @@ gpg =
 transplant =
 rebase =
 bookmarks =
-#hggit =
+hggit =
 color =
 parentrevspec =
 record =
@@ -16,6 +16,11 @@ pager =
 mq =
 localbranch = ~/.hgext/localbranch.py
 attic = ~/.hgext/attic.py
+
+[diff]
+git = 1
+showfunc = 1
+unified = 8
 
 [extdiff]
 cmd.udiff = diff
@@ -28,5 +33,6 @@ track.current = True
 pager = LESS='-FSRX' less
 ignore = update, push, pull, merge, fetch, convert, clone, record, crecord
 
-[alias]
-log = log -f
+[defaults]
+commit = -v
+log = -f
