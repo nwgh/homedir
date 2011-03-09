@@ -93,7 +93,7 @@ else
 		GGREP_PREFIX="git grep -n"
 	else
 		GGREP_PREFIX="grep --color=yes -n -r"
-		GGREP_POSTFIX=". | less"
+		GGREP_POSTFIX=". | less -S"
 	fi
 fi
 ggrep() {
