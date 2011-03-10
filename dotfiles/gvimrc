@@ -21,6 +21,7 @@ set bg=light
 " look good (and also to mesh with the color terminal colors)
 hi Normal guibg=black
 hi Normal guifg=white
+hi Search NONE
 hi Search gui=reverse
 hi PreProc guifg=Cyan
 hi Comment guifg=Cyan gui=NONE
