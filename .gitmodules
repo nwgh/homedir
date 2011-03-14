@@ -22,3 +22,6 @@
 [submodule "dotfiles/vim/bundle/supertab"]
 	path = dotfiles/vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "dotfiles/vim/bundle/ack"]
+	path = dotfiles/vim/bundle/ack
+	url = git://github.com/mileszs/ack.vim.git
