@@ -16,3 +16,6 @@
 [submodule "dotfiles/vim/bundle/bufexplorer"]
 	path = dotfiles/vim/bundle/bufexplorer
 	url = http://github.com/vim-scripts/bufexplorer.zip.git
+[submodule "dotfiles/vim/bundle/clang_complete"]
+	path = dotfiles/vim/bundle/clang_complete
+	url = git://github.com/Rip-Rip/clang_complete.git
