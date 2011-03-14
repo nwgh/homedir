@@ -4,3 +4,4 @@ svn-commit*tmp
 *~
 *.elc
 random_seed
+.*.swp
