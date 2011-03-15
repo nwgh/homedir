@@ -15,8 +15,9 @@
 [alias]
 	stat = status -sb
 	cdiff = diff --cached
+	staged = diff --cached
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
-	staged = diff --cached
+	asrebase = rebase -i --autosquash
 [branch]
 	autosetuprebase = remote
