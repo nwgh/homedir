@@ -46,3 +46,8 @@ set guitablabel=%t
 
 " Want to show minibuf whenever there's more than one buffer open
 "let g:miniBufExplorerMoreThanOne = 1
+
+" Bring in machine-local customizations
+if filereadable(glob("~/.gvimrc.local"))
+    so ~/.gvimrc.local
+endif
