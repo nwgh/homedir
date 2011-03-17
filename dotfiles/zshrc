@@ -94,7 +94,7 @@ ggrep_git() {
 ggrep_base() {
 	grep --color=yes -n -r "$@" . | less -FRSxi
 }
-if type nack > /dev/null 2>&1 ; then
+if type ack > /dev/null 2>&1 ; then
 	ggrep() {
 		ggrep_ack "$@"
 	}
