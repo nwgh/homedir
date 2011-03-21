@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+
+import argparse
+import subprocess
+import sys
+
+def git_mkpatch(base, head, diffargs=None):
+    """Make a patch between base and head, and return it as a string
+
+    diffargs - Optional list of args to pass to git diff
+    """
+    args = ['git', 'diff']
+    if diffargs:
+        args.extend(diffargs)
+    args.extend([base, head])
+
+    p = subprocess.Popen(args, stdout=subprocess.PIPE)
+
+    for line in p.stdout:
+        yield line
+
+    stat = p.wait()
+    if stat:
+        raise Exception, 'Error creating patch: %d' % stat
+
+def __determine_base_head(clibase, clihead):
+    """Figure out what revisions we should use as our base and head for the diff
+    """
+    if clihead:
+        p = subprocess.Popen(['git', 'rev-parse', clihead],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    else:
+        p = subprocess.Popen(['git', 'rev-parse', 'HEAD'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    output = p.stdout.readlines()
+    stat = p.wait()
+    if stat:
+        raise Exception, 'Could not determine branch head'
+
+    head = output[0].strip()
+
+    if clibase:
+        p = subprocess.Popen(['git', 'rev-parse', clibase],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    else:
+        p = subprocess.Popen(['git', 'merge-base', 'master', head],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    output = p.stdout.readlines()
+    stat = p.wait()
+    if stat:
+        raise Exception, 'Could not determine branch base'
+
+    base = output[0].strip()
+
+    return (base, head)
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser(description='Create a patch for a topic branch',
+        prog='git mkpatch')
+    ap.add_argument('base', default=None, nargs='?',
+        help='Base for patch (default: merge-base of master and head of branch)')
+    ap.add_argument('head', default=None, nargs='?',
+        help='Head of patch branch (default: HEAD)')
+    args, diffargs = ap.parse_known_args(sys.argv[1:])
+
+    try:
+        base, head = __determine_base_head(args.base, args.head)
+        for line in git_mkpatch(base, head, diffargs):
+            sys.stdout.write(line)
+    except Exception, e:
+        sys.stderr.write('%s\n' % e)
+        sys.exit(1)
+
+    sys.exit(0)
+
+__all__ = [git_mkpatch]
