@@ -50,10 +50,17 @@ set wildmenu
 
 set directory^=~/.vimswap//
 
+" Config for supertab completion and clang autocomplete
+set completeopt=menu,menuone,longest
+set pumheight=15
+let g:SuperTabDefaultCompletionType="context"
+let g:clang_complete_auto=0
+let g:clang_complete_copen=1
+
 " Some configuration for omnicompletion
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-inoremap <expr> <Nul> "\<C-x>\<C-o>\<C-n>\<C-p>"
+"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+"inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
+"inoremap <expr> <Nul> "\<C-x>\<C-o>\<C-n>\<C-p>"
 
 " xml-plugin opts before ftplugins turned on
 let xml_use_html = 1
