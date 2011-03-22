@@ -85,28 +85,18 @@ export PROMPT="\$(make_prompt)%(!.#.>) "
 
 # Do the smart thing when grepping, but leave plain ol' grep available if
 # necessary
-ggrep_ack() {
-	ack --noenv -a --noheading --nobreak --pager='less -FRSXi' --color-match='bold red' --color-lineno=reset --color-filename=reset "$@"
-}
-ggrep_git() {
-	git grep -n "$@"
-}
-ggrep_base() {
-	grep --color=yes -n -r "$@" . | less -FRSxi
-}
 if type ack > /dev/null 2>&1 ; then
-	ggrep() {
-		ggrep_ack "$@"
-	}
+	alias ggrep=ack
 else
 	ggrep() {
 		if git rev-parse --show-toplevel > /dev/null 2>&1 ; then
-			ggrep_git "$@"
+			git grep -n --no-index -I "$@"
 		else
-			ggrep_base "$@"
+			grep --color=yes -n -r -I "$@" | less -FRSXi
 		fi
 	}
 fi
+alias igrep='ggrep -i'
 
 ffind() {
 	find . -iname "$@"
