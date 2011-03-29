@@ -102,6 +102,12 @@ ffind() {
 	find . -iname "$@"
 }
 
+if type dgit > /dev/null 2>&1 ; then
+	# Use git with defaults, but make completion still work
+	alias git=dgit
+	compdef dgit=git
+fi
+
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
