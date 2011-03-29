@@ -21,3 +21,5 @@
 	asrebase = rebase -i --autosquash
 [branch]
 	autosetuprebase = remote
+[defaults]
+	log = --stat
