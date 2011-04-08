@@ -1,7 +1,11 @@
-" Remove toolbar, menubar, right-hand scrollbar
+" Remove toolbar, menubar, scrollbars
 set go-=T
 set go-=m
 set go-=r
+set go-=L
+" Try to use the system paste buffer if it's available
+set go+=a
+set go+=A
 
 " Don't let the cursor blink ever. EVER
 set gcr=a:blinkwait0-blinkoff0-blinkon0
