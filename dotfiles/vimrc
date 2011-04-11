@@ -86,8 +86,9 @@ map <C-k> :tabp<CR>
 map <C-j> :tabn<CR>
 
 let mapleader = ","
-map <leader>e :tabnew <C-R>=getcwd() . "/"<CR>
+map <leader>e :edit <C-R>=getcwd() . "/"<CR>
 map <leader>n :edit <C-R>=getcwd() . "/"<CR>
+map <leader>f :FufBuffer<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/,~/src/*/tags
