@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git format-patch -p --stdout --no-signature "$@" | hgify
