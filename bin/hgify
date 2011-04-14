@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import email
+import email.iterators
+import re
+import sys
+
+subjre = re.compile('\\[[^\\]]+\\] ')
+
+def hgify(f):
+    """Given a file-like object that is the output of git format-patch, turn
+    that into the kind of patch that hg expects with its special headers and
+    such.
+    """
+    msg = email.message_from_file(f)
+    body = email.iterators.body_line_iterator(msg)
+    yield 'From: %s\n' % msg['From']
+    yield '\n'
+    yield '%s\n' % subjre.sub('', msg['Subject']).replace('\n', '')
+    for line in body:
+        if line.startswith('index '):
+            continue
+        yield line
+
+if __name__ == '__main__':
+    for line in hgify(sys.stdin):
+        sys.stdout.write(line)
