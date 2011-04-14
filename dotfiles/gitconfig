@@ -21,5 +21,7 @@
 	asrebase = rebase -i --autosquash
 [branch]
 	autosetuprebase = remote
+[dgitext]
+    hgpatch =
 [defaults]
 	log = --stat
