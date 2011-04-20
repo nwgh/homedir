@@ -126,7 +126,7 @@ let g:miniBufExplModSelTarget = 1
 let g:miniBufExplorerMoreThanOne = 100
 
 " Setup NERDTree and Taglist
-nnoremap <silent> <F6> :NERDTreeToggle<CR>
+nnoremap <silent> <F6> :NERDTreeToggle $HOME/src<CR>
 nnoremap <silent> <F5> :TlistToggle<CR>
 
 let NERDTreeWinSize = 45
