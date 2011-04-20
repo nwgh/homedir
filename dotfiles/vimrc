@@ -151,9 +151,10 @@ let g:NProjectEnableHooks = 1
 " Easy way to clear hilight from search
 nnoremap <leader><space> :noh<CR>
 
-" Enable autotag
-let g:autotagCtagsCmd = ~/bin/ctags.sh
-so $HOME/.vim/autotag.vim
+" Enable autotag - Not until we get one that produces a workable tags file
+let g:autotagDisabled = 1
+"let g:autotagCtagsCmd = ~/bin/ctags.sh
+"so $HOME/.vim/autotag.vim
 
 " Bring in machine-local customizations
 if filereadable(glob("~/.vimrc.local"))
