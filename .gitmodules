@@ -38,3 +38,7 @@
 	path = dotfiles/vim/bundle/L9
 	url = git://github.com/vim-scripts/L9.git
 	ignore = dirty
+[submodule "dotfiles/vim/bundle/FuzzyFinder"]
+	path = dotfiles/vim/bundle/FuzzyFinder
+	url = git@github.com:todesschaf/FuzzyFinder.git
+	ignore = dirty
