@@ -92,8 +92,6 @@ map <leader>e :edit <C-R>=getcwd() . "/"<CR>
 map <leader>n :edit <C-R>=getcwd() . "/"<CR>
 map <leader>fb :FufBuffer<CR>
 map <leader>ff :FufFile!<CR>
-map <leader>ft :FufTag<CR>
-map <leader>fj :FufTagWithCursorWord!<CR>
 map <leader>bb :BufExplorer<CR>
 
 let g:fuf_abbrevMap = {
