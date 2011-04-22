@@ -34,10 +34,6 @@
 	path = dotfiles/vim/bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
 	ignore = dirty
-[submodule "dotfiles/vim/bundle/FuzzyFinder"]
-	path = dotfiles/vim/bundle/FuzzyFinder
-	url = git://github.com/vim-scripts/FuzzyFinder.git
-	ignore = dirty
 [submodule "dotfiles/vim/bundle/L9"]
 	path = dotfiles/vim/bundle/L9
 	url = git://github.com/vim-scripts/L9.git
