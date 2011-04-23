@@ -35,6 +35,12 @@ fi
 if [ -d /usr/local/cross-compile/current/bin ] ; then
     PATH=/usr/local/cross-compile/current/bin:$PATH
 fi
+if [ -d /opt/android/tools ] ; then
+	PATH=/opt/android/tools:$PATH
+fi
+if [ -d /opt/android/platform-tools ] ; then
+	PATH=/opt/android/platform-tools:$PATH
+fi
 export PATH
 
 if [ -d /usr/local/share/man ] ; then
