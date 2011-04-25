@@ -88,11 +88,10 @@ map <C-k> :tabp<CR>
 map <C-j> :tabn<CR>
 
 let mapleader = ","
-map <leader>e :edit <C-R>=getcwd() . "/"<CR>
-map <leader>n :edit <C-R>=getcwd() . "/"<CR>
-map <leader>fb :FufBuffer<CR>
-map <leader>ff :FufFile!<CR>
-map <leader>bb :BufExplorer<CR>
+nmap <leader>e :edit <C-R>=getcwd() . "/"<CR>
+nmap <leader>f :FufFile!<CR>
+nmap <leader>j :FufBuffer<CR>
+nmap <leader>b :BufExplorer<CR>
 
 let g:fuf_abbrevMap = {
     \   "^mc:" : [
