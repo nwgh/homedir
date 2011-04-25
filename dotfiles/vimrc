@@ -97,6 +97,9 @@ let g:fuf_abbrevMap = {
     \   "^mc:" : [
     \     "~/src/mozilla-central/**/",
     \   ],
+    \   "^necko:" : [
+    \     "~/src/mozilla-central/netwerk/**/",
+    \   ],
     \ }
 
 " http://www.vim.org/tips/tip.php?tip_id=94
