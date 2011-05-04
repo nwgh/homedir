@@ -7,7 +7,6 @@
 	pager = less -FRSXi
 [svn]
 	edit = true
-	authorsprog = /usr/local/bin/svnauthors
 [color]
 	ui = auto
 [merge]
@@ -19,9 +18,8 @@
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	asrebase = rebase -i --autosquash
+	hgpatch = !sh -c 'git format-patch --stdout --no-signature -p -1 HEAD | hgify'
 [branch]
 	autosetuprebase = remote
-[dgitext]
-    hgpatch =
 [defaults]
 	log = --stat
