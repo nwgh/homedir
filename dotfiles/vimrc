@@ -92,6 +92,7 @@ nmap <leader>e :edit <C-R>=getcwd() . "/"<CR>
 nmap <leader>f :FufFile!<CR>
 nmap <leader>j :FufBuffer<CR>
 nmap <leader>b :BufExplorer<CR>
+nmap <leader>t :tag 
 
 let g:fuf_abbrevMap = {
     \   "^mc:" : [
