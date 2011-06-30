@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Make sure we got a branch to create
+if [[ -z "$1" ]] ; then
+    echo "Usage: git empty-branch <branchname>"
+    exit 1
+fi
+
+# Make sure we're in a git repo
+if ! git rev-parse --show-toplevel > /dev/null ; then
+    exit 1
+fi
+
+# Make sure the branch doesn't already exist
+if git rev-parse --verify -q "$1" ; then
+    echo "fatal: branch $1 already exists"
+    exit 1
+fi
+
+# Now make our branch and empty it out
+git symbolic-ref HEAD "refs/heads/$1"
+rm "$(git rev-parse --git-dir)"/index
+git clean -fdx
