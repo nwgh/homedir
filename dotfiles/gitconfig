@@ -20,6 +20,7 @@
 	asrebase = rebase -i --autosquash
 	hgpatch = !sh -c 'git format-patch --stdout --no-signature -p -1 HEAD | hgify'
 	tlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	addrm = add -A
 [branch]
 	autosetuprebase = remote
 [defaults]
