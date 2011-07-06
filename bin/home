@@ -1,2 +1,0 @@
-#!/bin/sh
-exec /usr/bin/xterm +bc -uc -T Home -n Home -e /usr/bin/ssh todesschaf.net
