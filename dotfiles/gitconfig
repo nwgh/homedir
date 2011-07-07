@@ -21,10 +21,9 @@
 	hgpatch = !sh -c 'git format-patch --stdout --no-signature -p -1 HEAD | hgify'
 	tlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	addrm = add -A
+	slog = log --stat
 [branch]
 	autosetuprebase = remote
-[defaults]
-	log = --stat
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
