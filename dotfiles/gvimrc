@@ -17,32 +17,16 @@ else
     set gfn=DroidSansMonoSlashed,Terminus\ 10
 endif
 
-" Default to the light bg colors
-set bg=light
+" Use solarized colorscheme in gvim
+set background=dark
+colorscheme solarized
 
-" However, I REALLY want a dark bg, so override a bunch of stuff to make it
-" look good (and also to mesh with the color terminal colors)
-hi Normal guibg=black
-hi Normal guifg=white
-hi Search NONE
-hi Search gui=reverse
-hi PreProc guifg=Cyan
-hi Comment guifg=Cyan gui=NONE
-hi Statement guifg=DarkYellow gui=NONE
-hi Type guifg=#009900 gui=NONE
-hi Cursor NONE
-hi Cursor gui=reverse
-hi vimOption guifg=Blue
+" Fix solarized a bit - this only catches some things, looks bad underlined
+hi vimGroup gui=NONE
+
+" Add my custom match groups
 hi LineTooLong gui=underline
 hi TrailingWhitespace guibg=red
-hi CursorLine guibg=#222222
-hi Pmenu guibg=blue
-hi PmenuSel guibg=magenta
-" These next 3 lines are because macvim is run by a bunch of turds that have
-" to do things differently from regular vim
-hi clear String
-hi link String Constant
-hi Constant guifg=magenta
 
 " Label tabs with just the filename (no path)
 set guitablabel=%t

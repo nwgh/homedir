@@ -42,3 +42,7 @@
 	path = dotfiles/vim/bundle/FuzzyFinder
 	url = git@github.com:todesschaf/FuzzyFinder.git
 	ignore = dirty
+[submodule "dotfiles/vim/bundle/vim-colors-solarized"]
+	path = dotfiles/vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+	ignore = dirty

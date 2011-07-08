@@ -1,10 +1,11 @@
 " Set up pathogen
-filetype plugin off
+set nocompatible
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 filetype on
 filetype plugin on
+filetype indent on
 
 set visualbell
 set textwidth=1000 "should be 79
@@ -106,7 +107,7 @@ let g:fuf_abbrevMap = {
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/,~/src/*/tags
 
-" Make colors mesh with gvim and other things I like
+" Make terminal colors things I like
 hi Comment ctermfg=Cyan
 hi PreProc ctermfg=Cyan
 hi Statement ctermfg=Yellow
