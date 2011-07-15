@@ -162,6 +162,9 @@ let g:NProjectEnableHooks = 1
 " Easy way to clear hilight from search
 nnoremap <leader><space> :noh<CR>
 
+" Easy way to ack for things
+nnoremap <leader><C-]> :Ack! <C-R><C-W><CR>
+
 " Enable autotag - Not until we get one that produces a workable tags file
 let g:autotagDisabled = 1
 "let g:autotagCtagsCmd = ~/bin/ctags.sh
