@@ -91,9 +91,8 @@ nmap <C-j> :bn<CR>
 let mapleader = ","
 nmap <leader>e :edit <C-R>=getcwd() . "/"<CR>
 nmap <leader>f :LustyFilesystemExplorer<CR>
-nmap <leader>j :LustyBufferExplorer<CR>
-nmap <leader>b :BufExplorer<CR>
-nmap <leader>t :tag 
+nmap <leader>b :LustyBufferExplorer<CR>
+nmap <leader>j :LustyJuggler<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
 set tags=tags;/,~/src/*/tags
