@@ -1,6 +1,4 @@
 --nogroup
---skipped
---text
 --pager=less -FRSXi
 --color-match=bold red
 --color-lineno=reset
