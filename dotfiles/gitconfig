@@ -22,8 +22,6 @@
 	tlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	addrm = add -A
 	slog = log --stat
-[branch]
-	autosetuprebase = remote
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
