@@ -69,16 +69,17 @@ let xml_use_html = 1
 autocmd!
 syntax on
 autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|setl list listchars=tab:>>
-autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim
-autocmd BufNewFile,BufRead *.cpp        so $HOME/.vim/cpp.vim
-autocmd BufNewFile,BufRead **/mozilla-central*/*.cpp,**/mozilla-central*/*.h so $HOME/.vim/mozilla.vim
-autocmd BufNewFile,BufRead **/mozilla-central*/*.js so $HOME/.vim/mozilla_js.vim
-autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim
-autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim
-autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim
+autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|setl nolist
+autocmd BufNewFile,BufRead *.cpp        so $HOME/.vim/cpp.vim|setl nolist
+autocmd BufNewFile,BufRead **/mozilla-central*/*.cpp,**/mozilla-central*/*.h so $HOME/.vim/mozilla.vim|setl nolist
+autocmd BufNewFile,BufRead **/mozilla-central*/*.js so $HOME/.vim/mozilla_js.vim|setl list listchars=tab:>>
+autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|setl nolist
+autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|setl nolist
+autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim|setl nolist
 autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|setl list listchars=tab:>>
 autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|setl list listchars=tab:>>
-autocmd BufNewFile,BufRead *.txt		setl textwidth=78 "so $HOME/.vim/txt.vim
+autocmd BufNewFile,BufRead *.txt		setl textwidth=78 nolist "so $HOME/.vim/txt.vim
+autocmd BufNewFile,BufRead *.vim,vimrc*,gvimrc* setl nolist
 
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
