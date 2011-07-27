@@ -30,3 +30,7 @@
 	path = dotfiles/vim/bundle/lusty
 	url = git://github.com/sjbach/lusty.git
 	ignore = dirty
+[submodule "dotfiles/vim/bundle/Conque-Shell"]
+	path = dotfiles/vim/bundle/Conque-Shell
+	url = git://github.com/vim-scripts/Conque-Shell.git
+	ignore = dirty
