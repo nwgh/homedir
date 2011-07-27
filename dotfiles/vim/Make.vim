@@ -7,3 +7,4 @@ set shiftwidth&
 set softtabstop&
 set noexpandtab
 
+setlocal nolist

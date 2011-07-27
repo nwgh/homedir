@@ -66,20 +66,22 @@ let g:clang_complete_copen=1
 " xml-plugin opts before ftplugins turned on
 let xml_use_html = 1
 
-autocmd!
+au!
 syntax on
-autocmd BufNewFile,BufRead *.js			so $HOME/.vim/javascript.vim|setl list listchars=tab:>>
-autocmd BufNewFile,BufRead *.c,*.h		so $HOME/.vim/c.vim|setl nolist
-autocmd BufNewFile,BufRead *.cpp        so $HOME/.vim/cpp.vim|setl nolist
-autocmd BufNewFile,BufRead **/mozilla-central*/*.cpp,**/mozilla-central*/*.h so $HOME/.vim/mozilla.vim|setl nolist
-autocmd BufNewFile,BufRead **/mozilla-central*/*.js so $HOME/.vim/mozilla_js.vim|setl list listchars=tab:>>
-autocmd BufNewFile,BufRead Make*,make*		so $HOME/.vim/Make.vim|setl nolist
-autocmd BufNewFile,BufRead *.*sql*,*.dump	so $HOME/.vim/sql.vim|setl nolist
-autocmd BufNewFile,BufRead *.*sql*,*.dump	so $VIMRUNTIME/syntax/sql.vim|setl nolist
-autocmd BufNewFile,BufRead *.py,SConstruct	so $HOME/.vim/python.vim|setl list listchars=tab:>>
-autocmd BufNewFile,BufRead *.pyx,*.pxd		so $HOME/.vim/pyrex.vim|setl list listchars=tab:>>
-autocmd BufNewFile,BufRead *.txt		setl textwidth=78 nolist "so $HOME/.vim/txt.vim
-autocmd BufNewFile,BufRead *.vim,vimrc*,gvimrc* setl nolist
+au BufNewFile,BufRead **/mozilla-central*/*.cpp,**/mozilla-central*/*.h set ft=mozilla-c
+au BufNewFile,BufRead **/mozilla-central*/*.js set ft=mozilla-js
+au BufNewFile,BufRead *.pyx,*.pxd set ft=pyrex
+au FileType javascript so $HOME/.vim/js.vim
+au FileType c so $HOME/.vim/c.vim
+au FileType cpp so $HOME/.vim/cpp.vim
+au FileType mozilla-c so $HOME/.vim/mozilla.vim
+au FileType mozilla-js so $HOME/.vim/mozilla_js.vim
+au FileType makefile so $HOME/.vim/Make.vim
+au FileType sql so $HOME/.vim/sql.vim
+au FileType python so $HOME/.vim/python.vim
+au FileType pyrex so $HOME/.vim/pyrex.vim
+au FileType text so $HOME/.vim/txt.vim
+au FileType vim so $HOME/.vim/vim.vim
 
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
@@ -120,8 +122,8 @@ let python_highlight_all = 1
 set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 
 " Setup hilighting for certain line conditions
-au BufWinEnter * let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
-au BufWinEnter * let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
+au FileType javascript,c,cpp,makefile,sql,python,vim let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
+au FileType javascript,c,cpp,makefile,sql,python,vim let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
 " Make editing in command-line mode simpler for me - emacs-style
 cnoremap <C-A> <Home>
