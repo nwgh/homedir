@@ -28,7 +28,7 @@ gl1 = subprocess.Popen(['git', 'log', '-1', '--format=format:%s' % (LOGFMT,),
 patch.writelines(gl1.stdout)
 gl1.wait()
 
-gd = subprocess.Popen(['git', 'diff', '%s~1' % (rev,), 'HEAD'],
+gd = subprocess.Popen(['git', 'diff', '--binary', '%s~1' % (rev,), 'HEAD'],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 patch.writelines((line for line in gd.stdout if not line.startswith('index')))
 gd.wait()
