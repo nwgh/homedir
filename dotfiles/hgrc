@@ -8,7 +8,6 @@ gpg =
 transplant =
 rebase =
 bookmarks =
-#hggit =
 color =
 parentrevspec =
 record =
@@ -36,14 +35,14 @@ ignore = update, push, pull, merge, fetch, convert, clone, record, crecord
 [defaults]
 commit = -v
 log = -f
-qnew = -U
+qnew = -Ue
 
 [mq]
-plain = True
+git = keep
 
 [merge]
 kdiff3.priority = 10
-kdiff3.executable = /Applications/k3diff.app/Contents/MacOS/kdiff3
+kdiff3.executable = /Applications/kdiff3.app/Contents/MacOS/kdiff3
 kdiff3.args = $base $local $other -o $output
 p4.priority = 20
 p4.premerge = True
