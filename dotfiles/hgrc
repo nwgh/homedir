@@ -36,6 +36,7 @@ ignore = update, push, pull, merge, fetch, convert, clone, record, crecord
 commit = -v
 log = -f
 qnew = -Ue
+patch = --no-commit
 
 [mq]
 git = keep
