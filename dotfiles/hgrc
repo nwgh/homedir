@@ -37,6 +37,7 @@ commit = -v
 log = -f
 qnew = -Ue
 patch = --no-commit
+import = --no-commit
 
 [mq]
 git = keep
