@@ -1,0 +1,4 @@
+(setq viper-mode t)
+(require 'viper)
+(setq make-backup-files nil)
+(auto-save-mode nil)
