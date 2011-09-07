@@ -158,7 +158,7 @@ let g:ctrlp_by_filename = 1
 let g:ctrlp_persistence_input = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_lscommand = glob("~/bin/update-ctrlp-cache.sh")
+let g:ctrlp_lscommand = "ack --noenv --skipped --text -f"
 
 " Bring in machine-local customizations
 if filereadable(glob("~/.vimrc.local"))
