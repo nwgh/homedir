@@ -34,3 +34,7 @@
 	path = dotfiles/vim/bundle/Conque-Shell
 	url = git://github.com/vim-scripts/Conque-Shell.git
 	ignore = dirty
+[submodule "dotfiles/vim/bundle/ctrlp"]
+	path = dotfiles/vim/bundle/ctrlp
+	url = git@github.com:todesschaf/ctrlp.vim.git
+	ignore = dirty

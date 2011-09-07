@@ -93,7 +93,8 @@ nmap <C-j> :bn<CR>
 
 let mapleader = ","
 nmap <leader>e :edit <C-R>=getcwd() . "/"<CR>
-nmap <leader>f :LustyFilesystemExplorer<CR>
+"nmap <leader>f :LustyFilesystemExplorer<CR>
+nmap <leader>f :CtrlP<CR>
 nmap <leader>b :LustyBufferExplorer<CR>
 nmap <leader>j :LustyJuggler<CR>
 
@@ -138,6 +139,7 @@ cnoremap <C-P> <Up>
 
 " Enable nproject
 let g:NProjectEnableHooks = 1
+let g:NProjectDoChdir = 0
 
 " Easy way to clear hilight from search
 nnoremap <leader><space> :noh<CR>
@@ -149,6 +151,14 @@ nnoremap <C-]> :Ack! <C-R><C-W><CR>
 " Set up ConqueTerm
 let g:ConqueTerm_TERM = 'xterm-256color'
 let g:ConqueTerm_CloseOnEnd = 1
+
+" Set up CtrlP
+let g:ctrlp_use_caching = 1
+let g:ctrlp_by_filename = 1
+let g:ctrlp_persistence_input = 0
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_lscommand = "ack --noenv --skipped --text"
 
 " Bring in machine-local customizations
 if filereadable(glob("~/.vimrc.local"))
