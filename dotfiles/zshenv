@@ -69,5 +69,8 @@ export ANDROID_SDK=/opt/android
 if [ "$TERM" = "xterm" ] ; then
 	export TERM=xterm-256color
 fi
+if [ -f "$HOME/.mozconfig" ] ; then
+	export MOZCONFIG="$HOME/.mozconfig"
+fi
 
 # vim: set noexpandtab:
