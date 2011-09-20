@@ -43,6 +43,9 @@ setopt pushd_silent
 setopt pushd_to_home
 setopt pushd_ignore_dups
 
+# Case insensitive completion
+setopt no_case_glob
+
 # Prompt and such
 setopt prompt_subst
 
@@ -99,7 +102,7 @@ fi
 alias igrep='ggrep -i'
 
 ffind() {
-	find . -iname "$@"
+	find . -iname "*$@*"
 }
 
 if type dgit > /dev/null 2>&1 ; then
