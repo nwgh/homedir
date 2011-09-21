@@ -4,7 +4,7 @@
 	ignore = dirty
 [submodule "dotfiles/vim/bundle/nproject"]
 	path = dotfiles/vim/bundle/nproject
-	url = git@github.com:todesschaf/nproject.git
+	url = http://github.com/todesschaf/nproject.git
 	ignore = dirty
 [submodule "dotfiles/vim/bundle/nerdcommenter"]
 	path = dotfiles/vim/bundle/nerdcommenter
@@ -36,5 +36,5 @@
 	ignore = dirty
 [submodule "dotfiles/vim/bundle/ctrlp"]
 	path = dotfiles/vim/bundle/ctrlp
-	url = git@github.com:todesschaf/ctrlp.vim.git
+	url = git://github.com/todesschaf/ctrlp.vim.git
 	ignore = dirty
