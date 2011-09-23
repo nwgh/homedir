@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 import sys
 
 act = 'build'
@@ -27,4 +28,4 @@ if not os.path.exists(configfile):
 os.environ['MOZCONFIG'] = configfile
 print 'MOZCONFIG=%s' % configfile
 print 'make -f client.mk %s' % act
-#sys.exit(subprocess.call(['make', '-f', 'client.mk', act], env=os.environ))
+sys.exit(subprocess.call(['make', '-f', 'client.mk', act], env=os.environ))
