@@ -3,7 +3,6 @@ setlocal noet
 setlocal sts=0
 setlocal sw=4
 setlocal ts=4
-setlocal tw=78
 setlocal noexpandtab
 setlocal nolist
 
