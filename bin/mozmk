@@ -28,4 +28,7 @@ if not os.path.exists(configfile):
 os.environ['MOZCONFIG'] = configfile
 print 'MOZCONFIG=%s' % configfile
 print 'make -f client.mk %s' % act
-sys.exit(subprocess.call(['make', '-f', 'client.mk', act], env=os.environ))
+rval = subprocess.call(['make', '-f', 'client.mk', act], env=os.environ)
+success = 'FAILED' if rval else 'SUCCEEDED'
+print '!!! BUILD %s !!!' % (success,)
+sys.exit(rval)
