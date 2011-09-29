@@ -10,6 +10,10 @@ set go+=A
 " Don't let the cursor blink ever. EVER
 set gcr=a:blinkwait0-blinkoff0-blinkon0
 
+" Have a simple title string
+set title
+set titlestring=vim
+
 if has("macunix")
     set gfn=DroidSansMonoSlashed:h12,Consolas:h12
     set transparency=20
