@@ -91,6 +91,7 @@ inoremap jj <Esc>
 
 nmap <C-k> :bp<CR>
 nmap <C-j> :bn<CR>
+nnoremap <f5> :bufdo bw<CR>
 
 let mapleader = ","
 nmap <leader>e :edit <C-R>=getcwd() . "/"<CR>
