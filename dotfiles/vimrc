@@ -88,6 +88,7 @@ au FileType vim so $HOME/.vim/vim.vim
 inoremap # X#
 
 inoremap jj <Esc>
+inoremap jw <Esc> :w<CR>
 
 nmap <C-k> :bp<CR>
 nmap <C-j> :bn<CR>
