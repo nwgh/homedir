@@ -1,0 +1,6 @@
+#!/bin/sh
+if [[ x"$1" == "xinstall" ]] ; then
+    defaults write com.apple.loginwindow LoginHook "$HOME/bin/no_restore_apps"
+    exit 0
+fi
+rm -f /Users/hurley/Library/Preferences/ByHost/com.apple.loginwindow.*
