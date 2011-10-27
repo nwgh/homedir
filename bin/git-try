@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import copy
 import os
 import shutil
 import StringIO
@@ -215,7 +216,7 @@ class GitTryer(object):
 
         # Get the contents of the patch
         with file(patchfile, 'w') as f:
-            p = subprocess.Popen(['git', 'diff', '--binary', self.rev_from, self.rev_to],
+            p = subprocess.Popen(['git', 'mkpatch', self.rev_from, self.rev_to],
                     stdout=f, stderr=subprocess.PIPE)
             p.wait()
 
@@ -228,11 +229,20 @@ class GitTryer(object):
         # Apply the patch
         os.chdir(repodir)
         p = subprocess.Popen(['hg', 'import', '--config', 'defaults.import=',
-                '-m', self._build_try(), '-u', self.userstr, patchfile],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                patchfile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if p.wait():
             self._cleanup()
             raise GitTryerException, 'Could not apply patch to hg repository'
+
+        # Make our try selections
+        env = copy.copy(os.environ)
+        true = '/bin/true'
+        if sys.platform == 'darwin':
+            true = '/usr/bin/true'
+        env['EDITOR'] = true
+        p = subprocess.Popen(['hg', 'qnew', '-m', self._build_try(),
+            '-u', self.userstr, 'try_config'], stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, env=env)
 
         # Push to the try server
         os.system('hg push -f %s' % self.url)
