@@ -111,6 +111,9 @@ if type dgit > /dev/null 2>&1 ; then
 	compdef dgit=git
 fi
 
+# Some global aliases
+alias tmonkey='tmux new-window -n monkey "ssh -lhurley monkey.org"'
+
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")

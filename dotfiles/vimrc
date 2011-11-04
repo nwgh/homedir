@@ -105,19 +105,13 @@ nmap <leader>j :LustyJuggler<CR>
 set tags=tags;/,~/src/*/tags
 
 " Make terminal colors things I like
-hi Comment ctermfg=Cyan
-hi PreProc ctermfg=Cyan
-hi Statement ctermfg=Yellow
-hi Type ctermfg=40
-hi Constant ctermfg=200 cterm=NONE
+colorscheme solarized
+hi vimGroup cterm=NONE
+hi Normal ctermfg=white ctermbg=black
+hi CursorLine ctermbg=235
+hi StatusLine cterm=NONE ctermbg=white ctermfg=black
 hi LineTooLong cterm=underline term=underline
 hi TrailingWhitespace ctermbg=red term=underline
-hi CursorLine term=bold cterm=NONE ctermbg=233
-hi vimOption ctermfg=Blue
-hi Search NONE
-hi Search term=reverse cterm=reverse
-hi Pmenu ctermbg=20
-hi PmenuSel ctermbg=165
 let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
