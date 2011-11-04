@@ -111,7 +111,7 @@ hi Normal ctermfg=white ctermbg=black
 hi CursorLine ctermbg=235
 hi StatusLine cterm=NONE ctermbg=white ctermfg=black
 hi LineTooLong cterm=underline term=underline
-hi TrailingWhitespace ctermbg=red term=underline
+hi TrailingWhitespace ctermbg=1 term=underline
 let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
