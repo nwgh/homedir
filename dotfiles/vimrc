@@ -108,10 +108,11 @@ set tags=tags;/,~/src/*/tags
 colorscheme solarized
 hi vimGroup cterm=NONE
 hi Normal ctermfg=lightgrey ctermbg=black
+hi Comment ctermfg=darkgrey
 hi CursorLine ctermbg=235
 hi StatusLine cterm=NONE ctermbg=lightgrey ctermfg=black
 hi LineTooLong cterm=underline term=underline
-hi TrailingWhitespace ctermbg=1 term=underline
+hi TrailingWhitespace ctermbg=darkred term=underline
 let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
