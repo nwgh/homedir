@@ -107,9 +107,9 @@ set tags=tags;/,~/src/*/tags
 " Make terminal colors things I like
 colorscheme solarized
 hi vimGroup cterm=NONE
-hi Normal ctermfg=white ctermbg=black
+hi Normal ctermfg=lightgrey ctermbg=black
 hi CursorLine ctermbg=235
-hi StatusLine cterm=NONE ctermbg=white ctermfg=black
+hi StatusLine cterm=NONE ctermbg=lightgrey ctermfg=black
 hi LineTooLong cterm=underline term=underline
 hi TrailingWhitespace ctermbg=1 term=underline
 let python_highlight_all = 1
