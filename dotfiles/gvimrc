@@ -16,7 +16,6 @@ set titlestring=vim
 
 if has("macunix")
     set gfn=DroidSansMonoSlashed:h12,Consolas:h12
-    set transparency=20
 else
     set gfn=DroidSansMonoSlashed,Terminus\ 10
 endif
