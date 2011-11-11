@@ -1,4 +1,5 @@
 cd $HOME
 PATH="$HOME/.cabal/bin:/opt/local/bin:$PATH"
 export PATH
+xsetroot -cursor_name left_ptr
 exec xmonad
