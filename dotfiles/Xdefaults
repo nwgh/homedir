@@ -1,0 +1,6 @@
+urxvt*scrollBar: 0
+urxvt*background: black
+urxvt*foreground: grey
+urxvt*termName: xterm-256color
+xterm*Background: black
+xterm*Foreground: grey

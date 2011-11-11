@@ -1,0 +1,4 @@
+cd $HOME
+PATH="$HOME/.cabal/bin:/opt/local/bin:$PATH"
+export PATH
+exec xmonad
