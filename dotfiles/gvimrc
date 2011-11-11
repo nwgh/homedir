@@ -24,7 +24,7 @@ endif
 " Fix solarized a bit - this only catches some things, looks bad underlined
 hi vimGroup gui=NONE
 hi Comment gui=NONE
-hi Normal guibg=black guifg=grey
+"hi Normal guibg=black guifg=grey
 
 " Add my custom match groups
 hi LineTooLong gui=underline
