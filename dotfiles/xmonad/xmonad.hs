@@ -9,8 +9,8 @@ myTerminal = "/opt/local/bin/urxvt"
 
 addKeys x = [((mod1Mask .|. shiftMask, xK_v), spawn "/opt/local/bin/gvim")
             ,((mod1Mask .|. shiftMask, xK_f), spawn "/opt/local/bin/firefox")
-            ,((mod1Mask .|. shiftMask, xK_m), spawn "/opt/local/bin/urxvt -c 'ssh -lhurley monkey.org'")
-            ,((mod1Mask .|. shiftMask, xK_l), spawn "/opt/local/bin/urxvt -c 'ssh -lhurley cailleach'")
+            ,((mod1Mask .|. shiftMask, xK_m), spawn "/opt/local/bin/urxvt -e /opt/local/bin/ssh -lhurley monkey.org")
+            ,((mod1Mask .|. shiftMask, xK_l), spawn "/opt/local/bin/urxvt -e /opt/local/bin/ssh -lhurley cailleach")
             ]
 delKeys x = []
 newKeys x = M.union (keys defaultConfig x) (M.fromList (addKeys x))
