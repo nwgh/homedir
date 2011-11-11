@@ -8,6 +8,9 @@ It's pretty simple, just run
 setup_homedir.py -h <HOME> -s <SOURCE>
 
 The layout of <SOURCE> should be something like:
+<SOURCE>/<{osx,linux,windows}> - A subdirectory that is like the top-level,
+                                 but specific to the OS on which this is being
+                                 instaled
 <SOURCE>/dotfiles - Any files that should be dotfiles in <HOME>
 <SOURCE>/<anything> - All other files
 
@@ -20,23 +23,34 @@ filename starting with a dot (.).
 
 import getopt
 import os
+import platform
 import sys
 
 __author__ = "Nick Hurley <hurley@todesschaf.org>"
 __copyright__ = "Copyright 2010, Nick Hurley"
 __license__ = "BSD"
 
-def __safelink(src, dst, verbose=False):
+def __getos():
+    if platform.mac_ver()[0]:
+        return 'osx'
+    elif platform.linux_ver()[0]:
+        return 'linux'
+    elif platform.win32_ver()[0]:
+        return 'windows'
+    return None
+
+def __safelink(src, dst, act=True, verbose=False):
     """Like os.symlink, but does't behave badly if dst already exists
     """
     if not os.path.exists(dst):
         if verbose:
             print '%s -> %s' % (dst, src)
-        os.symlink(src, dst)
+        if act:
+            os.symlink(src, dst)
     elif verbose:
         print '%s already exists, not creating link' % (dst,)
 
-def setup_homedir(homedir, setupdir, verbose=False):
+def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
     """For each file, f, in setupdir, do the equivalent of:
        ln -s <setupdir>/<f> <homedir>/<f>
     Except for <setupdir>/dotfiles, where for each file f there, do:
@@ -57,8 +71,22 @@ def setup_homedir(homedir, setupdir, verbose=False):
 
     # Setup
     dotfiledir = None
+    osdir = None
     setupfiles = dict.fromkeys([f for f in os.listdir(setupdir)
                                 if not f.startswith('.')])
+
+    # See if we have an os-specific directory. If so, handle that first so the
+    # os-specific bits take priority
+    osname = __getos()
+    if (not in_os) and (osname in setupfiles):
+        if os.path.isdir(os.path.join(setupdir, osname)):
+            osdir = os.path.join(setupdir, osname)
+            del setupfiles[osname]
+            if verbose:
+                print 'Found osdir at %s' % (osdir,)
+            setup_homedir(homedir, osdir, act=act, verbose=verbose, in_os=True)
+    if (not in_os) and verbose and (not osdir):
+        print 'No osdir found'
 
     # See if we have a dotfiles directory
     if 'dotfiles' in setupfiles:
@@ -67,6 +95,9 @@ def setup_homedir(homedir, setupdir, verbose=False):
             del setupfiles['dotfiles']
             if verbose:
                 print 'Found dotfiledir at %s' % (dotfiledir,)
+    if verbose and not dotfiledir:
+        print 'No dotfiledir found'
+
     setupfiles = setupfiles.keys()
     setupfiles.sort()
 
@@ -75,7 +106,7 @@ def setup_homedir(homedir, setupdir, verbose=False):
         # Create the symlink
         src = os.path.join(setupdir, f)
         dst = os.path.join(homedir, f)
-        __safelink(src, dst, verbose=verbose)
+        __safelink(src, dst, act=act, verbose=verbose)
 
     # Handle the case where we have dotfiles to link
     if dotfiledir:
@@ -84,12 +115,14 @@ def setup_homedir(homedir, setupdir, verbose=False):
         for f in dotfiles:
             src = os.path.join(dotfiledir, f)
             dst = os.path.join(homedir, '.%s' % (f,))
-            __safelink(src, dst, verbose=verbose)
+            __safelink(src, dst, act=act, verbose=verbose)
 
 if __name__ == '__main__':
     # No point in having this usage if we aren't running as main
     def usage():
-        print >>sys.stderr, '%s [-h homedir] [-s setupdir] [-v]'
+        print >>sys.stderr, '%s [-n] [-h homedir] [-s setupdir] [-v]'
+        print >>sys.stderr, '   -n            Do nothing, just print what ' \
+            'would be done (implies -v)'
         print >>sys.stderr, '   -h homedir    Put links in <homedir> ' \
             '(default $HOME)'
         print >>sys.stderr, '   -s setupdir   Create links to files in ' \
@@ -98,16 +131,20 @@ if __name__ == '__main__':
         sys.exit(1)
     
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'h:s:v')
+        opts, args = getopt.getopt(sys.argv[1:], 'nh:s:v')
     except:
         usage()
 
+    act = True
     homedir = os.getenv('HOME') or os.getcwd()
     setupdir = os.getcwd()
     verbose = False
 
     for o, a in opts:
-        if o == '-h':
+        if o == '-n':
+            act = False
+            verbose = True
+        elif o == '-h':
             homedir = a
         elif o == '-s':
             setupdir = a
@@ -121,7 +158,7 @@ if __name__ == '__main__':
         usage()
 
     try:
-        setup_homedir(homedir, setupdir, verbose=verbose)
+        setup_homedir(homedir, setupdir, act=act, verbose=verbose)
     except Exception, e:
         print >>sys.stderr, str(e)
         sys.exit(1)

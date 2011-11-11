@@ -105,12 +105,14 @@ nmap <leader>j :LustyJuggler<CR>
 set tags=tags;/,~/src/*/tags
 
 " Make terminal colors things I like
+set bg=dark
 colorscheme solarized
+
 hi vimGroup cterm=NONE
-hi Normal ctermfg=lightgrey ctermbg=black
+hi Normal ctermfg=grey ctermbg=black
 hi Comment ctermfg=darkgrey
 hi CursorLine ctermbg=235
-hi StatusLine cterm=NONE ctermbg=lightgrey ctermfg=black
+hi StatusLine cterm=NONE ctermbg=grey ctermfg=black
 hi LineTooLong cterm=underline term=underline
 hi TrailingWhitespace ctermbg=darkred term=underline
 let python_highlight_all = 1
