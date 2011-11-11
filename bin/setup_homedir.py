@@ -8,6 +8,9 @@ It's pretty simple, just run
 setup_homedir.py -h <HOME> -s <SOURCE>
 
 The layout of <SOURCE> should be something like:
+<SOURCE>/<{osx,linux.windows}> - A subdirectory that is like the top-level,
+                                 but specific to the OS on which this is being
+                                 instaled
 <SOURCE>/dotfiles - Any files that should be dotfiles in <HOME>
 <SOURCE>/<anything> - All other files
 
@@ -20,13 +23,23 @@ filename starting with a dot (.).
 
 import getopt
 import os
+import platform
 import sys
 
 __author__ = "Nick Hurley <hurley@todesschaf.org>"
 __copyright__ = "Copyright 2010, Nick Hurley"
 __license__ = "BSD"
 
-def __safelink(src, dst, verbose=False):
+def __getos():
+    if platform.mac_ver()[0]:
+        return 'osx'
+    elif platform.linux_ver()[0]:
+        return 'linux'
+    elif platform.win32_ver()[0]:
+        return 'windows'
+    return None
+
+def __safelink(src, dst, verbose=False, in_os=False):
     """Like os.symlink, but does't behave badly if dst already exists
     """
     if not os.path.exists(dst):
@@ -57,8 +70,22 @@ def setup_homedir(homedir, setupdir, verbose=False):
 
     # Setup
     dotfiledir = None
+    osdir = None
     setupfiles = dict.fromkeys([f for f in os.listdir(setupdir)
                                 if not f.startswith('.')])
+
+    # See if we have an os-specific directory. If so, handle that first so the
+    # os-specific bits take priority
+    osname = __getos()
+    if (not in_os) and (osname in setupfiles):
+        if os.path.isdir(os.path.join(setupdir, osname)):
+            osdir = os.path.join(setupdir, osname)
+            del setupfiles[osname]
+            if verbose:
+                print 'Found osdir at %s' % (osdir,)
+            setup_homedir(homedir, osdir, verbose, True)
+    if verbose and not osdir:
+        print 'No osdir found'
 
     # See if we have a dotfiles directory
     if 'dotfiles' in setupfiles:
@@ -67,6 +94,9 @@ def setup_homedir(homedir, setupdir, verbose=False):
             del setupfiles['dotfiles']
             if verbose:
                 print 'Found dotfiledir at %s' % (dotfiledir,)
+    if verbose and not dotfiledir:
+        print 'No dotfiledir found'
+
     setupfiles = setupfiles.keys()
     setupfiles.sort()
 
