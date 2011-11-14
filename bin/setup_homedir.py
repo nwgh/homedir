@@ -30,13 +30,15 @@ __author__ = "Nick Hurley <hurley@todesschaf.org>"
 __copyright__ = "Copyright 2010, Nick Hurley"
 __license__ = "BSD"
 
+__osdirs = {'osx':'osx', 'linux':'linux', 'windows':'windows'}
+
 def __getos():
     if platform.mac_ver()[0]:
-        return 'osx'
+        return __osdirs['osx']
     elif platform.linux_distribution()[0]:
-        return 'linux'
+        return __osdirs['linux']
     elif platform.win32_ver()[0]:
-        return 'windows'
+        return __osdirs['windows']
     return None
 
 def __safelink(src, dst, act=True, verbose=False):
@@ -87,6 +89,10 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
             setup_homedir(homedir, osdir, act=act, verbose=verbose, in_os=True)
     if (not in_os) and verbose and (not osdir):
         print 'No osdir found'
+
+    for d in osdirs:
+        if d in setupfiles:
+            del setupfiles[d]
 
     # See if we have a dotfiles directory
     if 'dotfiles' in setupfiles:
