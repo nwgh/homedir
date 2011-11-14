@@ -90,7 +90,7 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
     if (not in_os) and verbose and (not osdir):
         print 'No osdir found'
 
-    for d in osdirs:
+    for d in __osdirs:
         if d in setupfiles:
             del setupfiles[d]
 
