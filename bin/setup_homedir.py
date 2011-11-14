@@ -33,7 +33,7 @@ __license__ = "BSD"
 def __getos():
     if platform.mac_ver()[0]:
         return 'osx'
-    elif platform.linux_ver()[0]:
+    elif platform.linux_distribution()[0]:
         return 'linux'
     elif platform.win32_ver()[0]:
         return 'windows'
