@@ -1,11 +1,12 @@
 *.o
 *.lo
 *.la
-*.swp
-*.swo
+.*.sw[a-z]
 *#
 .*.rej
 *.rej
+.*.orig
+*.orig
 .*~
 *~
 .#*
