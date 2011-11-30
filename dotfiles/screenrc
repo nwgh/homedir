@@ -1,0 +1,3 @@
+startup_message off
+escape ^ll
+hardstatus alwayslastline "%{= kw}%?%-w%?%{= kr}%n %t%{= kw}%?%+w%?%=%0c %d %M %Y"
