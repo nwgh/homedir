@@ -1,2 +1,2 @@
 #!/bin/bash
-ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%.1f%%", $10/$5 * 100)}'
+/usr/sbin/ioreg -l | /usr/bin/grep -i capacity | /usr/bin/tr '\n' ' | ' | /usr/bin/awk '{printf("%.1f%%", $10/$5 * 100)}'
