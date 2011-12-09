@@ -108,7 +108,7 @@ set tags=tags;/,~/src/*/tags
 set bg=dark
 colorscheme solarized
 
-hi vimGroup cterm=NONE
+hi vimGroup cterm=NONE ctermfg=27
 hi Normal ctermfg=grey ctermbg=black
 hi Comment ctermfg=darkgrey
 hi CursorLine ctermbg=235
@@ -117,6 +117,9 @@ hi LineTooLong cterm=underline term=underline
 hi TrailingWhitespace ctermbg=darkred term=underline
 hi NonText ctermfg=239
 hi SpecialKey ctermfg=239 ctermbg=235
+hi Identifier ctermfg=27
+hi vimHiLink ctermfg=27
+hi vimHiGroup ctermfg=27
 hi link javaScriptNumber Number
 let python_highlight_all = 1
 
