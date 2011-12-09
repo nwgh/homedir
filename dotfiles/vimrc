@@ -115,6 +115,9 @@ hi CursorLine ctermbg=235
 hi StatusLine cterm=NONE ctermbg=grey ctermfg=black
 hi LineTooLong cterm=underline term=underline
 hi TrailingWhitespace ctermbg=darkred term=underline
+hi NonText ctermfg=239
+hi SpecialKey ctermfg=239 ctermbg=235
+hi link javaScriptNumber Number
 let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
