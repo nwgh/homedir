@@ -126,7 +126,7 @@ let python_highlight_all = 1
 " Have the status line show the filename, whether or not it's modified,
 " read-only, a help buffer, and type on the left. Show line number, column
 " number, and percentage through file on right
-set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
+set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]\ %{strftime(\"%a\ %d\ %b\ %Y\ %H:%M\")}
 
 " Setup hilighting for certain line conditions
 au FileType javascript,c,cpp,makefile,sql,python,vim let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
