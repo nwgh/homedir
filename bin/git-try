@@ -104,7 +104,7 @@ class GitTryer(object):
                 if m in args:
                     raise GitTryerException, 'mochitests can not be used with any other mochitest'
 
-        return ','.join(args.platform)
+        return ','.join(args)
 
     def _compute_args_and_revs(self, args):
         p = argparse.ArgumentParser(description='Do a try run on a patch',
@@ -214,40 +214,54 @@ class GitTryer(object):
         repodir = os.path.join(self.tmpdir, 'repo')
 
         # Get the contents of the patch
+        sys.stdout.write('making patch...\n')
         with file(patchfile, 'w') as f:
             p = subprocess.Popen(['git', 'mkpatch', self.rev_from, self.rev_to],
                     stdout=f, stderr=subprocess.PIPE)
             p.wait()
 
         # Go to our hg repo and get a working copy
+        sys.stdout.write('cloning source repository...\n')
         p = subprocess.Popen(['hg', 'clone', self.repo, repodir], stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
         if p.wait():
             raise GitTryerException, 'Could not check out hg repository'
 
         # Apply the patch
+        sys.stdout.write('applying patch...\n')
         os.chdir(repodir)
         p = subprocess.Popen(['hg', 'import', '--config', 'defaults.import=',
                 patchfile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if p.wait():
-            self._cleanup()
             raise GitTryerException, 'Could not apply patch to hg repository'
 
         # Make our try selections
+        sys.stdout.write('setting try selections...\n')
         p = subprocess.Popen(['hg', '--config', 'ui.editor=true', 'qnew',
             '-m', self._build_try(), '-u', self.userstr, 'try_config'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if p.wait():
+            raise GitTryerException, 'Failed to set try configuration'
 
         # Push to the try server
-        os.system('hg push -f %s' % self.url)
+        sys.stdout.write('pushing to try...\n')
+        if os.system('hg push -f %s' % self.url):
+            raise GitTryerException, 'Failed to push!'
 
-        # Get rid of our working copy
+        # Get rid of our working copy if everything went well
+        sys.stdout.write('cleaning up...\n')
         self._cleanup()
+
+        sys.stdout.write('done!\n')
 
 if __name__ == '__main__':
     try:
         t = GitTryer(sys.argv[1:])
         t.run()
     except GitTryerException, e:
+        try:
+            sys.stderr.write('Working directory at %s\n' % t.tmpdir)
+        except:
+            sys.stderr.write('No working directory created\n')
         sys.stderr.write('%s\n' % str(e))
         sys.exit(1)
