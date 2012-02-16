@@ -28,3 +28,4 @@
 [try]
 	url = ssh://hg.mozilla.org/try
 	repo = /Users/hurley/src/.mozilla-central.hg
+	defaults = -n
