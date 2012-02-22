@@ -206,6 +206,13 @@ class GitTryer(object):
         if self.tmpdir:
             shutil.rmtree(self.tmpdir)
 
+    def _save_output(self, proc, fname):
+        with file(os.path.join(self.tmpdir, fname), 'w') as f:
+                f.write('STDOUT\n')
+                f.write(proc.stdout.read())
+                f.write('\n\nSTDERR\n')
+                f.write(proc.stderr.read())
+
     def run(self):
         # Make our working directory
         self.tmpdir = tempfile.mkdtemp(prefix='try', dir='/tmp')
@@ -225,6 +232,7 @@ class GitTryer(object):
         p = subprocess.Popen(['hg', 'clone', self.repo, repodir], stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
         if p.wait():
+            self._save_output(p, 'clone.out')
             raise GitTryerException, 'Could not check out hg repository'
 
         # Apply the patch
@@ -233,6 +241,7 @@ class GitTryer(object):
         p = subprocess.Popen(['hg', 'import', '--config', 'defaults.import=',
                 patchfile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if p.wait():
+            self._save_output(p, 'import.out')
             raise GitTryerException, 'Could not apply patch to hg repository'
 
         # Make our try selections
@@ -241,6 +250,7 @@ class GitTryer(object):
             '-m', self._build_try(), '-u', self.userstr, 'try_config'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if p.wait():
+            self._save_output(p, 'qnew.out')
             raise GitTryerException, 'Failed to set try configuration'
 
         # Push to the try server
