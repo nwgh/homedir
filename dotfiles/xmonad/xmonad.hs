@@ -4,11 +4,12 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run
 import System.Exit
 import System.IO
+import XMonad.Config.Gnome
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
-myTerminal = "/opt/local/bin/urxvt"
+myTerminal = "urxvt"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -16,19 +17,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch vim
-    , ((modm .|. shiftMask, xK_v), spawn "/opt/local/bin/gvim")
+    , ((modm .|. shiftMask, xK_v), spawn "gvim")
 
     -- launch firefox
-    , ((modm .|. shiftMask, xK_f), spawn "/opt/local/bin/firefox")
+    , ((modm .|. shiftMask, xK_f), spawn "/usr/local/firefox/firefox")
 
     -- launch a terminal to monkey
-    , ((modm .|. shiftMask, xK_m), spawn "/opt/local/bin/urxvt -e /opt/local/bin/ssh -lhurley monkey.org")
-
-    -- launch a terminal to the linux box
-    , ((modm .|. shiftMask, xK_l), spawn "/opt/local/bin/urxvt -e /opt/local/bin/ssh -lhurley cailleach")
+    , ((modm .|. shiftMask, xK_m), spawn "urxvt -e ssh -lhurley monkey.org")
 
     -- launch a python shell
-    , ((modm .|. shiftMask, xK_p), spawn "/opt/local/bin/urxvt -e /opt/local/bin/python")
+    , ((modm .|. shiftMask, xK_p), spawn "urxvt -e python")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -110,7 +108,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 main = do
-    xmproc <- spawnPipe "~/.cabal/bin/xmobar ~/.xmobarrc"
+    xmproc <- spawnPipe "xmobar ~/.xmobarrc"
     xmonad $ defaultConfig
         { keys = myKeys
         , terminal = myTerminal
@@ -122,3 +120,4 @@ main = do
             , ppLayout = const "" -- to disable layout info on xmobar
             }
         }
+-- main = xmonad gnomeConfig
