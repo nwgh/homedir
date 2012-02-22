@@ -13,8 +13,8 @@ parentrevspec =
 record =
 pager =
 mq =
-localbranch = ~/.hgext/localbranch.py
-attic = ~/.hgext/attic.py
+#localbranch = ~/.hgext/localbranch.py
+#attic = ~/.hgext/attic.py
 
 [diff]
 git = 1
