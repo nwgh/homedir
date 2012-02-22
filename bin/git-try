@@ -122,9 +122,13 @@ class GitTryer(object):
                 action='store_true')
         p.add_argument('-m', '--mozilla-central', action='store_true',
                 help='Use mozilla-central configuration')
+        p.add_argument('-f', '--force', action='store_true', default=False,
+                help='Force operation even with uncommitted changes')
         p.add_argument('rev', nargs='*', help='Revisions to push')
 
         args = p.parse_args(args)
+
+        self.args['force'] = args.force
 
         if args.build:
             self.args['build'] = args.build
@@ -219,6 +223,14 @@ class GitTryer(object):
         self.oldcwd = os.getcwd()
         patchfile = os.path.join(self.tmpdir, 'patch')
         repodir = os.path.join(self.tmpdir, 'repo')
+
+        # Ensure there aren't any outstanding changes
+        if not self.args['force']:
+            p = subprocess.Popen(['git', 'status', '--porcelain', '-z'],
+                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            p.wait()
+            if p.stdout.read():
+                raise GitTryerException, 'You have uncommitted changes'
 
         # Get the contents of the patch
         sys.stdout.write('making patch...\n')
