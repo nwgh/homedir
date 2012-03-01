@@ -69,8 +69,8 @@ let xml_use_html = 1
 
 au!
 syntax on
-au BufNewFile,BufRead **/mozilla-central*/*.cpp,**/mozilla-central*/*.h set ft=mozilla-c
-au BufNewFile,BufRead **/mozilla-central*/*.js set ft=mozilla-js
+au BufNewFile,BufRead **/mozilla/*.cpp,**/mozilla/*.h set ft=mozilla-c
+au BufNewFile,BufRead **/mozilla/*.js set ft=mozilla-js
 au BufNewFile,BufRead *.pyx,*.pxd set ft=pyrex
 au FileType javascript so $HOME/.vim/js.vim
 au FileType c so $HOME/.vim/c.vim
