@@ -38,3 +38,7 @@
 	path = dotfiles/vim/bundle/ctrlp
 	url = git://github.com/todesschaf/ctrlp.vim.git
 	ignore = dirty
+[submodule "dotfiles/vim/bundle/vim-powerline"]
+	path = dotfiles/vim/bundle/vim-powerline
+	url = git://github.com/todesschaf/vim-powerline.git
+	ignore = dirty
