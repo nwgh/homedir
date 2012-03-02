@@ -15,9 +15,9 @@ set title
 set titlestring=vim
 
 if has("macunix")
-    set gfn=DroidSansMonoSlashed:h12,Consolas:h12
+    set gfn=DroidSansMonoSlashedforPowerline:h12,Consolas:h12
 else
-    set gfn=DroidSansMonoSlashed,Terminus\ 10
+    set gfn=Droid\ Sans\ Mono\ Slashed\ for\ Powerline\ 9,Terminus\ 10
 endif
 
 " Fix solarized a bit - this only catches some things, looks bad underlined
