@@ -1,0 +1,5 @@
+#!/bin/sh
+
+FILES=$(ls -A | grep -v '^.git$')
+rm -rf "$FILES"
+git reset --hard HEAD
