@@ -4,7 +4,7 @@ import os
 import subprocess
 import sys
 
-act = 'build'
+acts = []
 config = 'desktop'
 
 if len(sys.argv) > 1:
@@ -13,7 +13,9 @@ if len(sys.argv) > 1:
     else:
         act = sys.argv[1]
         if act == 'rebuild':
-            act = 'everything'
+            acts = ['distclean', 'build']
+        else:
+            acts = [act]
         if len(sys.argv) > 2:
             config = sys.argv[2]
 
@@ -27,8 +29,11 @@ if not os.path.exists(configfile):
 
 os.environ['MOZCONFIG'] = configfile
 print 'MOZCONFIG=%s' % configfile
-print 'make -f client.mk %s' % act
-rval = subprocess.call(['make', '-f', 'client.mk', act], env=os.environ)
-success = 'FAILED' if rval else 'SUCCEEDED'
-print '!!! BUILD %s !!!' % (success,)
-sys.exit(rval)
+for act in acts:
+    print 'make -f client.mk %s' % act
+    rval = subprocess.call(['make', '-f', 'client.mk', act], env=os.environ)
+    if rval:
+        print '!!! BUILD FAILED !!!'
+        sys.exit(rval)
+print '!!! BUILD SUCCEEDED !!!'
+sys.exit(0)
