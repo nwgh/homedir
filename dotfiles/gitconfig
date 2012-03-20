@@ -28,4 +28,4 @@
 [try]
 	url = ssh://hg.mozilla.org/try
 	repo = http://hg.mozilla.org/mozilla-central
-	defaults = -n
+	defaults = -b do -p all -u all -t none -n
