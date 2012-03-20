@@ -152,7 +152,6 @@ nnoremap <leader><space> :noh<CR>
 
 " Easy way to ack for things
 nnoremap <leader><C-]> :Ack! <C-R><C-W><CR>
-nnoremap <C-]> :Ack! <C-R><C-W><CR>
 
 " Set up ConqueTerm
 let g:ConqueTerm_TERM = 'xterm-256color'
