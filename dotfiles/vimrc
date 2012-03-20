@@ -102,7 +102,7 @@ nmap <leader>b :LustyBufferExplorer<CR>
 nmap <leader>j :LustyJuggler<CR>
 
 " http://www.vim.org/tips/tip.php?tip_id=94
-set tags=tags;/,~/src/*/tags
+set tags=tags;/,~/src/**/tags
 
 " Make terminal colors things I like
 set bg=dark
