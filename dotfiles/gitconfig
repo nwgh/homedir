@@ -23,6 +23,7 @@
 	addrm = add -A
 	slog = log --stat
 	npush = push origin refs/notes/*
+	flog = log --first-parent
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
