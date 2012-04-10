@@ -9,8 +9,8 @@ LOGFMT="""From: %an <%ae>
 %B
 """
 
-if len(sys.argv) > 3:
-    rev_from, rev_to = sys.argv[2], sys.argv[3]
+if len(sys.argv) > 2:
+    rev_from, rev_to = sys.argv[1], sys.argv[2]
 else:
     rev_from, rev_to = 'master', 'HEAD'
 
