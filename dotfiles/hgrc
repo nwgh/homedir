@@ -3,38 +3,25 @@ username = Nick Hurley <hurley@todesschaf.org>
 ignore = ~/.hgignore
 
 [extensions]
-extdiff =
-gpg =
 transplant =
 rebase =
-bookmarks =
 color =
 parentrevspec =
 record =
 pager =
 mq =
-#localbranch = ~/.hgext/localbranch.py
-#attic = ~/.hgext/attic.py
 
 [diff]
 git = 1
 showfunc = 1
 unified = 8
 
-[extdiff]
-cmd.udiff = diff
-opts.udiff = -NpruU15
-
-[bookmarks]
-track.current = True
-
 [pager]
 pager = LESS='-FSRX' less
-ignore = update, push, pull, merge, fetch, convert, clone, record, crecord
+ignore = update, push, pull, merge, fetch, clone, record, qrecord
 
 [defaults]
 commit = -v
-log = -f
 qnew = -Ue
 
 [alias]
@@ -42,7 +29,7 @@ apply = import --no-commit
 qexport = export -g qtip
 
 [mq]
-git = keep
+git = yes
 
 [merge]
 kdiff3.priority = 10
