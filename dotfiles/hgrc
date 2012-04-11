@@ -27,6 +27,10 @@ qnew = -Ue
 [alias]
 apply = import --no-commit
 qexport = export -g qtip
+try = push -f ssh://hg.mozilla.org/try
+
+[hooks]
+post-try = hg phase --force --draft "mq()"
 
 [mq]
 git = yes
