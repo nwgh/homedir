@@ -172,6 +172,9 @@ let g:Powerline_symbols='fancy'
 let g:Powerline_colorscheme='todesschaf'
 let g:Powerline_theme='todesschaf'
 
+" Connect to the system clipboard
+set clipboard=unnamed
+
 " Let vim change the cursor in iTerm
 if exists('$ITERM_PROFILE')
     let &t_SI="\<Esc>]50;CursorShape=1\x7"
