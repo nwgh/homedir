@@ -96,7 +96,7 @@ nmap <C-j> :bn<CR>
 nnoremap <f5> :bufdo bw<CR>
 
 let mapleader = ","
-nmap <leader>e :edit <C-R>=getcwd() . "/"<CR>
+nmap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
 nmap <leader>s :CtrlP<CR>
 nmap <leader>f :LustyFilesystemExplorerFromHere<CR>
 nmap <leader>b :LustyBufferExplorer<CR>
