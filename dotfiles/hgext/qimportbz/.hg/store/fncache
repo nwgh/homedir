@@ -1,0 +1,9 @@
+data/scp.py.i
+data/patch.py.i
+data/commands.py.i
+data/bzhandler.py.i
+data/qimportbz.py.i
+data/bz.py.i
+data/.hgignore.i
+data/pb.py.i
+data/__init__.py.i

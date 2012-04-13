@@ -10,6 +10,8 @@ parentrevspec =
 record =
 pager =
 mq =
+qimportbz = ~/.hgext/qimportbz
+bzexport = ~/.hgext/bzexport/bzexport.py
 
 [diff]
 git = 1
