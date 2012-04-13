@@ -172,6 +172,12 @@ let g:Powerline_symbols='fancy'
 let g:Powerline_colorscheme='todesschaf'
 let g:Powerline_theme='todesschaf'
 
+" Let vim change the cursor in iTerm
+if exists('$ITERM_PROFILE')
+    let &t_SI="\<Esc>]50;CursorShape=1\x7"
+    let &t_EI="\<Esc>]50;CursorShape=0\x7"
+endif
+
 " Bring in machine-local customizations
 if filereadable(glob("~/.vimrc.local"))
     so ~/.vimrc.local
