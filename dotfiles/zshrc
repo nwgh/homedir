@@ -5,10 +5,10 @@ compinit
 # Easy-to-use colors for prompts
 autoload colors
 colors
-PR_RED="%{$fg_bold[red]%}"
-PR_BLUE="%{$fg_bold[blue]%}"
-PR_GREEN="%{$fg_bold[green]%}"
-PR_YELLOW="%{$fg_bold[yellow]%}"
+PR_RED="%{$fg[red]%}"
+PR_BLUE="%{$fg[blue]%}"
+PR_GREEN="%{$fg[green]%}"
+PR_YELLOW="%{$fg[yellow]%}"
 PR_RESET="%{$reset_color%}"
 
 # vcs info config
@@ -73,7 +73,7 @@ function make_prompt {
 		pathinfo="%~"
 	fi
 
-	echo -e "%B%m%b $pathinfo%(!.#.>) "
+	echo -e "%m $pathinfo%(!.#.>) "
 }
 
 export PROMPT="\$(make_prompt)"
