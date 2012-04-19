@@ -51,7 +51,7 @@ setopt prompt_subst
 
 function make_prompt {
 	vcs_info prompt
-	rval="%n@%B%m%b"
+	rval="%m"
 
 	if [[ -n "$vcs_info_msg_0_" ]] ; then
 		vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
@@ -66,28 +66,22 @@ function make_prompt {
 			if hg qtop > /dev/null 2>&1 ; then
 				branch="$(hg qtop)"
 			fi
-		elif [[ $vtype = "git-svn" ]] ; then
-			vtype="$(echo -e -n \\xc2\\xb1)-s"
-		elif [[ $vtype = "svn" ]] ; then
-			vtype="s"
-			branch="${branch}@${act}"
-			act=""
 		else
-			vtype="?"
+			vtype=">"
 		fi
-		rval="$rval $vtype $PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
+		rval="$rval $PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
 		if [[ -n "$act" ]] ; then
 			rval="$rval $PR_RED($act)$PR_RESET"
 		fi
-		rval="$rval\n$rpath"
+		rval="$rval $rpath$vtype"
 	else
-		rval="$rval\n%~"
+		rval="$rval %~%(!.#.>)"
 	fi
 
 	echo -e "$rval"
 }
 
-export PROMPT="\$(make_prompt)%(!.#.>) "
+export PROMPT="\$(make_prompt) "
 
 # Do the smart thing when grepping, but leave plain ol' grep available if
 # necessary
