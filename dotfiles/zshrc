@@ -13,7 +13,7 @@ PR_RESET="%{$reset_color%}"
 
 # vcs info config
 autoload vcs_info
-zstyle ':vcs_info:*' enable git hg svn
+zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*:prompt:*' formats "%s:%r:%S:%b"
 zstyle ':vcs_info:*:prompt:*' actionformats "%s:%r:%S:%b:%a"
 
@@ -51,7 +51,6 @@ setopt prompt_subst
 
 function make_prompt {
 	vcs_info prompt
-	rval="%m"
 
 	if [[ -n "$vcs_info_msg_0_" ]] ; then
 		vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
@@ -59,29 +58,25 @@ function make_prompt {
 		rpath="/$(echo "$vcs_info_msg_0_" | cut -d: -f3 | sed -e 's/^\.//')"
 		branch="$(echo "$vcs_info_msg_0_" | cut -d: -f4)"
 		act="$(echo "$vcs_info_msg_0_" | cut -d: -f5)"
-		if [[ $vtype = "git" ]] ; then
-			vtype="$(echo -e -n \\xc2\\xb1)"
-		elif [[ $vtype = "hg" ]] ; then
-			vtype="$(echo -e -n \\xe2\\x98\\xbf)"
-			if hg qtop > /dev/null 2>&1 ; then
-				branch="$(hg qtop)"
+		if [[ $vtype = "hg" ]] ; then
+			qtop="$(hg qtop 2>/dev/null)"
+			if [[ "$qtop" != "no patches applied" ]] ; then
+				branch="$qtop"
 			fi
-		else
-			vtype=">"
 		fi
-		rval="$rval $PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
+		pathinfo="$PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
 		if [[ -n "$act" ]] ; then
-			rval="$rval $PR_RED($act)$PR_RESET"
+			pathinfo="$pathinfo $PR_RED($act)$PR_RESET"
 		fi
-		rval="$rval $rpath$vtype"
+		pathinfo="$pathinfo $rpath"
 	else
-		rval="$rval %~%(!.#.>)"
+		pathinfo="%~"
 	fi
 
-	echo -e "$rval"
+	echo -e "%B%m%b $pathinfo%(!.#.>) "
 }
 
-export PROMPT="\$(make_prompt) "
+export PROMPT="\$(make_prompt)"
 
 # Do the smart thing when grepping, but leave plain ol' grep available if
 # necessary
