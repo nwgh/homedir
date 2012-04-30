@@ -18,6 +18,10 @@ git = 1
 showfunc = 1
 unified = 8
 
+[color]
+qseries.applied = blue underline
+qseries.unapplied = none
+
 [pager]
 pager = LESS='-FSRX' less
 ignore = update, push, pull, merge, fetch, clone, record, qrecord
