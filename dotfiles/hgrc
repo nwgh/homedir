@@ -12,6 +12,7 @@ pager =
 mq =
 qimportbz = ~/.hgext/qimportbz
 bzexport = ~/.hgext/bzexport/bzexport.py
+try = ~/.hgext/try_extension/try.py
 
 [diff]
 git = 1
@@ -34,10 +35,6 @@ qselect = -n --pop
 [alias]
 apply = import --no-commit
 qexport = export -g qtip
-try = push -f ssh://hg.mozilla.org/try
-
-[hooks]
-post-try = hg phase --force --draft "mq()"
 
 [mq]
 git = yes
@@ -55,3 +52,6 @@ p4.binary = False
 vimdiff.priority = 30
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close
+
+[try]
+defaults = -b do -p all -u all -t none -n
