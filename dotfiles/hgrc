@@ -30,7 +30,6 @@ ignore = update, push, pull, merge, fetch, clone, record, qrecord
 [defaults]
 commit = -v
 qnew = -Ue
-qselect = -n --pop
 
 [alias]
 apply = import --no-commit
