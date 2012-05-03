@@ -71,6 +71,9 @@ def run_qbranch(ui, repo, *args, **kwargs):
     hg qbranch
 
     will set no guards as active, and pop any guarded mq entries.
+    If, while pushing patches, one fails to apply, the operation will abort, and
+    you will have to fix the problems, qrefresh, and continue to qpush on your
+    own (or fix, qrefresh, and re-do the qbranch).
 
     By default, enabling this extension will make it so that any time you do a
     hg qnew, the patch that you create will be given a positive guard on
@@ -97,12 +100,14 @@ def run_qbranch(ui, repo, *args, **kwargs):
     if args:
         mq.select(ui, repo, args[0], none=True)
     else:
-        mq.select(ui, repo, none=True, pop=True)
+        mq.select(ui, repo, none=True)
 
     # Go through and push all the eligible patches
     for idx, patch in enumerate(repo.mq.series):
         if repo.mq.pushable(idx)[0]:
-            mq.push(ui, repo, patch, move=True)
+            if mq.push(ui, repo, patch, move=True) != 0:
+                raise util.Abort('Error applying patches. Fix the problem, '
+                        'then qrefresh, then re-run qbranch.\n')
 
 cmdtable = {
     'qbranch':(run_qbranch, [], 'hg qbranch [name]'),
