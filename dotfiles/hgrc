@@ -13,6 +13,7 @@ mq =
 qimportbz = ~/.hgext/qimportbz
 bzexport = ~/.hgext/bzexport/bzexport.py
 try = ~/.hgext/try_extension/try.py
+qbranch = ~/.hgext/qbranch_extension/qbranch.py
 
 [diff]
 git = 1
