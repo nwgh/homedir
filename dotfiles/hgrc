@@ -23,6 +23,7 @@ unified = 8
 [color]
 qseries.applied = blue underline
 qseries.unapplied = none
+qseries.guarded = none
 
 [pager]
 pager = LESS='-FSRX' less
