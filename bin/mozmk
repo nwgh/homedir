@@ -59,7 +59,7 @@ def main():
         sys.stdout.write('make -f client.mk %s\n' % (act,))
         rval = subprocess.call(['make', '-f', 'client.mk', act], env=os.environ)
         if rval:
-            display_status('failed', stage)
+            display_status('failed', act)
             sys.exit(rval)
 
     display_status('succeeded')
