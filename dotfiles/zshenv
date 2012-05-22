@@ -10,27 +10,12 @@ if [ -d /usr/games ] ; then
 fi
 if [ -d $HOME/bin ] ; then
     PATH=$PATH:$HOME/bin
-    if [ -d $HOME/bin/perl ] ; then
-        PATH=$PATH:$HOME/bin/perl
-    fi
 fi
 if [ -d /opt/local/bin ] ; then
    PATH=/opt/local/bin:/opt/local/sbin:$PATH
 fi
 if [ -d /todesschaf/bin ] ; then
    PATH=/todesschaf/bin:$PATH
-fi
-if [ -d /opt/PalmPDK/arm-gcc/bin ] ; then
-    PATH=/opt/PalmPDK/arm-gcc/bin:$PATH
-fi
-if [ -d /opt/PalmPDK/bin ] ; then
-    PATH=/opt/PalmPDK/bin:$PATH
-fi
-if [ -d /opt/PalmSDK/Current/bin ] ; then
-    PATH=/opt/PalmSDK/Current/bin:$PATH
-fi
-if [ -d /opt/nova/bin ] ; then
-    PATH=/opt/nova/bin:$PATH
 fi
 if [ -d /usr/local/cross-compile/current/bin ] ; then
     PATH=/usr/local/cross-compile/current/bin:$PATH
@@ -40,9 +25,6 @@ if [ -d /opt/android/tools ] ; then
 fi
 if [ -d /opt/android/platform-tools ] ; then
 	PATH=/opt/android/platform-tools:$PATH
-fi
-if [ -d $HOME/.cabal/bin ] ; then
-	PATH=$HOME/.cabal/bin:$PATH
 fi
 export PATH
 

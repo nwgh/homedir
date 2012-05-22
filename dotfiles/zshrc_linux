@@ -5,7 +5,7 @@ alias ll='/bin/ls -Al --color=auto'
 open() {
     xdg-open "$@" 2>>/tmp/open-${USER}
 }
-export MINIDUMP_STACKWALK="${HOME}/Dropbox/moz/minidump_stackwalk_linux_x86"
+export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_linux_x86"
 export NWH_ZSH_CONFIG="linux"
 
 # vim: set noexpandtab:

@@ -104,7 +104,6 @@ if type dgit > /dev/null 2>&1 ; then
 fi
 
 # Some global aliases
-alias tmonkey='tmux new-window -n monkey "ssh -lhurley monkey.org"'
 alias mq='hg -R $(hg root)/.hg/patches'
 
 # Load OS-specific zsh configuration
