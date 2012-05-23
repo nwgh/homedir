@@ -26,18 +26,29 @@ fi
 if [ -d /opt/android/platform-tools ] ; then
 	PATH=/opt/android/platform-tools:$PATH
 fi
-export PATH
 
 if [ -d /usr/local/share/man ] ; then
-	export MANPATH=/usr/local/share/man:$MANPATH
+	MANPATH=/usr/local/share/man:$MANPATH
 fi
 if [ -d /opt/local/share/man ] ; then
-	export MANPATH=/opt/local/share/man:$MANPATH
+	MANPATH=/opt/local/share/man:$MANPATH
 fi
 if [ -d /opt/local/share/info ] ; then
-	export INFOPATH=/opt/local/share/info:$INFOPATH
+	INFOPATH=/opt/local/share/info:$INFOPATH
 fi
 
+if [ -d /opt/jetpack ] ; then
+	VIRTUAL_ENV=/opt/jetpack/latest
+	PATH=$PATH:$VIRTUAL_ENV/bin
+	PYTHONPATH=$VIRTUAL_ENV/python-lib:$PYTHONPATH
+	CUDDLEFISH_ROOT=$VIRTUAL_ENV
+fi
+
+export PATH
+export MANPATH
+export INFOPATH
+export PYTHONPATH
+export CUDDLEFISH_ROOT
 export PYTHONSTARTUP=~/.pythonrc
 export HISTFILE=~/.zsh_history
 export HISTSIZE=500
