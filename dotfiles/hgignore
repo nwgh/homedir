@@ -6,3 +6,4 @@ svn-commit*tmp
 random_seed
 .*.swp
 *.pyc
+*.egg-info
