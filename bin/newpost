@@ -14,14 +14,16 @@ args = parser.parse_args()
 
 title_for_file = args.title.lower().replace(' ', '-').replace("'", '').replace('"', '')
 filename = '%s-%s.md' % (time.strftime('%Y-%m-%d'), title_for_file)
+postdate = time.strftime('%Y-%m-%d %H:%M:%S')
 
 with file(filename, 'w') as f:
     f.write('---\n')
     f.write('layout: post\n')
     f.write('title: %s\n' % (args.title,))
+    f.write('date: %s\n' % (postdate,))
     if args.tags:
         f.write('tags: %s\n' % (', '.join(args.tags),))
     if args.nocomments:
-        f.write('comments_disabled: 1\n')
+        f.write('nocomments: 1\n')
     f.write('disqusid: %s\n' % (postid,))
     f.write('---\n')
