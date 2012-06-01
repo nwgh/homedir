@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import argparse
+import time
+import uuid
+
+postid = uuid.uuid4().hex
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-n', dest='nocomments', default=False, action='store_true')
+parser.add_argument('-t', dest='tags', action='append')
+parser.add_argument('title')
+args = parser.parse_args()
+
+title_for_file = args.title.lower().replace(' ', '-').replace("'", '').replace('"', '')
+filename = '%s-%s.md' % (time.strftime('%Y-%m-%d'), title_for_file)
+
+with file(filename, 'w') as f:
+    f.write('---\n')
+    f.write('layout: post\n')
+    f.write('title: %s\n' % (args.title,))
+    if args.tags:
+        f.write('tags: %s\n' % (', '.join(args.tags),))
+    if args.nocomments:
+        f.write('comments_disabled: 1\n')
+    f.write('disqusid: %s\n' % (postid,))
+    f.write('---\n')
