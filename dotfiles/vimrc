@@ -56,8 +56,6 @@ set completeopt=menu,menuone,longest
 set pumheight=15
 let g:SuperTabMappingForward='<C-S-tab>'
 let g:SuperTabDefaultCompletionType="context"
-let g:clang_complete_auto=0
-let g:clang_complete_copen=1
 
 " Some configuration for omnicompletion
 "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
