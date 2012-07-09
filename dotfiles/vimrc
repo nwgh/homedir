@@ -51,16 +51,9 @@ set wildmenu
 
 set directory^=~/.vimswap//
 
-" Config for supertab completion and clang autocomplete
+" Config for clang autocomplete
 set completeopt=menu,menuone,longest
 set pumheight=15
-let g:SuperTabMappingForward='<C-S-tab>'
-let g:SuperTabDefaultCompletionType="context"
-
-" Some configuration for omnicompletion
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-"inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-"inoremap <expr> <Nul> "\<C-x>\<C-o>\<C-n>\<C-p>"
 
 " xml-plugin opts before ftplugins turned on
 let xml_use_html = 1
@@ -96,7 +89,6 @@ nnoremap <f5> :bufdo bw<CR>
 
 let mapleader = ","
 nmap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
-nmap <leader>s :CtrlP<CR>
 nmap <leader>f :LustyFilesystemExplorerFromHere<CR>
 nmap <leader>b :LustyBufferExplorer<CR>
 nmap <leader>j :LustyJuggler<CR>
@@ -139,27 +131,11 @@ cnoremap <C-D> <Del>
 cnoremap <C-N> <Down>
 cnoremap <C-P> <Up>
 
-" Enable nproject
-let g:NProjectEnableHooks = 1
-let g:NProjectDoChdir = 0
-
 " Easy way to clear hilight from search
 nnoremap <leader><space> :noh<CR>
 
 " Easy way to ack for things
 nnoremap <leader><C-]> :Ack! <C-R><C-W><CR>
-
-" Set up ConqueTerm
-let g:ConqueTerm_TERM = 'xterm-256color'
-let g:ConqueTerm_CloseOnEnd = 1
-
-" Set up CtrlP
-let g:ctrlp_use_caching = 1
-let g:ctrlp_by_filename = 1
-let g:ctrlp_persistence_input = 0
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_lscommand = "ack --noenv --skipped --text -f"
 
 " Set up Powerline
 set encoding=utf-8
