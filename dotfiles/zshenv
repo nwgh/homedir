@@ -1,4 +1,7 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
+if [ -d /usr/local/share/python ] ; then
+    PATH=/usr/local/share/python:$PATH
+fi
 if [ -d /usr/X11R6/bin -a ! -L /usr/X11R6/bin ] ; then
     PATH=$PATH:/usr/X11R6/bin
 fi
