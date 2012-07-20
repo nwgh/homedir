@@ -106,6 +106,10 @@ fi
 # Some global aliases
 alias mq='hg -R $(hg root)/.hg/patches'
 
+if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
+	source "$HOME/.rvm/scripts/rvm"
+fi
+
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")

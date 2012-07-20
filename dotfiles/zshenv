@@ -29,6 +29,9 @@ fi
 if [ -d /opt/android/platform-tools ] ; then
 	PATH=/opt/android/platform-tools:$PATH
 fi
+if [ -d $HOME/.rvm/bin ] ; then
+	PATH=$PATH:$HOME/.rvm/bin
+fi
 
 if [ -d /usr/local/share/man ] ; then
 	MANPATH=/usr/local/share/man:$MANPATH
