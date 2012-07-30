@@ -93,8 +93,22 @@ else
 fi
 alias igrep='ggrep -i'
 
+_do_find() {
+	spath="$2"
+
+	if [[ -z "$spath" ]] ; then
+		spath="."
+	fi
+
+	find "$spath" -"$3"name "*$1*" | $PAGER
+}
+
 ffind() {
-	find . -iname "*$@*"
+	_do_find "$1" "$2"
+}
+
+ifind() {
+	_do_find "$1" "$2" i
 }
 
 if type dgit > /dev/null 2>&1 ; then
