@@ -3,3 +3,4 @@
 --color-match=bold red
 --color-lineno=reset
 --color-filename=reset
+--ignore-dir=obj-ff-dbg
