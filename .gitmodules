@@ -21,3 +21,9 @@
 [submodule "dotfiles/vim/bundle/ctrlp"]
 	path = dotfiles/vim/bundle/ctrlp
 	url = git://github.com/kien/ctrlp.vim.git
+[submodule "dotfiles/vim/bundle/vim-fugitive"]
+	path = dotfiles/vim/bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive
+[submodule "dotfiles/vim/bundle/hgrev"]
+	path = dotfiles/vim/bundle/hgrev
+	url = git://github.com/vim-scripts/hgrev
