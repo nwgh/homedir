@@ -15,19 +15,14 @@ set title
 set titlestring=vim
 
 if has("macunix")
-    set gfn=DroidSansMonoSlashedforPowerline:h12,Consolas:h12
+    set gfn=Ubuntu\ Mono:h14
 else
-    set gfn=Droid\ Sans\ Mono\ Slashed\ for\ Powerline\ 9,Terminus\ 10
+    set gfn=Ubuntu\ Mono\ 14
 endif
-
-" Fix solarized a bit - this only catches some things, looks bad underlined
-hi vimGroup gui=NONE
-hi Comment gui=NONE
-" hi Normal guibg=black guifg=grey
 
 " Add my custom match groups
 hi LineTooLong gui=underline
-hi TrailingWhitespace guibg=red
+hi TrailingWhitespace guibg=#dc322f
 
 " Label tabs with just the filename (no path)
 set guitablabel=%t
