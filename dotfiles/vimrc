@@ -1,8 +1,9 @@
-" Set up pathogen
 set nocompatible
-filetype off
-call pathogen#runtime_append_all_bundles()
+
+" Set up pathogen
+call pathogen#infect()
 call pathogen#helptags()
+
 filetype on
 filetype plugin on
 filetype indent on
