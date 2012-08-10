@@ -10,6 +10,7 @@ parentrevspec =
 record =
 pager =
 mq =
+relink =
 qimportbz = ~/.hgext/qimportbz
 bzexport = ~/.hgext/bzexport/bzexport.py
 try = ~/.hgext/try_extension/try.py
