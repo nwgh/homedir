@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+
+import argparse
+import collections
+import os
+import time
+
+def extract_frontmatter(fname):
+    frontmatter = collections.OrderedDict()
+    rest = []
+    started_frontmatter = False
+
+    with file(fname) as f:
+        for line in f:
+            if line.strip() == '---':
+                if started_frontmatter:
+                    break
+                started_frontmatter = True
+            elif started_frontmatter:
+                key, value = line.strip().split(': ')
+                frontmatter[key] = value
+            else:
+                sys.stderr.write('Found data before frontmatter: %s' % (line,))
+
+        rest = [line for line in f]
+
+    return frontmatter, rest
+
+parser = argparse.ArgumentParser()
+parser.add_argument('file')
+args = parser.parse_args()
+
+filename = args.file.replace('IN_PROGRESS', time.strftime('%Y-%m-%d'))
+postdate = time.strftime('%Y-%m-%d %H:%M:%S')
+
+frontmatter, body = extract_frontmatter(args.file)
+frontmatter['date'] = postdate
+
+with file(filename, 'w') as f:
+    f.write('---\n')
+    for k, v in frontmatter.iteritems():
+        f.write('%s: %s\n' % (k, v))
+    f.write('---\n')
+    f.writelines(body)
+
+os.unlink(args.file)

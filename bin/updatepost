@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+
+import argparse
+import collections
+import os
+import time
+
+def extract_frontmatter(fname):
+    frontmatter = collections.OrderedDict()
+    rest = []
+    started_frontmatter = False
+
+    with file(fname) as f:
+        for line in f:
+            if line.strip() == '---':
+                if started_frontmatter:
+                    break
+                started_frontmatter = True
+            elif started_frontmatter:
+                key, value = line.strip().split(': ')
+                frontmatter[key] = value
+            else:
+                sys.stderr.write('Found data before frontmatter: %s' % (line,))
+
+        rest = [line for line in f]
+
+    return frontmatter, rest
+
+parser = argparse.ArgumentParser()
+parser.add_argument('file')
+args = parser.parse_args()
+
+filename = '%s.update' % (args.file,)
+postdate = time.strftime('%Y-%m-%d %H:%M:%S')
+
+frontmatter, body = extract_frontmatter(args.file)
+frontmatter['update'] = postdate
+
+with file(filename, 'w') as f:
+    f.write('---\n')
+    for k, v in frontmatter.iteritems():
+        f.write('%s: %s\n' % (k, v))
+    f.write('---\n')
+    f.writelines(body)
+
+os.rename(filename, args.file)

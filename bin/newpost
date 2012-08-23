@@ -13,14 +13,13 @@ parser.add_argument('title')
 args = parser.parse_args()
 
 title_for_file = args.title.lower().replace(' ', '-').replace("'", '').replace('"', '')
-filename = '%s-%s.md' % (time.strftime('%Y-%m-%d'), title_for_file)
-postdate = time.strftime('%Y-%m-%d %H:%M:%S')
+filename = 'IN_PROGRESS-%s.md' % (title_for_file,)
 
 with file(filename, 'w') as f:
     f.write('---\n')
     f.write('layout: post\n')
     f.write('title: %s\n' % (args.title,))
-    f.write('date: %s\n' % (postdate,))
+    f.write('date: IN_PROGRESS\n')
     if args.tags:
         f.write('tags: %s\n' % (', '.join(args.tags),))
     if args.nocomments:
