@@ -43,18 +43,9 @@ if [ -d /opt/local/share/info ] ; then
 	INFOPATH=/opt/local/share/info:$INFOPATH
 fi
 
-if [ -d /opt/jetpack ] ; then
-	VIRTUAL_ENV=/opt/jetpack/latest
-	PATH=$PATH:$VIRTUAL_ENV/bin
-	PYTHONPATH=$VIRTUAL_ENV/python-lib:$PYTHONPATH
-	CUDDLEFISH_ROOT=$VIRTUAL_ENV
-fi
-
 export PATH
 export MANPATH
 export INFOPATH
-export PYTHONPATH
-export CUDDLEFISH_ROOT
 export PYTHONSTARTUP=~/.pythonrc
 export HISTFILE=~/.zsh_history
 export HISTSIZE=500
