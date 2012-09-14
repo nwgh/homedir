@@ -4,7 +4,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	editor = vi
-	pager = less -FRSXi
+	pager = less -FRXi
 [svn]
 	edit = true
 [color]
