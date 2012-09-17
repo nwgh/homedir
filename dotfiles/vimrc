@@ -107,7 +107,7 @@ nmap <leader>f :CtrlP<CR>
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = {
-    \ 'dir': '\.git$\|\.hg$\|obj-ff-.*$\|\.dropbox$\|\.fontconfig$\|\.cups$\|\.vimswap$\|\.wireshark.*$\|Library$\|\.ctrlp_cache$\|\.config$\|\.gem$\|Virtual Machines\.localized$\|Music$\|\.ccache$\|\.gem$\|\.hgext$\|\.pentadactyl$\|\.pip$\|\.clamquarantine$\|Movies$\|Pictures$\|Public$\|\.Trash$\|\.ssh$\|inbound$\|aurora$\|beta$\|central$\|\.rvm$\|\.subversion$\|\.android$',
+    \ 'dir': '\.git$\|\.hg$\|obj-ff-.*$\|\.dropbox$\|\.fontconfig$\|\.cups$\|\.vimswap$\|\.wireshark.*$\|Library$\|\.ctrlp_cache$\|\.config$\|\.gem$\|Virtual Machines\.localized$\|Music$\|\.ccache$\|\.gem$\|\.hgext$\|\.pentadactyl$\|\.pip$\|\.clamquarantine$\|Movies$\|Pictures$\|Public$\|\.Trash$\|\.ssh$\|inbound$\|aurora$\|beta$\|central$\|\.rvm$\|\.subversion$\|\.android$\|\.irssi$',
     \ 'file': '\.o$\|\.so$\|\.pyc$\|\.DS_Store$\|\.localized$\|Icon.$\|\.dmg$\|\.jpg$\|\.png$\|\.zip$\|\.tar$\|\.xpi$\|\.gif$\|\.tgz$\|\.tar\.bz2$\|\.tar\.gz$\|\.CFUserTextEncoding$\|\.Rapp\.history$\|\.X.*$\|\..*_history$\|\.lesshst$\|\.mozconfig.*$\|\.netrc$\|\.rnd$\|\.zcompdump\|\.patch$\|\.pdf$\|\.viminfo$\|\.parentlock$\|\.sqlite.*$\|\.p12$\|\.dia.*$\|\.plist$\|\.doc$\|\.rtf$\|\.odt$\|\.wav$\|\.pages$\|\.rdp$\|\.rdf$\|\.exe$\|\.tbz$\|\.docx$\|\.gdoc$\|\.diff$\|\.3gp$\|\.itermcolors$\|mseed.*$\|\.dropbox$\|\.ogg$\|\.mp3$\|\.m4a$\|\.mp4$\|\.mpg$\|\.mov$\|\.jpeg$',
     \ }
 let g:ctrlp_by_filename = 1
