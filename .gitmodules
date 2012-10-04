@@ -27,3 +27,6 @@
 [submodule "dotfiles/vim/bundle/hgrev"]
 	path = dotfiles/vim/bundle/hgrev
 	url = git://github.com/vim-scripts/hgrev
+[submodule "dotfiles/vim/bundle/snipmate.vim"]
+	path = dotfiles/vim/bundle/snipmate.vim
+	url = git://github.com/msanders/snipmate.vim
