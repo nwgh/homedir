@@ -42,7 +42,7 @@ if not revs:
     sys.exit(1)
 
 # Make a place for our base rev
-revs.append('master')
+revs.append('%s~1' % (revs[-1],))
 filenames.append('junk')
 revs.reverse()
 filenames.reverse()
