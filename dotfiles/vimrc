@@ -8,95 +8,90 @@ filetype on
 filetype plugin on
 filetype indent on
 
-set visualbell
-set textwidth=0
-set showmatch
-set showmode
-set showcmd
-set ignorecase
-set backspace=indent,eol,start
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set modeline
-
-set smartcase
-set hidden
-set history=1000
-set scrolloff=2
-set incsearch
-set hlsearch
-set ttyfast
-
-set mouse=a
+set visualbell " NO BEEPING
+set textwidth=0 " Don't want wrapping by default
+set showmatch " Show matching brackets if on screen
+set showmode " Indicate mode in bottom line
+set showcmd " Show commands when typing
+set ignorecase " Case-insensitive search by default
+set smartcase " ... But become sensitive if uppercase is used
+set backspace=indent,eol,start " Backspace ALL the things!
+set tabstop=4 " 4 spaces are good
+set shiftwidth=4 " Yep, still good
+set softtabstop=4 " And still... they're good
+set modeline " Enable use of modelines in files
+set hidden " Hide instead of unloading abandoned buffers
+set history=1000 " Number of commands to keep in history
+set scrolloff=2 " Number of lines to guarantee above/below current
+set incsearch " Incremental search (no enter needed)
+set hlsearch " Hilight search matches
+set ttyfast " Generally used locally, so we have fast TTYs
+set mouse=a " Mouse is enabled in all modes
+set notitle " Don't muck with the terminal title
+set ruler " Show line/column at the bottom
+set laststatus=2 " Always show status line
+set nobackup " Don't keep backups around after write succeeds
+set writebackup " But do write them while writing a buffer, just in case
+set number " Show line numbers
+set cursorline " Hilight the current line
+set directory^=~/.vimswap// " Put .sw* files out of the way
 
 " see :help smartindent for inoremap details
-set smartindent
-set smarttab
-set expandtab
-
-" turn off annoying X-window title renaming
-" handle window crap
-set notitle
-set ruler
-set laststatus=2
-set nobackup
-set writebackup
-
-" Want the current line hilighted
-set cursorline
+set smartindent " Smart auto indentation
+set smarttab " Use tabs or spaces depending on the file
+set expandtab " By default, use spaces instead of tabs
 
 " Better filename completion (more like the shell)
 set wildmode=longest:list
 set wildmenu
 
-set directory^=~/.vimswap//
 
 " Config for clang autocomplete
 set completeopt=menu,menuone,longest,preview
 set pumheight=15
 inoremap <expr> <C-J> pumvisible() ? "\<C-N>" : "\<C-J>"
 inoremap <expr> <C-K> pumvisible() ? "\<C-P>" : "\<C-K>"
-let g:clang_auto_select = 2
-let g:clang_complete_copen = 1
-let g:clang_periodic_quickfix = 1
-let g:clang_snippets = 1
-let g:clang_snippets_engine = 'snipmate'
-let g:clang_use_library = 1
-let g:clang_complete_macros = 1
-let g:clang_complete_patterns = 1
-let g:clang_close_preview = 1
+let g:clang_auto_select = 2 " Select & insert first match
+let g:clang_complete_copen = 1 " Open quickfix window on error
+let g:clang_periodic_quickfix = 1 " Periodically update quickfix window
+let g:clang_snippets = 1 " Do snippet magic for parameters
+let g:clang_snippets_engine = 'snipmate' " Snipmate works better
+let g:clang_use_library = 1 " Use libclang instead of the clang binary
+let g:clang_complete_macros = 1 " Enable macro completion
+let g:clang_complete_patterns = 1 " Enable completion of common code patterns
+let g:clang_close_preview = 1 " Close the preview window when done
 
-" xml-plugin opts before ftplugins turned on
-let xml_use_html = 1
-
-au!
+" Herein lies all the magic for file types
+autocmd!
 syntax on
-au BufNewFile,BufRead **/mozilla/*.cpp,**/mozilla/*.h set ft=mozilla-c
-au BufNewFile,BufRead **/mozilla/*.js,**/mozilla/*.jsm set ft=mozilla-js
-au BufNewFile,BufRead *.pyx,*.pxd set ft=pyrex
-au BufNewFile,BufRead *.md set ft=markdown
-au FileType javascript so $HOME/.vim/js.vim
-au FileType c so $HOME/.vim/c.vim
-au FileType cpp so $HOME/.vim/cpp.vim
-au FileType mozilla-c so $HOME/.vim/mozilla.vim
-au FileType mozilla-js so $HOME/.vim/mozilla_js.vim
-au FileType makefile so $HOME/.vim/Make.vim
-au FileType sql so $HOME/.vim/sql.vim
-au FileType python so $HOME/.vim/python.vim
-au FileType pyrex so $HOME/.vim/pyrex.vim
-au FileType text so $HOME/.vim/txt.vim
-au FileType vim so $HOME/.vim/vim.vim
+autocmd BufNewFile,BufRead **/mozilla/*.cpp,**/mozilla/*.h set ft=mozilla-c
+autocmd BufNewFile,BufRead **/mozilla/*.js,**/mozilla/*.jsm set ft=mozilla-js
+autocmd BufNewFile,BufRead *.pyx,*.pxd set ft=pyrex
+autocmd BufNewFile,BufRead *.md set ft=markdown
+autocmd FileType javascript so $HOME/.vim/js.vim
+autocmd FileType c so $HOME/.vim/c.vim
+autocmd FileType cpp so $HOME/.vim/cpp.vim
+autocmd FileType mozilla-c so $HOME/.vim/mozilla.vim
+autocmd FileType mozilla-js so $HOME/.vim/mozilla_js.vim
+autocmd FileType makefile so $HOME/.vim/Make.vim
+autocmd FileType sql so $HOME/.vim/sql.vim
+autocmd FileType python so $HOME/.vim/python.vim
+autocmd FileType pyrex so $HOME/.vim/pyrex.vim
+autocmd FileType text so $HOME/.vim/txt.vim
+autocmd FileType vim so $HOME/.vim/vim.vim
 
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
 
-inoremap jj <Esc>
-inoremap kk <Esc>
+" Easy way to get out of insert mode
+inoremap jk <Esc>
+inoremap kj <Esc>
 
+" Easy way to cycle through buffers
 nmap <C-k> :bp<CR>
 nmap <C-j> :bn<CR>
 
+" Here are some other handy keybindings I use
 let mapleader = ","
 nmap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
 nmap <leader>j :LustyJuggler<CR>
@@ -105,24 +100,28 @@ nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>r :CtrlPMRU<CR>
 nmap <leader>f :CtrlP<CR>
 
-let g:ctrlp_working_path_mode = 0
+" Setup for ctrlp
+let g:ctrlp_working_path_mode = 0 " Always start from $CWD
 let g:ctrlp_custom_ignore = {
     \ 'dir': '\.git$\|\.hg$\|obj-ff-.*$\|\.dropbox$\|\.fontconfig$\|\.cups$\|\.vimswap$\|\.wireshark.*$\|Library$\|\.ctrlp_cache$\|\.config$\|\.gem$\|Virtual Machines\.localized$\|Music$\|\.ccache$\|\.gem$\|\.hgext$\|\.pentadactyl$\|\.pip$\|\.clamquarantine$\|Movies$\|Pictures$\|Public$\|\.Trash$\|\.ssh$\|inbound$\|aurora$\|beta$\|central$\|\.rvm$\|\.subversion$\|\.android$\|\.irssi$\|\.app$',
     \ 'file': '\.o$\|\.so$\|\.pyc$\|\.DS_Store$\|\.localized$\|Icon.$\|\.dmg$\|\.jpg$\|\.png$\|\.zip$\|\.tar$\|\.xpi$\|\.gif$\|\.tgz$\|\.tar\.bz2$\|\.tar\.gz$\|\.CFUserTextEncoding$\|\.Rapp\.history$\|\.X.*$\|\..*_history$\|\.lesshst$\|\.mozconfig.*$\|\.netrc$\|\.rnd$\|\.zcompdump\|\.patch$\|\.pdf$\|\.viminfo$\|\.parentlock$\|\.sqlite.*$\|\.p12$\|\.dia.*$\|\.plist$\|\.doc$\|\.rtf$\|\.odt$\|\.wav$\|\.pages$\|\.rdp$\|\.rdf$\|\.exe$\|\.tbz$\|\.docx$\|\.gdoc$\|\.diff$\|\.3gp$\|\.itermcolors$\|mseed.*$\|\.dropbox$\|\.ogg$\|\.mp3$\|\.m4a$\|\.mp4$\|\.mpg$\|\.mov$\|\.jpeg$',
     \ }
-let g:ctrlp_by_filename = 1
-let g:ctrlp_max_history = 0
-let g:ctrlp_max_files = 0
+let g:ctrlp_by_filename = 1 " Default to look at just the filename
+let g:ctrlp_max_history = 0 " Disable history in ctrlp
+let g:ctrlp_max_files = 0 " Index ALL the files!
+" Make it so I don't have to take my fingers off the home row to cycle
+" through options that ctrlp gives me
 let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("j")': ['<c-j>', '<down>', '<c-n>'],
     \ 'PrtSelectMove("k")': ['<c-k>', '<up>', '<c-p>'],
     \ 'PrtHistory(-1)':     [],
     \ 'PrtHistory(1)':      [],
     \ }
-let g:ctrlp_command = 'CtrlPRoot'
+let g:ctrlp_command = 'CtrlPRoot' " Use C-p to get default behavior of ctrlp
 
-" http://www.vim.org/tips/tip.php?tip_id=94
-set tags=tags;/,~/src/**/tags
+let g:snips_author = 'Nick Hurley' " Author for snipmate
+
+set tags=tags;/,~/src/**/tags " Find tags filesj
 
 " Make terminal colors things I like
 set bg=dark
@@ -134,9 +133,10 @@ if exists('$TERM_SESSION_CLASS_ID')
 endif
 colorscheme solarized
 
-hi LineTooLong cterm=underline term=underline
-hi TrailingWhitespace ctermbg=darkred term=underline
-hi link javaScriptNumber Number
+" Some custom highlights
+highlight LineTooLong cterm=underline term=underline
+highlight TrailingWhitespace ctermbg=darkred term=underline
+highlight link javaScriptNumber Number
 let python_highlight_all = 1
 
 " Have the status line show the filename, whether or not it's modified,
@@ -145,8 +145,8 @@ let python_highlight_all = 1
 set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
 
 " Setup hilighting for certain line conditions
-au FileType javascript,c,cpp,makefile,sql,python,vim let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
-au FileType javascript,c,cpp,makefile,sql,python,vim let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
+autocmd FileType javascript,c,cpp,makefile,sql,python,vim let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
+autocmd FileType javascript,c,cpp,makefile,sql,python,vim let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
 " Make editing in command-line mode simpler for me - emacs-style
 cnoremap <C-A> <Home>

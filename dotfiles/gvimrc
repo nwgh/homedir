@@ -1,19 +1,21 @@
 " Remove toolbar, menubar, scrollbars
-set go-=T
-set go-=m
-set go-=r
-set go-=L
+set guioptions-=T
+set guioptions-=m
+set guioptions-=r
+set guioptions-=L
+
 " Try to use the system paste buffer if it's available
-set go+=a
-set go+=A
+set guioptions+=a
+set guioptions+=A
 
 " Don't let the cursor blink ever. EVER
-set gcr=a:blinkwait0-blinkoff0-blinkon0
+set guicursor=a:blinkwait0-blinkoff0-blinkon0
 
 " Have a simple title string
 set title
 set titlestring=vim
 
+" I much prefer Ubuntu Mono
 if has("macunix")
     set gfn=Ubuntu\ Mono:h14
 else
@@ -21,8 +23,11 @@ else
 endif
 
 " Add my custom match groups
-hi LineTooLong gui=underline
-hi TrailingWhitespace guibg=#dc322f
+highlight LineTooLong gui=underline
+highlight TrailingWhitespace guibg=#dc322f
+
+" Fix up the cursor line number
+highlight CursorLineNr gui=NONE guifg=NONE
 
 " Label tabs with just the filename (no path)
 set guitablabel=%t
