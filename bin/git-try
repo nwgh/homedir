@@ -1,274 +1,94 @@
 #!/usr/bin/env python
 
-import argparse
+import glob
 import os
 import shutil
-import StringIO
 import subprocess
 import sys
 import tempfile
-
-PLATFORMS = ('all', 'none', 'linux', 'linuxqt', 'linux64', 'macosx64', 'win32',
-             'linux-android', 'linux-maemo5-gtk', 'linux-maemo5-qt',
-             'linux-mobile', 'win32-mobile', 'macosx-mobile', 'macosx')
-MOCHITESTS = ('mochitest-1', 'mochitest-2', 'mochitest-3', 'mochitest-4',
-              'mochitest-5', 'mochitest-o')
-UNITTESTS = ('all', 'none', 'reftest', 'reftest-ipc', 'reftest-no-accel',
-             'crashtest', 'crashtest-ipc', 'xpcshell', 'jsreftest', 'jetpack',
-             'mozmill-all', 'opengl', 'mochitests') + MOCHITESTS
-TALOS = ('all', 'none', 'chrome', 'nochrome', 'dirty', 'tp', 'tp4', 'cold',
-         'v8', 'svg', 'scroll', 'dromaeo', 'a11y', 'paint', 'remote-ts',
-         'remote-tdhtml', 'remote-tsvg', 'remote-tsspider', 'remote-tpan',
-         'remote-tp4m', 'remote-tp4m_nochrome', 'remote-twinopen',
-         'remote-zoom')
 
 class GitTryerException(Exception):
     pass
 
 class GitTryer(object):
     def __init__(self, args):
-        self.rev_from = 'master'
-        self.rev_to = 'HEAD'
-        self.args = {'build':None, 'platform':None, 'unittests':None,
-                     'talos':None, 'email':None}
+        self.args = args
         self.tmpdir = None
-        self.oldcwd = None
+        self.patches = None
 
-        name = self._get_conf('user.name')
-        if not name:
-            raise GitTryerException, 'Missing user name'
-
-        email = self._get_conf('user.email')
-        if not email:
-            raise GitTryerException, 'Missing user email'
-
-        self.userstr = '%s <%s>' % (name, email)
-
-        self.url = self._get_conf('try.url')
-        if not self.url:
-            raise GitTryerException, 'Missing URL for try server'
-
-        self.repo = self._get_conf('try.repo')
+        p = subprocess.Popen(['git', 'config', '--get', 'try.repo'],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.wait()
+        self.repo = p.stdout.read().strip()
         if not self.repo:
             raise GitTryerException, 'Missing path to HG repo'
 
-        default_args = self._get_conf('try.defaults')
-        if default_args:
-            self._parse_tryargs(default_args)
-        self._compute_args_and_revs(args)
-
-    def _get_conf(self, var):
-        p = subprocess.Popen(['git', 'config', '--get', var],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        val = p.stdout.read().strip()
-        p.wait()
-
-        return val
-
-    def _parse_tryargs(self, argstr):
-        args = argstr.split()
-        i = 0
-        while i < len(args):
-            skip = 1
-            if args[i] in ('-b', '--build'):
-                skip = 2
-                self.args['build'] = args[i + 1]
-            if args[i] in ('-p', '--platform'):
-                skip = 2
-                self.args['platform'] = args[i + 1]
-            if args[i] in ('-u', '--unittests'):
-                skip = 2
-                self.args['unittests'] = args[i + 1]
-            if args[i] in ('-t', '--talos'):
-                skip = 2
-                self.args['talos'] = args[i + 1]
-            if args[i] in ('-e', '--all-emails'):
-                self.args['email'] = '-e'
-            if args[i] in ('-n', '--no-emails'):
-                self.args['email'] = '-n'
-            i += skip
-
-    def _create_args(self, atype, args, check_mochitests=False):
-        if 'all' in args:
-            if len(args) != 1:
-                raise GitTryerException, 'all can not be used with any other %s' % atype
-            return 'all'
-
-        if 'none' in args:
-            if len(args) != 1:
-                raise GitTryerException, 'none can not be used with any other %s' % atype
-            return 'none'
-
-        if check_mochitests and 'mochitests' in args:
-            for m in MOCHITESTS:
-                if m in args:
-                    raise GitTryerException, 'mochitests can not be used with any other mochitest'
-
-        return ','.join(args)
-
-    def _compute_args_and_revs(self, args):
-        p = argparse.ArgumentParser(description='Do a try run on a patch',
-                prog='git try')
-        p.add_argument('-b', '--build', choices=('d', 'o', 'do'))
-        p.add_argument('-p', '--platform', choices=PLATFORMS,
-                help='Platforms to build', action='append')
-        p.add_argument('-u', '--unittests', choices=UNITTESTS,
-                help='Unit tests to run', action='append')
-        p.add_argument('-t', '--talos', choices=TALOS,
-                help='Talos tests to run', action='append')
-        p.add_argument('-e', '--all-emails', help='Send all email',
-                action='store_true')
-        p.add_argument('-n', '--no-emails', help='Send no email',
-                action='store_true')
-        p.add_argument('-m', '--mozilla-central', action='store_true',
-                help='Use mozilla-central configuration')
-        p.add_argument('-f', '--force', action='store_true', default=False,
-                help='Force operation even with uncommitted changes')
-        p.add_argument('rev', nargs='*', help='Revisions to push')
-
-        args = p.parse_args(args)
-
-        self.args['force'] = args.force
-
-        if args.build:
-            self.args['build'] = args.build
-
-        if args.platform:
-            self.args['platform'] = self._create_args('platform', args.platform)
-
-        if args.unittests:
-            self.args['unittests'] = self._create_args('unittests',
-                    args.unittests, True)
-
-        if args.talos:
-            self.args['talos'] = self._create_args('talos', args.talos)
-
-        if args.all_emails and args.no_emails:
-            raise GitTryerException, '-e and -n are exclusive'
-
-        if args.all_emails:
-            self.args['email'] = '-e'
-
-        if args.no_emails:
-            self.args['email'] = '-n'
-
-        if args.mozilla_central:
-            if args.build or args.platform or args.unittests or args.talos:
-                raise GitTryerException, '-m may not be used with -b, -p, -u or -t'
-            self.args['build'] = 'do'
-            self.args['platform'] = 'all'
-            self.args['unittests'] = 'all'
-            self.args['talos'] = 'all'
-
-        self._get_revs(args.rev)
-
-    def _get_revs(self, args):
-        if len(args) > 2:
-            raise GitTryerException, 'At most 2 revisions are allowed (from to)'
-        if len(args) == 2:
-            self.rev_from, self.rev_to = args
-        elif args:
-            self.rev_from = args[0]
-
-        p = subprocess.Popen(['git', 'rev-parse', '-q', '--verify', self.rev_from],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if p.wait():
-            raise GitTryerException, 'Invalid revision %s' % self.rev_from
-
-        p = subprocess.Popen(['git', 'rev-parse', '-q', '--verify', self.rev_to],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if p.wait():
-            raise GitTryerException, 'Invalid revision %s' % self.rev_to
-
-    def _build_try(self):
-        trylist = ['try:']
-
-        if not any((self.args['build'], self.args['platform'], self.args['unittests'], self.args['talos'])):
-            raise GitTryerException, 'Empty try configuration'
-
-        if self.args['build']:
-            trylist.extend(['-b', self.args['build']])
-
-        if self.args['platform']:
-            trylist.extend(['-p', self.args['platform']])
-
-        if self.args['unittests']:
-            trylist.extend(['-u', self.args['unittests']])
-
-        if self.args['talos']:
-            trylist.extend(['-t', self.args['talos']])
-
-        if self.args['email']:
-            trylist.append(self.args['email'])
-
-        return ' '.join(trylist)
-
     def _cleanup(self):
-        if self.oldcwd:
-            os.chdir(self.oldcwd)
-
         if self.tmpdir:
             shutil.rmtree(self.tmpdir)
 
-    def _save_output(self, proc, fname):
-        with file(os.path.join(self.tmpdir, fname), 'w') as f:
-                f.write('STDOUT\n')
-                f.write(proc.stdout.read())
-                f.write('\n\nSTDERR\n')
-                f.write(proc.stderr.read())
+        if self.patches:
+            p = subprocess.Popen(['hg', 'qpop', '-a'], cwd=self.repo)
+            for patch in self.patches:
+                p = subprocess.Popen(['hg', 'qdel', patch], cwd=self.repo)
+                p.wait()
 
     def run(self):
         # Make our working directory
         self.tmpdir = tempfile.mkdtemp(prefix='try', dir='/tmp')
-        self.oldcwd = os.getcwd()
-        patchfile = os.path.join(self.tmpdir, 'patch')
-        repodir = os.path.join(self.tmpdir, 'repo')
 
-        # Ensure there aren't any outstanding changes
-        if not self.args['force']:
+        try:
+            # Ignore any outstanding changes, don't pass this arg on to hg try
+            self.args.remove('--force')
+        except ValueError:
+            # Ensure there aren't any outstanding changes
+            sys.stdout.write('checking git repository...\n')
             p = subprocess.Popen(['git', 'status', '--porcelain', '-z'],
                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             p.wait()
             if p.stdout.read():
                 raise GitTryerException, 'You have uncommitted changes'
 
-        # Get the contents of the patch
-        sys.stdout.write('making patch...\n')
-        with file(patchfile, 'w') as f:
-            p = subprocess.Popen(['git', 'mkpatch', self.rev_from, self.rev_to],
-                    stdout=f, stderr=subprocess.PIPE)
-            p.wait()
-
-        # Go to our hg repo and get a working copy
-        sys.stdout.write('cloning source repository...\n')
-        p = subprocess.Popen(['hg', 'clone', self.repo, repodir], stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+        # Get the contents of the patches
+        sys.stdout.write('making patches...\n')
+        p = subprocess.Popen(['git', 'branchseries', '-o', self.tmpdir])
         if p.wait():
-            self._save_output(p, 'clone.out')
+            raise GitTryerException, 'Could not create patches'
+
+        # Make sure our hg repo doesn't have any outstanding changes or patches
+        sys.stdout.write('checking hg repository...\n')
+        p = subprocess.Popen(['hg', 'qseries'], stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, cwd=self.repo)
+        p.wait()
+        if p.stdout.read().strip():
+            raise GitTryerException, 'Hg repo already has mq patches'
+
+        p = subprocess.Popen(['hg', 'status'], stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, cwd=self.repo)
+        p.wait()
+        if p.stdout.read().strip():
+            raise GitTryerException, 'Hg repo has outstanding changes'
+
+        # Go to our hg repo and update to the latest
+        sys.stdout.write('updating hg repository...\n')
+        p = subprocess.Popen(['hg', 'pull', '-u'], stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, cwd=self.repo)
+        if p.wait():
             raise GitTryerException, 'Could not check out hg repository'
 
-        # Apply the patch
-        sys.stdout.write('applying patch...\n')
-        os.chdir(repodir)
-        p = subprocess.Popen(['hg', 'import', '--config', 'defaults.import=',
-                patchfile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if p.wait():
-            self._save_output(p, 'import.out')
-            raise GitTryerException, 'Could not apply patch to hg repository'
+        # Apply the patches
+        sys.stdout.write('applying patches...\n')
+        self.patches = glob.glob(os.path.join(self.tmpdir, '*.patch'))
+        for patch in self.patches:
+            p = subprocess.Popen(['hg', 'qimport', '-P', patch], cwd=self.repo)
+            if p.wait():
+                raise GitTryerException, 'Could not apply patch to hg'
 
-        # Make our try selections
-        sys.stdout.write('setting try selections...\n')
-        p = subprocess.Popen(['hg', '--config', 'ui.editor=true', 'qnew',
-            '-m', self._build_try(), '-u', self.userstr, 'try_config'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Use the hg try extension to do the right thing
+        sys.stdout.write('running hg try extension...\n')
+        p = subprocess.Popen(['hg', 'try'] + self.args, cwd=self.repo)
         if p.wait():
-            self._save_output(p, 'qnew.out')
-            raise GitTryerException, 'Failed to set try configuration'
-
-        # Push to the try server
-        sys.stdout.write('pushing to try...\n')
-        if os.system('hg push -f %s' % self.url):
-            raise GitTryerException, 'Failed to push!'
+            raise GitTryerException, 'hg try failed'
 
         # Get rid of our working copy if everything went well
         sys.stdout.write('cleaning up...\n')

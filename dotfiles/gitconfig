@@ -28,6 +28,4 @@
 	insteadOf = gh:
 	insteadOf = github:
 [try]
-	url = ssh://hg.mozilla.org/try
-	repo = http://hg.mozilla.org/mozilla-central
-	defaults = -b do -p all -u all -t none -n
+	repo = /Users/hurley/src/mozilla/central
