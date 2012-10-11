@@ -85,7 +85,6 @@ inoremap # X#
 
 " Easy way to get out of insert mode
 inoremap jk <Esc>
-inoremap kj <Esc>
 
 " Easy way to cycle through buffers
 nmap <C-k> :bp<CR>
