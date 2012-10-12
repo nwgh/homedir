@@ -51,6 +51,7 @@ set completeopt=menu,menuone
 set pumheight=15
 inoremap <expr> <C-J> pumvisible() ? "\<C-N>" : "\<C-J>"
 inoremap <expr> <C-K> pumvisible() ? "\<C-P>" : "\<C-K>"
+inoremap <c-space> <c-x><c-u>
 let g:clang_auto_select = 2 " Select & insert first match
 let g:clang_complete_copen = 1 " Open quickfix window on error
 let g:clang_periodic_quickfix = 1 " Periodically update quickfix window
