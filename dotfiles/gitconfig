@@ -24,6 +24,7 @@
 	slog = log --stat
 	npush = push origin refs/notes/*
 	flog = log --first-parent
+	root = rev-parse --show-toplevel
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
