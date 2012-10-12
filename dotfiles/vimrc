@@ -88,17 +88,17 @@ inoremap # X#
 inoremap jk <Esc>
 
 " Easy way to cycle through buffers
-nmap <C-k> :bp<CR>
-nmap <C-j> :bn<CR>
+nnoremap <C-k> :bp<CR>
+nnoremap <C-j> :bn<CR>
 
 " Here are some other handy keybindings I use
 let mapleader = ","
-nmap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
-nmap <leader>j :LustyJuggler<CR>
-nmap <leader>m :CtrlPMixed<CR>
-nmap <leader>b :CtrlPBuffer<CR>
-nmap <leader>r :CtrlPMRU<CR>
-nmap <leader>f :CtrlP /Users/hurley/src<CR>
+nnoremap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
+nnoremap <leader>j :LustyJuggler<CR>
+nnoremap <leader>m :CtrlPMixed<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>r :CtrlPMRU<CR>
+nnoremap <leader>f :CtrlP /Users/hurley/src<CR>
 
 " Setup for ctrlp
 let g:ctrlp_working_path_mode = 0 " Always start from $CWD
