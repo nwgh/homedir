@@ -47,7 +47,7 @@ set wildmenu
 
 
 " Config for clang autocomplete
-set completeopt=menu,menuone
+set completeopt=menu,menuone,longest
 set pumheight=15
 inoremap <expr> <C-J> pumvisible() ? "\<C-N>" : "\<C-J>"
 inoremap <expr> <C-K> pumvisible() ? "\<C-P>" : "\<C-K>"
