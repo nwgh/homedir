@@ -29,7 +29,9 @@ class GitTryer(object):
 
         if self.patches:
             p = subprocess.Popen(['hg', 'qpop', '-a'], cwd=self.repo)
+            p.wait()
             for patch in self.patches:
+                patch = os.path.basename(patch)
                 p = subprocess.Popen(['hg', 'qdel', patch], cwd=self.repo)
                 p.wait()
 
