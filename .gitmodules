@@ -30,3 +30,6 @@
 [submodule "dotfiles/vim/bundle/snipmate.vim"]
 	path = dotfiles/vim/bundle/snipmate.vim
 	url = git://github.com/msanders/snipmate.vim
+[submodule "dotfiles/vim/bundle/vim-fswitch"]
+	path = dotfiles/vim/bundle/vim-fswitch
+	url = git://github.com/derekwyatt/vim-fswitch.git
