@@ -56,6 +56,3 @@ p4.binary = False
 vimdiff.priority = 30
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close
-
-[try]
-defaults = -b do -p all -u all -t none -n
