@@ -82,7 +82,10 @@ class GitTryer(object):
         sys.stdout.write('applying patches...\n')
         self.patches = glob.glob(os.path.join(self.tmpdir, '*.patch'))
         for patch in self.patches:
-            p = subprocess.Popen(['hg', 'qimport', '-P', patch], cwd=self.repo)
+            p = subprocess.Popen(['hg', 'qimport', patch], cwd=self.repo)
+            if p.wait():
+                raise GitTryerException, 'Could not import patch to hg'
+            p = subprocess.Popen(['hg', 'qpush'], cwd=self.repo)
             if p.wait():
                 raise GitTryerException, 'Could not apply patch to hg'
 
