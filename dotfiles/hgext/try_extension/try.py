@@ -6,19 +6,21 @@ from mercurial import commands
 from mercurial import extensions
 from mercurial import util
 
-PLATFORMS = ('all', 'none', 'linux', 'linuxqt', 'linux64', 'macosx64', 'win32',
-             'linux-android', 'linux-maemo5-gtk', 'linux-maemo5-qt',
-             'linux-mobile', 'win32-mobile', 'macosx-mobile', 'macosx')
+PLATFORMS = ('all', 'none', 'linux', 'linux64', 'macosx64', 'win32', 'win64',
+             'android', 'android-armv6')
 MOCHITESTS = ('mochitest-1', 'mochitest-2', 'mochitest-3', 'mochitest-4',
-              'mochitest-5', 'mochitest-o')
+              'mochitest-5', 'mochitest-o', 'mochitest-bc')
 UNITTESTS = ('all', 'none', 'reftest', 'reftest-ipc', 'reftest-no-accel',
              'crashtest', 'crashtest-ipc', 'xpcshell', 'jsreftest', 'jetpack',
-             'mozmill-all', 'opengl', 'mochitests') + MOCHITESTS
-TALOS = ('all', 'none', 'chrome', 'nochrome', 'dirty', 'tp', 'tp4', 'cold',
-         'v8', 'svg', 'scroll', 'dromaeo', 'a11y', 'paint', 'remote-ts',
-         'remote-tdhtml', 'remote-tsvg', 'remote-tsspider', 'remote-tpan',
-         'remote-tp4m', 'remote-tp4m_nochrome', 'remote-twinopen',
-         'remote-zoom')
+             'marionette', 'mozmill', 'mochitests', 'reftest-1', 'reftest-2',
+             'reftest-3', 'reftest-4', 'jsreftest-1', 'jsreftest-2',
+             'jsreftest-3', 'crashtest-2', 'crashtest-3', 'mochitest-6',
+             'mochitest-7', 'mochitest-8', 'robocop') + MOCHITESTS
+TALOS = ('all', 'none', 'tpn', 'chromez', 'nochromer', 'other', 'dirtypaint',
+         'svgr', 'dromaeojs', 'xperf', 'remote-ts', 'remote-tdhtml',
+         'remote-tsvg', 'remote-tpan', 'remote-trobopan', 'remote-trobocheck',
+         'remote-troboprovider', 'remote-trobocheck2', 'remote-trobocheck3',
+         'remote-tp4m_nochrome')
 
 class Tryer(object):
     def __init__(self, ui, repo, args):
