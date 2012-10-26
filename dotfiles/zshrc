@@ -120,10 +120,6 @@ fi
 # Some global aliases
 alias mq='hg -R $(hg root)/.hg/patches'
 
-if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
-	source "$HOME/.rvm/scripts/rvm"
-fi
-
 if [ -d /opt/jetpack ] ; then
 	jetpack() {
 		OLDPWD=$(pwd)
