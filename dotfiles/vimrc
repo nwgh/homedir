@@ -166,7 +166,7 @@ cnoremap <C-K> <Up>
 nnoremap <leader><space> :noh<CR>
 
 " Easy way to ack for things
-nnoremap <leader><C-]> :Ack! <C-R><C-W><CR>
+nnoremap <leader><C-]> :LAck! <C-R><C-W><CR>
 
 " Set up Powerline
 set encoding=utf-8
