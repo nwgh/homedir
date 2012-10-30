@@ -135,6 +135,10 @@ if [ -d /opt/jetpack ] ; then
 	}
 fi
 
+if which rbenv > /dev/null 2>&1 ; then
+	eval "$(rbenv init -)"
+fi
+
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
