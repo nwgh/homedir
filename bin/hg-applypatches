@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+import os
+import subprocess
+import sys
+
+patches = sys.argv[1:]
+
+for patch in patches:
+    p = subprocess.Popen(['hg', 'qimport', patch])
+    if p.wait():
+        sys.exit(1)
+    p = subprocess.Popen(['hg', 'qpush'])
+    if p.wait():
+        sys.exit(2)
+    os.unlink(patch)
