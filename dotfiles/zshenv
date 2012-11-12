@@ -39,6 +39,9 @@ fi
 if [ -d /opt/local/share/info ] ; then
 	INFOPATH=/opt/local/share/info:$INFOPATH
 fi
+if [ -f /usr/local/share/python/virtualenvwrapper.sh ] ; then
+	source /usr/local/share/python/virtualenvwrapper.sh
+fi
 
 export PATH
 export MANPATH
