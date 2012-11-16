@@ -119,6 +119,7 @@ fi
 
 # Some global aliases
 alias mq='hg -R $(hg root)/.hg/patches'
+alias testblog='jekyll --pygments --no-lsi --safe --serve --auto'
 
 if [ -d /opt/jetpack ] ; then
 	jetpack() {
