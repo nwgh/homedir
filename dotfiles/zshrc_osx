@@ -9,6 +9,7 @@ alias la="/bin/ls -A ${SPECIFIER}"
 alias ll="/bin/ls -Al ${SPECIFIER}"
 alias mvim="mvim --remote-silent"
 alias gvim="gvim --remote-silent"
+alias subl="/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl"
 export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_osx"
 export NWH_ZSH_CONFIG="osx"
 
