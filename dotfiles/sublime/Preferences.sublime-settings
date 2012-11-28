@@ -1,0 +1,14 @@
+{
+    "color_scheme": "Packages/Solarized Color Scheme/Solarized (dark).tmTheme",
+    "ignored_packages": [],
+    "vintage_ctrl_keys": true,
+    "vintage_start_in_command_mode": true,
+    "highlight_modified_tabs": true,
+    "ensure_newline_at_eof_on_save": true,
+    "draw_white_space": "all",
+    "word_wrap": true,
+    "translate_tabs_to_spaces": true,
+    "font_face": "Ubuntu Mono",
+    "font_size": 14,
+    "rulers": [80]
+}

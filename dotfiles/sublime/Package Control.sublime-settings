@@ -1,0 +1,20 @@
+{
+	"installed_packages":
+	[
+		"Emmet",
+		"HTML5",
+		"Package Control",
+		"SCSS",
+		"Solarized Color Scheme",
+		"SublimeClang",
+		"SublimeCodeIntel",
+		"SublimeLinter",
+		"SublimePTY",
+		"SublimeREPL",
+		"VintageEx"
+	],
+	"repositories":
+	[
+		"https://github.com/wuub/SublimePTY"
+	]
+}
