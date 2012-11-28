@@ -11,6 +11,7 @@
 		"SublimeLinter",
 		"SublimePTY",
 		"SublimeREPL",
+		"TrailingSpaces",
 		"VintageEx"
 	],
 	"repositories":
