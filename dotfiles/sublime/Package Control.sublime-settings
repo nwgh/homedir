@@ -15,9 +15,5 @@
 		"SublimeRope",
 		"TrailingSpaces",
 		"VintageEx"
-	],
-	"repositories":
-	[
-		"https://github.com/wuub/SublimePTY"
 	]
 }
