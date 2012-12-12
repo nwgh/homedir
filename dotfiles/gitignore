@@ -18,5 +18,6 @@
 *.a
 *.pyc
 *.pyo
+.ropeproject
 cscope.out
 tags
