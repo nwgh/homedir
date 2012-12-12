@@ -10,8 +10,8 @@
 		"SublimeClang",
 		"SublimeCodeIntel",
 		"SublimeLinter",
-		"SublimePTY",
 		"SublimeREPL",
+		"SublimeRope",
 		"TrailingSpaces",
 		"VintageEx"
 	],

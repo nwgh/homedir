@@ -1,0 +1,4 @@
+{
+    "trim_trailing_witespace_on_save": true,
+    "auto_complete_triggers": [ {"selector": "source.python - string - comment - constant.numeroc", "characters": "."} ]
+}

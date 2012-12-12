@@ -1,0 +1,14 @@
+{
+    "suppress_word_completions": true,
+    "suppress_explicit_completions": true,
+    "case_sensitive_completion": false,
+    "rope_autoimport_modules":
+    [
+        "flask",
+        "jinja2",
+        "werkzeug",
+        "lxml",
+        "pyquery",
+        "requests"
+    ]
+}
