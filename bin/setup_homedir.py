@@ -30,7 +30,8 @@ __author__ = "Nick Hurley <hurley@todesschaf.org>"
 __copyright__ = "Copyright 2010, Nick Hurley"
 __license__ = "BSD"
 
-__osdirs = {'osx':'osx', 'linux':'linux', 'windows':'windows'}
+__osdirs = {'osx': 'osx', 'linux': 'linux', 'windows': 'windows'}
+
 
 def __getos():
     if platform.mac_ver()[0]:
@@ -40,6 +41,7 @@ def __getos():
     elif platform.win32_ver()[0]:
         return __osdirs['windows']
     return None
+
 
 def __safelink(src, dst, act=True, verbose=False):
     """Like os.symlink, but does't behave badly if dst already exists
@@ -51,6 +53,7 @@ def __safelink(src, dst, act=True, verbose=False):
             os.symlink(src, dst)
     elif verbose:
         print '%s already exists, not creating link' % (dst,)
+
 
 def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
     """For each file, f, in setupdir, do the equivalent of:
@@ -65,11 +68,11 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
 
     # Do sanity checks on the source and dest directories
     if homedir == setupdir:
-        raise Exception, 'homedir cannot be the same as setupdir'
+        raise Exception('homedir cannot be the same as setupdir')
     if not os.path.isdir(homedir):
-        raise Exception, 'homedir must be a directory'
+        raise Exception('homedir must be a directory')
     if not os.path.isdir(setupdir):
-        raise Exception, 'setupdir must be a directory'
+        raise Exception('setupdir must be a directory')
 
     # Setup
     dotfiledir = None
@@ -123,6 +126,7 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
             dst = os.path.join(homedir, '.%s' % (f,))
             __safelink(src, dst, act=act, verbose=verbose)
 
+
 if __name__ == '__main__':
     # No point in having this usage if we aren't running as main
     def usage():
@@ -135,7 +139,7 @@ if __name__ == '__main__':
             '<setupdir> (default .)'
         print >>sys.stderr, '   -v            Be verbose'
         sys.exit(1)
-    
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'nh:s:v')
     except:
