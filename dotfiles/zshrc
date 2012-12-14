@@ -1,160 +1,33 @@
-# Initialize completion subsystem
-autoload -U compinit
-compinit
+# Herein lies the general config
+source "${HOME}/.zsh.d/env.zsh"
+source "${HOME}/.zsh.d/options.zsh"
+source "${HOME}/.zsh.d/prompt.zsh"
 
-# Easy-to-use colors for prompts
-autoload colors
-colors
-PR_RED="%{$fg[red]%}"
-PR_BLUE="%{$fg[blue]%}"
-PR_GREEN="%{$fg[green]%}"
-PR_YELLOW="%{$fg[yellow]%}"
-PR_RESET="%{$reset_color%}"
+# Get setup that is specific to particular pieces of software that may be
+# installed
+for f in ${HOME}/.zsh.d/packages/* ; do
+	source "$f"
+done
 
-# vcs info config
-autoload vcs_info
-zstyle ':vcs_info:*' enable git hg
-zstyle ':vcs_info:*:prompt:*' formats "%s:%r:%S:%b"
-zstyle ':vcs_info:*:prompt:*' actionformats "%s:%r:%S:%b:%a"
-
-#allow tab completion in the middle of a word
-setopt complete_in_word
-
-# Don't remove slashes from tab-completed things
-setopt no_auto_remove_slash
-
-# Built-in echo is BSD compatible
-setopt bsd_echo
-
-# If the name of a dir is typed as a command, CD to that dir
-setopt auto_cd
-
-# Don't try to correct spelling of commands/args
-setopt no_correct
-setopt no_correct_all
-
-# No duplicates anywhere in history
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-
-# Do a pushd every time I cd, don't tell me about it, and don't push dupes
-setopt auto_pushd
-setopt pushd_silent
-setopt pushd_to_home
-setopt pushd_ignore_dups
-
-# Case insensitive completion
-setopt no_case_glob
-
-# Prompt and such
-setopt prompt_subst
-
-function make_prompt {
-	vcs_info prompt
-
-	if [[ -n "$vcs_info_msg_0_" ]] ; then
-		vtype="$(echo "$vcs_info_msg_0_" | cut -d: -f1)"
-		repo="$(echo "$vcs_info_msg_0_" | cut -d: -f2)"
-		rpath="/$(echo "$vcs_info_msg_0_" | cut -d: -f3 | sed -e 's/^\.//')"
-		branch="$(echo "$vcs_info_msg_0_" | cut -d: -f4)"
-		act="$(echo "$vcs_info_msg_0_" | cut -d: -f5)"
-		if [[ $vtype = "hg" ]] ; then
-			qtop="$(hg qtop 2>/dev/null)"
-			if [[ "$qtop" != "no patches applied" ]] ; then
-				branch="$qtop"
-			fi
-		fi
-		pathinfo="$PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
-		if [[ -n "$act" ]] ; then
-			pathinfo="$pathinfo $PR_RED($act)$PR_RESET"
-		fi
-		pathinfo="$pathinfo $rpath"
-	else
-		pathinfo="%~"
-	fi
-
-	echo -e "%m $pathinfo%(!.#.>) "
-}
-
-export PROMPT="\$(make_prompt)"
-
-# Do the smart thing when grepping, but leave plain ol' grep available if
-# necessary
-if type ack > /dev/null 2>&1 ; then
-	alias ggrep='ack --skipped --text'
-else
-	ggrep() {
-		if git rev-parse --show-toplevel > /dev/null 2>&1 ; then
-			git grep -n --no-index -I "$@"
-		else
-			grep --color=yes -n -r -I "$@" | less -FRSXi
-		fi
-	}
-fi
-alias igrep='ggrep -i'
-
-_do_find() {
-	spath="$2"
-
-	if [[ -z "$spath" ]] ; then
-		spath="."
-	fi
-
-	find "$spath" -"$3"name "*$1*" | $PAGER
-}
-
-ffind() {
-	_do_find "$1" "$2"
-}
-
-ifind() {
-	_do_find "$1" "$2" i
-}
-
-if type dgit > /dev/null 2>&1 ; then
-	# Use git with defaults, but make completion still work
-	alias git=dgit
-	compdef dgit=git
-fi
-
-# Some global aliases
-alias mq='hg -R $(hg root)/.hg/patches'
-alias testblog='jekyll --pygments --no-lsi --safe --serve --auto'
-
-if [ -d /opt/jetpack ] ; then
-	jetpack() {
-		OLDPWD=$(pwd)
-		cd /opt/jetpack/latest
-		source bin/activate
-		cd "$OLDPWD"
-	}
-
-	cfx() {
-		jetpack > /dev/null 2>&1
-		/opt/jetpack/latest/bin/cfx "$*"
-		deactivate > /dev/null 2>&1
-	}
-fi
-
-if which rbenv > /dev/null 2>&1 ; then
-	eval "$(rbenv init -)"
-fi
+# Some of these commands may depend on paths being set up by packages
+source "${HOME}/.zsh.d/commands.zsh"
 
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
-		source "${HOME}/.zshrc_linux"
+		source "${HOME}/.zsh.d/linux.zsh"
 		;;
 	"Darwin")
-		source "${HOME}/.zshrc_osx"
+		source "${HOME}/.zsh.d/osx.zsh"
 		;;
 	*)
-		source "${HOME}/.zshrc_generic"
+		source "${HOME}/.zsh.d/generic.zsh"
 		;;
 esac
 
-if [[ -f "${HOME}/.zshrc_local" ]] ; then
-    source "${HOME}/.zshrc_local"
+# Finally, let the local machine override anything it wants, if it wants
+if [[ -f "${HOME}/.local.zsh" ]] ; then
+    source "${HOME}/.local.zsh"
 fi
 
 # vim: set noexpandtab:
