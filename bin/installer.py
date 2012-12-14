@@ -6,6 +6,11 @@ import subprocess
 import sys
 
 
+class WorkerSubprocessException(Exception):
+    def __init__(self, rval):
+        self.rval = rval
+
+
 def setup_env():
     global env
     mypath = os.path.abspath(__file__)
@@ -42,11 +47,15 @@ def do_installer(command):
     pid = os.fork()
     if pid == 0:
         # This is the child that will install the thing
-        os.execvpe(command, sys.argv, env)
+        args = copy.copy(sys.argv)
+        args[0] = command
+        os.execvpe(command, args, env)
     else:
         # Wait until the child is done so we can save off a copy of our package
         # list after the new install completes
-        os.waitpid(pid, 0)
+        rval = os.waitpid(pid, 0)[1]
+        if rval:
+            raise WorkerSubprocessException(rval)
 
 
 def get_raw_output(*args):
@@ -59,6 +68,14 @@ def get_raw_output(*args):
     return p.stdout.read().split('\n')
 
 
+def get_outfile_name(basename):
+    """Return the full path to an output file.
+    """
+    if not packagedir:
+        return basename
+    return os.path.join(packagedir, basename)
+
+
 def do_save(packages, filename):
     """Saves a list of installed packages/programs/gems/whatever to the
     specified file.
@@ -66,9 +83,12 @@ def do_save(packages, filename):
     if not packagedir:
         return
 
-    outfile = os.path.join(packagedir, filename)
+    packages = filter(None, packages)
+    packages = sorted(packages)
+    package_str = '\n'.join(packages)
+    outfile = get_outfile_name(filename)
     with file(outfile, 'w') as f:
-        f.write('\n'.join(packages))
+        f.write('%s\n' % (package_str,))
 
 
 def do_brew():
@@ -76,8 +96,17 @@ def do_brew():
     installed brews.
     """
     do_installer('brew')
-    brews = get_raw_output('brew', 'list')
-    do_save(brews, 'brews.txt')
+    act = sys.argv[1]
+    if act in ('install', 'uninstall'):
+        brewfile = get_outfile_name('brews.txt')
+        with file(brewfile) as f:
+            brews = set(f.read().strip().split('\n'))
+        if act == 'install':
+            brews.add(' '.join(sys.argv[2:]))
+        else:
+            package = sys.argv[2]
+            brews = [b for b in brews if not b.startswith(package)]
+        do_save(brews, 'brews.txt')
 
 
 def do_pip():
@@ -86,7 +115,7 @@ def do_pip():
     the list of installed packages.
     """
     do_installer('pip')
-    if 'VIRTUAL_ENV' not in env:
+    if sys.argv[1] in ('install', 'uninstall') and 'VIRTUAL_ENV' not in env:
         packages = get_raw_output('pip', 'freeze')
         packagenames = [p.split('=')[0] for p in packages]
         do_save(packagenames, 'python.txt')
@@ -98,6 +127,8 @@ def do_gem():
     the list of installed gems.
     """
     do_installer('gem')
+    if sys.argv[1] not in ('install', 'uninstall'):
+        return
     try:
         subprocess.check_call(['rbenv', 'local'], stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, env=env)
@@ -130,4 +161,9 @@ if __name__ == '__main__':
     installer = os.path.basename(sys.argv[0])
     worker = workers.get(installer, do_unknown)
 
-    worker()
+    rval = 0
+    try:
+        worker()
+    except WorkerSubprocessException as e:
+        rval = e.rval
+    sys.exit(rval)
