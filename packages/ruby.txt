@@ -33,3 +33,4 @@ sinatra
 stringex
 syntax
 tilt
+tmuxinator
