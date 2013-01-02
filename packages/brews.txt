@@ -7,7 +7,7 @@ glib
 libffi
 libidl
 libyaml
-macvim
+macvim --override-system-vim
 mercurial
 nginx
 openssh
