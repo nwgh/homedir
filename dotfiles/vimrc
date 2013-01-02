@@ -98,7 +98,7 @@ nnoremap <leader>j :LustyJuggler<CR>
 nnoremap <leader>m :CtrlPMixed<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>r :CtrlPMRU<CR>
-nnoremap <leader>f :CtrlP /Users/hurley/src<CR>
+nnoremap <leader>f :CtrlP<CR>
 nnoremap <leader>s :FSHere<CR>
 
 " Setup for ctrlp
