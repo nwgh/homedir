@@ -7,9 +7,9 @@ tabs:
   - m-c:
       layout: 9a2f,238x68,0,0{80x68,0,0[80x42,0,0,0,80x25,0,43,4],157x68,81,0[157x57,81,0,3,157x10,81,58,5]}
       panes:
-        - cd /Users/hurley/src/mozilla/m-c
-        - cd /Users/hurley/src/mozilla/m-c
-        - cd /Users/hurley/src/mozilla/m-c && vim
+        - cd /Users/hurley/src/m-c
+        - cd /Users/hurley/src/m-c
+        - cd /Users/hurley/src/m-c && vim
         - python
   - stoneridge:
       layout: 9a2f,238x68,0,0{80x68,0,0[80x42,0,0,0,80x25,0,43,4],157x68,81,0[157x57,81,0,3,157x10,81,58,5]}
