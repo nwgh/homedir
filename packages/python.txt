@@ -1,15 +1,6 @@
-Flask
-Jinja2
-Werkzeug
-cssselect
-daemonize
 distribute
 git-remote-helpers
-lxml
 pgl
-pyquery
-requests
-tornado
 virtualenv
 virtualenv-clone
 virtualenvwrapper
