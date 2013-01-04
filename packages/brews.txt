@@ -14,12 +14,10 @@ openssh
 pcre
 pkg-config
 pstree
-pwgen
 python
 rbenv
 readline
 reattach-to-user-namespace
-redis
 ruby-build
 sqlite
 ssh-copy-id
