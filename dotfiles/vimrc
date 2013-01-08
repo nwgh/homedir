@@ -138,12 +138,66 @@ colorscheme solarized
 highlight LineTooLong cterm=underline term=underline
 highlight TrailingWhitespace ctermbg=darkred term=underline
 highlight link javaScriptNumber Number
+highlight clear StatusLine
+highlight link StatusLine LineNr
 let python_highlight_all = 1
+
+" Functions to make my status line show more like powerline, without all the
+" extra color cruft that comes along with it (which screws things up in tmux)
+function! GetEditMode()
+    let mode = mode()
+    let rval=''
+
+    if mode ==# 'v'
+        let rval='VISUAL'
+    elseif mode ==# 'V'
+        let rval='V-LINE'
+    elseif mode ==# ''
+        let rval='V-BLOCK'
+    elseif mode ==# 's'
+        let rval='SELECT'
+    elseif mode ==# 'S'
+        let rval='S-LINE'
+	elseif mode ==# ''
+        let rval='S-BLOCK'
+    elseif mode =~# '\vi'
+        let rval='INSERT'
+    elseif mode =~# '\v(R|Rv)'
+        let rval='REPLACE'
+    else
+        " Fallback to normal mode
+        let rval='NORMAL'
+    endif
+
+    if &paste
+        let rval.=' PASTE'
+    endif
+
+    return rval
+endfunction
+
+function! GetFileStatus()
+    let rval=''
+
+    if &readonly
+        let rval.='RO '
+    elseif &mod
+        let rval.='+ '
+    endif
+
+    if strlen(&ft)
+        let rval.=&ft
+    else
+        let rval.='no ft'
+    endif
+
+    return rval
+endfunction
 
 " Have the status line show the filename, whether or not it's modified,
 " read-only, a help buffer, and type on the left. Show line number, column
 " number, and percentage through file on right
-set statusline=%F%m%r%h%y%=%l,%v\ [%p%%]
+set statusline=%{GetEditMode()}\ %t\ %{GetFileStatus()}%=%p%%\ L:%l\ C:%v
 
 " Setup hilighting for certain line conditions
 autocmd FileType javascript,c,cpp,makefile,sql,python,vim let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)

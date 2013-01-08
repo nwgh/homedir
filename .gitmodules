@@ -14,10 +14,6 @@
 	path = dotfiles/vim/bundle/lusty
 	url = git://github.com/sjbach/lusty.git
 	ignore = dirty
-[submodule "dotfiles/vim/bundle/vim-powerline"]
-	path = dotfiles/vim/bundle/vim-powerline
-	url = git://github.com/todesschaf/vim-powerline.git
-	ignore = dirty
 [submodule "dotfiles/vim/bundle/ctrlp"]
 	path = dotfiles/vim/bundle/ctrlp
 	url = git://github.com/kien/ctrlp.vim.git
