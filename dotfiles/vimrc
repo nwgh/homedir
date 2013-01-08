@@ -148,29 +148,29 @@ function! GetEditMode()
     let mode = mode()
     let rval=''
 
-    if mode ==# 'v'
-        let rval='VISUAL'
-    elseif mode ==# 'V'
-        let rval='V-LINE'
-    elseif mode ==# ''
-        let rval='V-BLOCK'
-    elseif mode ==# 's'
-        let rval='SELECT'
-    elseif mode ==# 'S'
-        let rval='S-LINE'
-    elseif mode ==# ''
-        let rval='S-BLOCK'
-    elseif mode =~# '\vi'
-        let rval='INSERT'
-    elseif mode =~# '\v(R|Rv)'
-        let rval='REPLACE'
-    else
-        " Fallback to normal mode
-        let rval='NORMAL'
+    if &paste
+        let rval.='PASTE '
     endif
 
-    if &paste
-        let rval.=' PASTE'
+    if mode ==# 'v'
+        let rval.='VISUAL'
+    elseif mode ==# 'V'
+        let rval.='V-LINE'
+    elseif mode ==# ''
+        let rval.='V-BLOCK'
+    elseif mode ==# 's'
+        let rval.='SELECT'
+    elseif mode ==# 'S'
+        let rval.='S-LINE'
+    elseif mode ==# ''
+        let rval.='S-BLOCK'
+    elseif mode =~# '\vi'
+        let rval.='INSERT'
+    elseif mode =~# '\v(R|Rv)'
+        let rval.='REPLACE'
+    else
+        " Fallback to normal mode
+        let rval.='NORMAL'
     endif
 
     return rval
