@@ -158,7 +158,7 @@ function! GetEditMode()
         let rval='SELECT'
     elseif mode ==# 'S'
         let rval='S-LINE'
-	elseif mode ==# ''
+    elseif mode ==# ''
         let rval='S-BLOCK'
     elseif mode =~# '\vi'
         let rval='INSERT'
