@@ -187,8 +187,6 @@ function! GetFileStatus()
 
     if strlen(&ft)
         let rval.=&ft
-    else
-        let rval.='no ft'
     endif
 
     return rval
