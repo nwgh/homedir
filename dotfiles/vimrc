@@ -140,6 +140,8 @@ highlight TrailingWhitespace ctermbg=darkred term=underline
 highlight link javaScriptNumber Number
 highlight clear StatusLine
 highlight link StatusLine LineNr
+highlight clear StatusLineNC
+highlight link StatusLineNC CursorLineNr
 let python_highlight_all = 1
 
 " Functions to make my status line show more like powerline, without all the
