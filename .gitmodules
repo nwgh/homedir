@@ -29,3 +29,9 @@
 [submodule "dotfiles/vim/bundle/vim-fswitch"]
 	path = dotfiles/vim/bundle/vim-fswitch
 	url = git://github.com/derekwyatt/vim-fswitch.git
+[submodule "dotfiles/vim/bundle/jedi-vim"]
+	path = dotfiles/vim/bundle/jedi-vim
+	url = git://github.com/davidhalter/jedi-vim
+[submodule "dotfiles/vim/bundle/python-mode"]
+	path = dotfiles/vim/bundle/python-mode
+	url = git://github.com/klen/python-mode
