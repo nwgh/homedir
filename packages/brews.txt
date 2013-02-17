@@ -10,11 +10,14 @@ libyaml
 macvim --override-system-vim
 mercurial
 nginx
+nmap
 openssh
 pcre
 pkg-config
+postgresql
 pstree
 python
+rabbitmq
 rbenv
 readline
 reattach-to-user-namespace
