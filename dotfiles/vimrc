@@ -234,15 +234,18 @@ let g:Powerline_theme='todesschaf'
 let g:pymode_doc=0
 let g:pymode_run=0
 let g:pymode_lint_checker="pyflakes,pep8"
-let g:pymode_lint_onfly=1
 let g:pymode_lint_cwindow=0
 let g:pymode_rope=0
 let g:pymode_folding=0
 let g:pymode_breakpoint=0
 let g:pymode_options=0
+let g:pymode_virtualenv=0
 
 " Set up jedi
 let g:jedi#use_tabs_not_buffers=0
+
+" Set up virtualenv integration
+let g:virtualenv_projects="~/src"
 
 " Connect to the system clipboard
 set clipboard=unnamed

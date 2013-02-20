@@ -15,6 +15,7 @@ export RSYNC_RSH=ssh
 export TZ=PST8PDT
 export LESS=-FRXi
 export GIT_DIFF_OPTS=--unified=8
+export PROJECT_HOME="$HOME/src"
 export HOMEBREW_NO_EMOJI=1
 if [ "$TERM" = "xterm" ] ; then
 	export TERM=xterm-256color

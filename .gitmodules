@@ -35,3 +35,6 @@
 [submodule "dotfiles/vim/bundle/python-mode"]
 	path = dotfiles/vim/bundle/python-mode
 	url = git://github.com/klen/python-mode
+[submodule "dotfiles/vim/bundle/vim-virtualenv"]
+	path = dotfiles/vim/bundle/vim-virtualenv
+	url = git://github.com/todesschaf/vim-virtualenv.git
