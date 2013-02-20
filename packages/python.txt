@@ -1,4 +1,5 @@
 distribute
+flake8
 git-remote-helpers
 pgl
 virtualenv
