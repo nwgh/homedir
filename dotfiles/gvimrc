@@ -27,7 +27,7 @@ highlight LineTooLong gui=underline
 highlight TrailingWhitespace guibg=#dc322f
 
 " Fix up the cursor line number
-highlight CursorLineNr gui=NONE guifg=NONE
+highlight CursorLineNr gui=NONE guifg=#586e75 guibg=bg
 
 " Label tabs with just the filename (no path)
 set guitablabel=%t

@@ -142,6 +142,8 @@ highlight clear StatusLine
 highlight link StatusLine LineNr
 highlight clear StatusLineNC
 highlight link StatusLineNC CursorLineNr
+highlight clear SignColumn
+highlight link SignColumn LineNr
 let python_highlight_all = 1
 
 " Functions to make my status line show more like powerline, without all the
