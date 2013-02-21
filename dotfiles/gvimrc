@@ -32,6 +32,16 @@ highlight CursorLineNr gui=NONE guifg=#586e75 guibg=bg
 " Label tabs with just the filename (no path)
 set guitablabel=%t
 
+" Let's do a giant hack to get our $PATH set properly
+python << EOF
+import vim, subprocess
+p = subprocess.Popen(['/bin/zsh', '-l', '-i', '-c', 'echo $PATH'],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+p.wait()
+path = p.stdout.read().strip()
+vim.command('let $PATH="%s"' % (path,))
+EOF
+
 " Bring in machine-local customizations
 if filereadable(glob("~/.gvimrc.local"))
     so ~/.gvimrc.local
