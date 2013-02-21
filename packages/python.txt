@@ -1,7 +1,7 @@
 distribute
 flake8
-git-remote-helpers
 pgl
+stevedore
 virtualenv
 virtualenv-clone
 virtualenvwrapper
