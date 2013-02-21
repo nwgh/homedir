@@ -55,15 +55,13 @@ inoremap <expr> <C-K> pumvisible() ? "\<C-P>" : "\<C-K>"
 " Herein lies all the magic for file types
 autocmd!
 syntax on
-autocmd BufNewFile,BufRead **/m-c/*.cpp,**/m-c/*.h set ft=mozilla-c
-autocmd BufNewFile,BufRead **/m-c/*.js,**/m-c/*.jsm set ft=mozilla-js
+autocmd BufNewFile,BufRead **/m-c/*.cpp,**/m-c/*.h so $HOME/.vim/mozilla.vim
+autocmd BufNewFile,BufRead **/m-c/*.js,**/m-c/*.jsm so $HOME/.vim/mozilla_js.vim
 autocmd BufNewFile,BufRead *.pyx,*.pxd set ft=pyrex
 autocmd BufNewFile,BufRead *.md set ft=markdown
 autocmd FileType javascript so $HOME/.vim/js.vim
 autocmd FileType c so $HOME/.vim/c.vim
 autocmd FileType cpp so $HOME/.vim/cpp.vim
-autocmd FileType mozilla-c so $HOME/.vim/mozilla.vim
-autocmd FileType mozilla-js so $HOME/.vim/mozilla_js.vim
 autocmd FileType makefile so $HOME/.vim/Make.vim
 autocmd FileType sql so $HOME/.vim/sql.vim
 autocmd FileType python so $HOME/.vim/python.vim
