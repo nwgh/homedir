@@ -40,3 +40,9 @@
 [submodule "dotfiles/vim/bundle/YouCompleteMe"]
 	path = dotfiles/vim/bundle/YouCompleteMe
 	url = git://github.com/Valloric/YouCompleteMe.git
+[submodule "dotfiles/vim/bundle/gundo.vim"]
+	path = dotfiles/vim/bundle/gundo.vim
+	url = git://github.com/sjl/gundo.vim.git
+[submodule "dotfiles/vim/bundle/vim-easymotion"]
+	path = dotfiles/vim/bundle/vim-easymotion
+	url = git://github.com/Lokaltog/vim-easymotion.git
