@@ -1,7 +1,3 @@
-[submodule "dotfiles/vim/bundle/clang_complete"]
-	path = dotfiles/vim/bundle/clang_complete
-	url = git://github.com/Rip-Rip/clang_complete.git
-	ignore = dirty
 [submodule "dotfiles/vim/bundle/ack"]
 	path = dotfiles/vim/bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
@@ -41,3 +37,6 @@
 [submodule "dotfiles/vim/bundle/syntastic"]
 	path = dotfiles/vim/bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
+[submodule "dotfiles/vim/bundle/YouCompleteMe"]
+	path = dotfiles/vim/bundle/YouCompleteMe
+	url = git://github.com/Valloric/YouCompleteMe.git
