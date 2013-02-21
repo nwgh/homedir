@@ -1,5 +1,6 @@
 ack
 autoconf213
+cmake
 gdbm
 gettext
 git
@@ -7,7 +8,6 @@ glib
 libffi
 libidl
 libyaml
-macvim --override-system-vim
 mercurial
 nginx
 nmap
