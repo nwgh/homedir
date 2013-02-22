@@ -23,5 +23,10 @@ fi
 if [ -f "$HOME/.mozconfig" ] ; then
 	export MOZCONFIG="$HOME/.mozconfig"
 fi
+if [ -f "/todesschaf/bin/vim" ] ; then
+	export EDITOR=/todesschaf/bin/vim
+elif [ -f "/usr/local/bin/vim" ] ; then
+	export EDITOR=/usr/local/bin/vim
+fi
 
 # vim: set noexpandtab:
