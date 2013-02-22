@@ -246,7 +246,8 @@ let g:ycm_filetypes_to_completely_ignore = {
     \ 'markdown' : 1,
     \ 'text' : 1,
     \ 'vim' : 1,
-    \ 'python' : 1
+    \ 'python' : 1,
+    \ 'gitcommit' : 1
     \}
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_ey_list_select_completion=['<Enter>', '<TAB>', '<Down>']
