@@ -30,3 +30,5 @@
 	insteadOf = github:
 [try]
 	repo = /Users/hurley/src/mozilla/central
+[push]
+	default = simple
