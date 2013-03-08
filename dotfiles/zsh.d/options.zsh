@@ -42,3 +42,6 @@ setopt no_case_glob
 
 # Prompt and such
 setopt prompt_subst
+
+# Use emacs-style keybindings (muscle memory sucks)
+bindkey -e
