@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 lctitle = args.title.lower()
 title_for_file = lctitle.replace(' ', '-').replace("'", '').replace('"', '')
-filename = '3000-01-01-%s.md' % (title_for_file,)
+filename = '3000-01-01-%s.markdown' % (title_for_file,)
 
 with file(filename, 'w') as f:
     f.write('---\n')
