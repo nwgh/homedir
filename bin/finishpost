@@ -3,7 +3,9 @@
 import argparse
 import collections
 import os
+import sys
 import time
+
 
 def extract_frontmatter(fname):
     frontmatter = collections.OrderedDict()
@@ -30,7 +32,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('file')
 args = parser.parse_args()
 
-filename = args.file.replace('IN_PROGRESS', time.strftime('%Y-%m-%d'))
+filename = args.file.replace('3000-01-01', time.strftime('%Y-%m-%d'))
 postdate = time.strftime('%Y-%m-%d %H:%M:%S')
 
 frontmatter, body = extract_frontmatter(args.file)

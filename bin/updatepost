@@ -3,7 +3,9 @@
 import argparse
 import collections
 import os
+import sys
 import time
+
 
 def extract_frontmatter(fname):
     frontmatter = collections.OrderedDict()
