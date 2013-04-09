@@ -17,6 +17,7 @@ export LESS=-FRXi
 export GIT_DIFF_OPTS=--unified=8
 export PROJECT_HOME="$HOME/src"
 export HOMEBREW_NO_EMOJI=1
+export BLOG_POSTS="$HOME/src/todesschaf.github.com/_posts"
 if [ "$TERM" = "xterm" ] ; then
 	export TERM=xterm-256color
 fi

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import argparse
 import collections
+import glob
 import os
 import sys
 import time
@@ -22,27 +22,52 @@ def extract_frontmatter(fname):
                 key, value = line.strip().split(': ')
                 frontmatter[key] = value
             else:
-                sys.stderr.write('Found data before frontmatter: %s' % (line,))
+                sys.stderr.write('Found data before frontmatter: %s\n' %
+                                 (line,))
 
         rest = [line for line in f]
 
     return frontmatter, rest
 
-parser = argparse.ArgumentParser()
-parser.add_argument('file')
-args = parser.parse_args()
+posts = os.getenv('BLOG_POSTS', None)
+if posts is None:
+    posts = '.'
 
-filename = args.file.replace('3000-01-01', time.strftime('%Y-%m-%d'))
+candidates = glob.glob(os.path.join(posts, '3000-01-01*'))
+if not candidates:
+    sys.stderr.write('No blog posts need finishing!\n')
+    sys.exit(1)
+
+if len(candidates) == 1:
+    oldfile = candidates[0]
+else:
+    postid = None
+    while postid is None:
+        sys.stdout.write('Choose a post:\n')
+        for i, c in enumerate(candidates):
+            sys.stdout.write('%d: %s\n' % (i + 1, os.path.basename(c)))
+        inp = raw_input('> ')
+        try:
+            postid = int(inp)
+            if postid < 0 or postid > len(candidates):
+                postid = None
+        except:
+            postid = None
+    oldfile = candidates[postid - 1]
+
+shortfile = os.path.basename(oldfile)
+filename = shortfile.replace('3000-01-01', time.strftime('%Y-%m-%d'))
 postdate = time.strftime('%Y-%m-%d %H:%M:%S')
 
-frontmatter, body = extract_frontmatter(args.file)
+frontmatter, body = extract_frontmatter(oldfile)
 frontmatter['date'] = postdate
 
-with file(filename, 'w') as f:
+newfile = os.path.join(posts, filename)
+with file(newfile, 'w') as f:
     f.write('---\n')
     for k, v in frontmatter.iteritems():
         f.write('%s: %s\n' % (k, v))
     f.write('---\n')
     f.writelines(body)
 
-os.unlink(args.file)
+os.unlink(oldfile)
