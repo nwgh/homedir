@@ -28,6 +28,6 @@
 	insteadOf = gh:
 	insteadOf = github:
 [try]
-	repo = /Users/hurley/src/mozilla/central
+	repo = /Users/hurley/src/hgmc
 [push]
 	default = simple
