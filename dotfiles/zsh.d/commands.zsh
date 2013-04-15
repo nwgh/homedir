@@ -33,7 +33,6 @@ ifind() {
 
 # Some global aliases
 alias mq='hg -R $(hg root)/.hg/patches'
-alias testblog='jekyll --pygments --no-lsi --safe --serve --auto'
 
 if type dgit > /dev/null 2>&1 ; then
     # Use git with defaults, but make completion still work
