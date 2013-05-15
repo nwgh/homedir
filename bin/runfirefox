@@ -1,0 +1,27 @@
+#!/bin/sh
+
+profiles="${HOME}/.mozprofiles"
+if [[ ! -d "$profiles" ]] ; then
+	mkdir "$profiles"
+fi
+channel="$(basename $1)"
+profd="${profiles}/${channel}"
+if [[ ! -d "$profd" ]] ; then
+	mkdir "$profd"
+fi
+case "$channel" in
+    "aurora")
+        app="/Applications/FirefoxAurora.app"
+        ;;
+    "release")
+        app="/Applications/Firefox.app"
+        ;;
+    "dev")
+        app="${HOME}/src/m-c/obj-ff-dbg/dist/NightlyDebug.app"
+        ;;
+    *)
+        echo "Invalid channel: ${channel}"
+        exit 1
+        ;;
+esac
+open "${app}" --args -no-remote -profile "$profd"
