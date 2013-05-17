@@ -18,13 +18,10 @@ pkg-config
 postgresql
 pstree
 python
-rabbitmq
 rbenv
 readline
-reattach-to-user-namespace
 ruby-build
 sqlite
 ssh-copy-id
-tmux
 xz
 yasm
