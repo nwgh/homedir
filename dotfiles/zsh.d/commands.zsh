@@ -1,7 +1,7 @@
 # Do the smart thing when grepping, but leave plain ol' grep available if
 # necessary
 if type ack > /dev/null 2>&1 ; then
-    alias ggrep='ack --skipped --text'
+    alias ggrep=ack
 else
     ggrep() {
         if git rev-parse --show-toplevel > /dev/null 2>&1 ; then

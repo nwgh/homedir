@@ -1,3 +1,4 @@
+--smart-case
 --nogroup
 --pager=less -FRSXi
 --color-match=bold red
