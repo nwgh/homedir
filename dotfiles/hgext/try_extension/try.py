@@ -1,26 +1,35 @@
 #!/usr/bin/env python
 
 import argparse
+import re
 
 from mercurial import commands
 from mercurial import extensions
 from mercurial import util
 
-PLATFORMS = ('all', 'none', 'linux', 'linux64', 'macosx64', 'win32', 'win64',
-             'android', 'android-armv6')
+PLATFORMS = ('linux', 'linux64', 'macosx64', 'win32', 'win64', 'android',
+             'android-armv6', 'android-noion', 'android-x86',
+             'ics_armv7a_gecko', 'emulato', 'panda', 'unagi', 'all', 'none')
 MOCHITESTS = ('mochitest-1', 'mochitest-2', 'mochitest-3', 'mochitest-4',
               'mochitest-5', 'mochitest-o', 'mochitest-bc')
-UNITTESTS = ('all', 'none', 'reftest', 'reftest-ipc', 'reftest-no-accel',
-             'crashtest', 'crashtest-ipc', 'xpcshell', 'jsreftest', 'jetpack',
-             'marionette', 'mozmill', 'mochitests', 'reftest-1', 'reftest-2',
-             'reftest-3', 'reftest-4', 'jsreftest-1', 'jsreftest-2',
-             'jsreftest-3', 'crashtest-2', 'crashtest-3', 'mochitest-6',
-             'mochitest-7', 'mochitest-8', 'robocop') + MOCHITESTS
-TALOS = ('all', 'none', 'tpn', 'chromez', 'nochromer', 'other', 'dirtypaint',
-         'svgr', 'dromaeojs', 'xperf', 'remote-ts', 'remote-tdhtml',
-         'remote-tsvg', 'remote-tpan', 'remote-trobopan', 'remote-trobocheck',
-         'remote-troboprovider', 'remote-trobocheck2', 'remote-trobocheck3',
-         'remote-tp4m_nochrome')
+UNITTESTS = ('reftest', 'reftest-ipc', 'reftest-no-accel', 'crashtest',
+             'crashtest-ipc', 'xpcshell', 'jsreftest', 'jetpack', 'marionette',
+             'mozmill', 'mochitests', 'plain-reftest-1', 'plain-reftest-2',
+             'plain-reftest-3', 'plain-reftest-4', 'jsreftest-1', 'jsreftest-2',
+             'jsreftest-3', 'mochitest-6', 'mochitest-7', 'mochitest-8',
+             'mochitest-gl', 'robocop-1', 'robocop-2', 'crashtest-1',
+             'crashtest-2', 'crashtest-3', 'reftest-1', 'reftest-2',
+             'reftest-3', 'reftest-4', 'reftest-5', 'reftest-6', 'reftest-7',
+             'reftest-8', 'reftest-9', 'reftest-10', 'marionette-webapi', 'all',
+             'none') + MOCHITESTS
+TALOS = ('chromez', 'dromaeojs', 'other', 'dirtypaint', 'svgr', 'tp5o', 'xperf',
+         'remote-trobocheck', 'remote-trobocheck2', 'remote-trobopan',
+         'remote-troboprovider', 'remote-tsvg', 'remote-tp4m_nochrome',
+         'remote-ts', 'all', 'none')
+RESTRICTIONS = ('Fedora', 'Ubuntu', 'x64', '10.6', '10.7', '10.8',
+                'Windows XP', 'Windows 7', '6.2')
+
+RESTRICTION_RE = re.compile('[-a-z0-9]+\\[')
 
 class Tryer(object):
     def __init__(self, ui, repo, args):
@@ -73,7 +82,7 @@ class Tryer(object):
                 self.args['email'] = '-n'
             i += skip
 
-    def _create_args(self, atype, args, check_mochitests=False):
+    def _create_args(self, atype, args):
         if 'all' in args:
             if len(args) != 1:
                 raise util.Abort('all can not be used with any other %s' %
@@ -86,14 +95,44 @@ class Tryer(object):
                         (atype,))
             return 'none'
 
-        if check_mochitests and 'mochitests' in args:
+        # Make a set here to ensure there are no duplicates
+        return ','.join(set(args))
+
+    def _create_u_args(self, args):
+        unittests = set()
+        restrictions = set()
+        for a in args:
+            if RESTRICTION_RE.match(a):
+                test, rest = a.split('[', 1)
+                restrs = rest[:-1].split(',')
+                if test not in UNITTESTS:
+                    raise util.Abort('invalid unit test: %s' % (test,))
+                unittests.add(test)
+                restrictions.update(restrs)
+            else:
+                if a not in UNITTESTS:
+                    raise util.Abort('invalid unit test: %s' % (a,))
+                unittests.add(a)
+
+        if 'mochitests' in unittests:
             for m in MOCHITESTS:
-                if m in args:
+                if m in unittests:
                     raise util.Abort('mochitests can not be used with any '
                             'other mochitest')
 
-        # Make a set here to ensure there are no duplicates
-        return ','.join(set(args))
+        for r in restrictions:
+            if r not in RESTRICTIONS:
+                raise util.Abort('invalid restriction: %s' % (r,))
+
+        if not restrictions:
+            return ','.join(unittests)
+        else:
+            res = []
+            restrs = ','.join(restrictions)
+            for u in unittests:
+                res.append('%s[%s]' % (u, restrs))
+            return ','.join(res)
+
 
     def _compute_args(self, args):
         """Given the command-line args
@@ -103,7 +142,7 @@ class Tryer(object):
         p.add_argument('-b', '--build', choices=('d', 'o'), action='append')
         p.add_argument('-p', '--platform', choices=PLATFORMS,
                 help='Platforms to build', action='append')
-        p.add_argument('-u', '--unittests', choices=UNITTESTS,
+        p.add_argument('-u', '--unittests',
                 help='Unit tests to run', action='append')
         p.add_argument('-t', '--talos', choices=TALOS,
                 help='Talos tests to run', action='append')
@@ -124,8 +163,7 @@ class Tryer(object):
             self.args['platform'] = self._create_args('platform', args.platform)
 
         if args.unittests:
-            self.args['unittests'] = self._create_args('unittests',
-                    args.unittests, True)
+            self.args['unittests'] = self._create_u_args(args.unittests)
 
         if args.talos:
             self.args['talos'] = self._create_args('talos', args.talos)
@@ -195,6 +233,9 @@ class Tryer(object):
         self.ui.write('setting try selections...\n')
         mq.new(self.ui, self.repo, self.qname, message=trymsg)
         rev = self.repo[None].p1()
+
+        if True:
+            return
 
         # Push to the try server
         self.ui.write('pushing to try...\n')

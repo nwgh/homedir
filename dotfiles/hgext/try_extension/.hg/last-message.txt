@@ -1,1 +1,2 @@
-Update options to match the current reality
+Update try extension with new choices and syntax
+
