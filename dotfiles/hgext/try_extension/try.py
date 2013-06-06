@@ -234,9 +234,6 @@ class Tryer(object):
         mq.new(self.ui, self.repo, self.qname, message=trymsg)
         rev = self.repo[None].p1()
 
-        if True:
-            return
-
         # Push to the try server
         self.ui.write('pushing to try...\n')
         if self.debug:

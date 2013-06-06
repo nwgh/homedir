@@ -1,2 +1,2 @@
-Update try extension with new choices and syntax
+Fix try extension to actually work (whoops!)
 
