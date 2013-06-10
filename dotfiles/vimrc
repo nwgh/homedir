@@ -212,6 +212,12 @@ nnoremap <leader><space> :noh<CR>
 " Easy way to ack for things
 nnoremap <leader><C-]> :LAck! <C-R><C-W><CR>
 
+" Easy way to force diagnostics in C/C++
+nnoremap <leader>l :YcmForceCompileAndDiagnostics<CR>
+
+" Easy way to edit my vimrc
+nnoremap <leader>v :edit $MYVIMRC<CR>
+
 " Sane encoding ahoy!
 set encoding=utf-8
 
