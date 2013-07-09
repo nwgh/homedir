@@ -14,7 +14,7 @@ parser.add_argument('title')
 args = parser.parse_args()
 
 lctitle = args.title.lower()
-title_for_file = lctitle.replace(' ', '-').replace("'", '').replace('"', '')
+title_for_file = lctitle.replace(' ', '-').replace("'", '').replace('"', '').replace('/', '')
 filename = '3000-01-01-%s.markdown' % (title_for_file,)
 posts = os.getenv('BLOG_POSTS', None)
 if posts is not None:

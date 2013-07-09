@@ -57,7 +57,7 @@ else:
 
 shortfile = os.path.basename(oldfile)
 filename = shortfile.replace('3000-01-01', time.strftime('%Y-%m-%d'))
-postdate = time.strftime('%Y-%m-%d %H:%M:%S')
+postdate = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
 
 frontmatter, body = extract_frontmatter(oldfile)
 frontmatter['date'] = postdate
