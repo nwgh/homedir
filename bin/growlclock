@@ -1,2 +1,0 @@
-#!/bin/sh
-/bin/date +'%a %d %b %Y %H:%M' | /usr/local/bin/growlnotify -n growlclock -d growlclock -s > /dev/null 2>&1
