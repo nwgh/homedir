@@ -19,6 +19,9 @@ case "$channel" in
     "dev")
         app="${HOME}/src/m-c/obj-ff-dbg/dist/NightlyDebug.app"
         ;;
+    "ux")
+        app="/Applications/FirefoxUX.app"
+        ;;
     *)
         echo "Invalid channel: ${channel}"
         exit 1
