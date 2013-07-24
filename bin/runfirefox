@@ -10,6 +10,9 @@ if [[ ! -d "$profd" ]] ; then
 	mkdir "$profd"
 fi
 case "$channel" in
+    "nightly")
+        app="/Applications/FirefoxNightly.app"
+        ;;
     "aurora")
         app="/Applications/FirefoxAurora.app"
         ;;
