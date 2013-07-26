@@ -31,3 +31,5 @@
 	repo = /Users/hurley/src/hgmc
 [push]
 	default = simple
+[inbound]
+    repo = /Users/hurley/src/inbound
