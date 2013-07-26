@@ -27,12 +27,18 @@ if not os.path.isdir(args.outdir):
     sys.stderr.write('Invalid output directory: %s\n' % (args.outdir,))
     sys.exit(1)
 
-grl = subprocess.Popen(['git', 'rev-list', '^origin/master', 'HEAD'],
+gbp = subprocess.Popen(['git', 'branchpoint'], stdout=subprocess.PIPE,
+                       stderr=subprocess.PIPE)
+gbp.wait()
+branchpoint = gbp.stdout.readlines()[0].strip()
+
+grl = subprocess.Popen(['git', 'rev-list', branchpoint, 'HEAD'],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 revs = map(lambda x: x.strip(), grl.stdout.readlines())
 grl.wait()
 
-glg = subprocess.Popen(['git', 'log', '--format=format:%f', 'origin/master..HEAD'],
+glg = subprocess.Popen(['git', 'log', '--format=format:%f',
+                        '%s..HEAD' % (branchpoint,)],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 filenames = map(lambda x: x.strip(), glg.stdout.readlines())
 glg.wait()
