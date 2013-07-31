@@ -80,6 +80,8 @@ class Tryer(object):
                 self.args['email'] = '-e'
             if args[i] in ('-n', '--no-emails'):
                 self.args['email'] = '-n'
+            if args[i] in ('-f', '--failure-emails'):
+                self.args['email'] = '-f'
             i += skip
 
     def _create_args(self, atype, args):
@@ -150,6 +152,8 @@ class Tryer(object):
                 action='store_true')
         p.add_argument('-n', '--no-emails', help='Send no email',
                 action='store_true')
+        p.add_argument('-f', '--failure-emails', help='Send email on failures',
+                       action='store_true')
         p.add_argument('-m', '--mozilla-central', action='store_true',
                 help='Use mozilla-central configuration')
 
@@ -168,8 +172,8 @@ class Tryer(object):
         if args.talos:
             self.args['talos'] = self._create_args('talos', args.talos)
 
-        if args.all_emails and args.no_emails:
-            raise util.Abort('-e and -n are exclusive')
+        if sum(map(int, [args.all_emails, args.no_emails, args.failure_emails])) > 1:
+            raise util.Abort('-e, -n, and -f are exclusive')
 
         if args.all_emails:
             self.args['email'] = '-e'

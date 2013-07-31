@@ -1,2 +1,2 @@
-Fix try extension to actually work (whoops!)
+Add failure-only email notification ability
 
