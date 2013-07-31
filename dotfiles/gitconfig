@@ -28,8 +28,9 @@
 	insteadOf = gh:
 	insteadOf = github:
 [try]
-	repo = /Users/hurley/src/hgmc
+	repo = /Users/hurley/src/central
 [push]
 	default = simple
 [inbound]
     repo = /Users/hurley/src/inbound
+    interactive = true
