@@ -32,7 +32,7 @@ gbp = subprocess.Popen(['git', 'branchpoint'], stdout=subprocess.PIPE,
 gbp.wait()
 branchpoint = gbp.stdout.readlines()[0].strip()
 
-grl = subprocess.Popen(['git', 'rev-list', branchpoint, 'HEAD'],
+grl = subprocess.Popen(['git', 'rev-list', '%s...HEAD' % (branchpoint,)],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 revs = map(lambda x: x.strip(), grl.stdout.readlines())
 grl.wait()
