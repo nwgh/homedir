@@ -21,7 +21,8 @@ class GitPusher(object):
         self.tmpdir = None
         self.patches = None
 
-        p = subprocess.Popen(['git', 'config', '--get', '%s.repo' % (repo,)],
+        p = subprocess.Popen(['git', 'config', '--get',
+                              '%s.repo' % (self.args.repo,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         self.repo = p.stdout.read().strip()
@@ -62,6 +63,38 @@ class GitPusher(object):
         if self.args.force and self.args.repo != 'try':
             raise GitPusherException('--force can only be used on try')
 
+    def _build_try_args(self):
+        args = []
+        if self.args.build:
+            for build in self.args.build:
+                args.extend(['-b', build])
+
+        if self.args.platform:
+            for platform in self.args.platform:
+                args.extend(['-p', platform])
+
+        if self.args.unittests:
+            for unittest in self.args.unittests:
+                args.extend(['-u', unittest])
+
+        if self.args.talos:
+            for talos in self.args.talos:
+                args.extend(['-t', talos])
+
+        if self.args.all_emails:
+            args.append('-e')
+
+        if self.args.no_emails:
+            args.append('-n')
+
+        if self.args.failure_emails:
+            args.append('-f')
+
+        if self.args.mozilla_central:
+            args.append('-m')
+
+        return args
+
     def _cleanup(self):
         if self.tmpdir:
             shutil.rmtree(self.tmpdir)
@@ -76,6 +109,7 @@ class GitPusher(object):
 
     def _push_to_try(self):
         sys.stdout.write('running hg try extension...\n')
+        args = self._build_try_args()
         p = subprocess.Popen(['hg', 'try'] + args, cwd=self.repo)
         if p.wait():
             raise GitPusherException('hg try failed')
@@ -157,13 +191,12 @@ class GitPusher(object):
             if p.wait():
                 raise GitPusherException('Could not apply patch to hg')
 
-        # No patches applied after this point, don't try to pop them
-        self.patches = None
-
         try:
             if self.args.repo == 'try':
                 self._push_to_try()
             else:
+                # No patches applied after this point, don't try to pop them
+                self.patches = None
                 self._push_to_hg()
         finally:
             sys.stdout.write('cleaning up...\n')
