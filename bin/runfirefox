@@ -26,8 +26,7 @@ case "$channel" in
         app="/Applications/FirefoxUX.app"
         ;;
     *)
-        echo "Invalid channel: ${channel}"
-        exit 1
+        app="/Applications/Firefox.app"
         ;;
 esac
 open "${app}" --args -no-remote -profile "$profd"
