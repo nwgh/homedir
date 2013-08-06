@@ -21,6 +21,7 @@ python
 rbenv
 readline
 ruby-build
+rust
 sqlite
 ssh-copy-id
 xz
