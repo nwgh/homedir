@@ -284,12 +284,31 @@ def run_try(ui, repo, *args, **opts):
     # argument to be sent)
     buildsplit = lambda s: [x for x in s]
     othersplit = lambda s: s.split(',')
+    def unitsplit(s):
+        results = []
+        curr = ''
+        in_brackets = False
+        for c in s:
+            if c == ',' and not in_brackets:
+                results.append(curr)
+                curr = ''
+                continue
+
+            if c == '[':
+                in_brackets = True
+            elif c == ']':
+                in_brackets = False
+            curr += c
+
+        if curr:
+            results.append(curr)
+        return results
 
     # Turn each option into a list of [flag, value, ...] for parsing by the
     # argument parser that does the hardcore work
     optflags = {'build':('-b', buildsplit),
                 'platform':('-p', othersplit),
-                'unittests':('-u', othersplit),
+                'unittests':('-u', unitsplit),
                 'talos':('-t', othersplit)}
     for name, (flag, split) in optflags.items():
         if opts[name]:

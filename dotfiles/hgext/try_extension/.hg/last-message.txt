@@ -1,2 +1,2 @@
-Add failure-only email notification ability
+Handle unit test formatting properly
 
