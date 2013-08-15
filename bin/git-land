@@ -36,6 +36,12 @@ class GitPusher(object):
         interactive = p.stdout.read().strip().lower()
         self.interactive = interactive not in ['0', 'no', 'f', 'false']
 
+        p = subprocess.Popen(['git', 'config', '--get',
+                              '%s.url' % (self.args.repo,)],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.wait()
+        self.url = p.stdout.read().strip()
+
     def _parse_args(self, args):
         parser = argparse.ArgumentParser(prog='git land')
         parser.add_argument('-b', '--build', action='append',
@@ -136,7 +142,7 @@ class GitPusher(object):
 
         # Now we can go around pushing
         sys.stdout.write('running hg push...\n')
-        p = subprocess.Popen(['hg', 'push'], cwd=self.repo)
+        p = subprocess.Popen(['hg', 'push', self.url], cwd=self.repo)
         if p.wait():
             raise GitPusherException('hg push failed')
 
