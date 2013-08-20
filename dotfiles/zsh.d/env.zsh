@@ -19,11 +19,9 @@ export PROJECT_HOME="$HOME/src"
 export HOMEBREW_NO_EMOJI=1
 export BLOG_HOME="$HOME/src/todesschaf.github.com"
 export BLOG_POSTS="$BLOG_HOME/_posts"
+export MOZCONFIG_ROOT="$HOME/src/mozilla/mozconfigs"
 if [ "$TERM" = "xterm" ] ; then
 	export TERM=xterm-256color
-fi
-if [ -f "$HOME/.mozconfig" ] ; then
-	export MOZCONFIG="$HOME/.mozconfig"
 fi
 if [ -f "/todesschaf/bin/vim" ] ; then
 	export EDITOR=/todesschaf/bin/vim

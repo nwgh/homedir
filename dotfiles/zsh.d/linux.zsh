@@ -7,5 +7,6 @@ open() {
 }
 export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_linux_x86"
 export NWH_ZSH_CONFIG="linux"
+export MOZCONFIG="$MOZCONFIG_ROOT/linux_debug"
 
 # vim: set noexpandtab:
