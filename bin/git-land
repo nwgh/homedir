@@ -19,7 +19,8 @@ class GitPusher(object):
     def __init__(self, args):
         self._parse_args(args)
         self.tmpdir = None
-        self.patches = None
+        self.patches = []
+        self.applied_patches = []
 
         p = subprocess.Popen(['git', 'config', '--get',
                               '%s.repo' % (self.args.repo,)],
@@ -101,14 +102,14 @@ class GitPusher(object):
 
         return args
 
-    def _cleanup(self):
+    def cleanup(self):
         if self.tmpdir:
             shutil.rmtree(self.tmpdir)
 
-        if self.patches:
+        if self.applied_patches:
             p = subprocess.Popen(['hg', 'qpop', '-a'], cwd=self.repo)
             p.wait()
-            for patch in self.patches:
+            for patch in self.applied_patches:
                 patch = os.path.basename(patch)
                 p = subprocess.Popen(['hg', 'qdel', patch], cwd=self.repo)
                 p.wait()
@@ -193,6 +194,7 @@ class GitPusher(object):
             p = subprocess.Popen(['hg', 'qimport', patch], cwd=self.repo)
             if p.wait():
                 raise GitPusherException('Could not import patch to hg')
+            self.applied_patches.append(patch)
             p = subprocess.Popen(['hg', 'qpush'], cwd=self.repo)
             if p.wait():
                 raise GitPusherException('Could not apply patch to hg')
@@ -202,22 +204,22 @@ class GitPusher(object):
                 self._push_to_try()
             else:
                 # No patches applied after this point, don't try to pop them
-                self.patches = None
+                self.applied_patches = []
                 self._push_to_hg()
         finally:
             sys.stdout.write('cleaning up...\n')
-            self._cleanup()
+            self.cleanup()
 
         sys.stdout.write('done!\n')
 
 if __name__ == '__main__':
     try:
         t = GitPusher(sys.argv[1:])
+    except Exception as e:
+        sys.stderr.write('Failed creating pusher: %s' % (e,))
+    try:
         t.run()
-    except GitPusherException, e:
-        try:
-            sys.stderr.write('Working directory at %s\n' % t.tmpdir)
-        except:
-            sys.stderr.write('No working directory created\n')
-        sys.stderr.write('%s\n' % str(e))
+    except GitPusherException as e:
+        t.cleanup()
+        sys.stderr.write('%s\n' % (e,))
         sys.exit(1)
