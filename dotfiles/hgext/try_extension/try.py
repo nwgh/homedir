@@ -248,13 +248,6 @@ class Tryer(object):
         # Get rid of our mq entry
         self.ui.write('cleaning up...\n')
 
-        try:
-            commands.phase(self.ui, self.repo, 'mq()', draft=True, public=False,
-                    secret=False, force=True, rev='')
-        except AttributeError:
-            # If the phase command doesn't exist, we can just ignore this
-            pass
-
         if not self.debug:
             mq.pop(self.ui, self.repo)
             mq.delete(self.ui, self.repo, self.qname)
