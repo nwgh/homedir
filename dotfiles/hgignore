@@ -7,3 +7,4 @@ random_seed
 .*.swp
 *.pyc
 *.egg-info
+.ycm_extra_conf.py
