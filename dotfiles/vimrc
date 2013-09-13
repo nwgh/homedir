@@ -250,7 +250,7 @@ let g:syntastic_c_checkers=['ycm']
 let g:syntastic_cpp_checkers=['ycm']
 
 " Set up YouCompleteMe
-let g:ycm_filetypes_to_completely_ignore = {
+let g:ycm_filetype_blacklist = {
     \ 'notes' : 1,
     \ 'markdown' : 1,
     \ 'text' : 1,
@@ -259,7 +259,8 @@ let g:ycm_filetypes_to_completely_ignore = {
     \ 'gitcommit' : 1
     \}
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_ey_list_select_completion=['<Enter>', '<TAB>', '<Down>']
+let g:ycm_key_list_select_completion=['<Enter>', '<TAB>', '<Down>']
+let g:ycm_confirm_extra_conf=0
 
 " Connect to the system clipboard
 set clipboard=unnamed
