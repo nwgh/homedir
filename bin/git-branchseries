@@ -21,6 +21,8 @@ def find_patch_start(revs, filenames, rev_to_idx):
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', dest='outdir', default=os.getcwd(),
     help='Directory to output patches to (default: .)')
+parser.add_argument('--no-coalesce', dest='no_coalesce', default=False,
+                    action='store_true')
 args = parser.parse_args()
 
 if not os.path.isdir(args.outdir):
@@ -59,7 +61,10 @@ patches = []
 patchnames = []
 
 while rev_from_idx > 0:
-    rev_from_idx = find_patch_start(revs, filenames, rev_to_idx)
+    if args.no_coalesce:
+        rev_from_idx = rev_to_idx - 1
+    else:
+        rev_from_idx = find_patch_start(revs, filenames, rev_to_idx)
     rev_from = revs[rev_from_idx]
     rev_to = revs[rev_to_idx]
 

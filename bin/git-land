@@ -162,7 +162,10 @@ class GitPusher(object):
 
         # Get the contents of the patches
         sys.stdout.write('making patches...\n')
-        p = subprocess.Popen(['git', 'branchseries', '-o', self.tmpdir])
+        gbs_args = ['git', 'branchseries', '-o', self.tmpdir]
+        if self.args.repo == 'try':
+            gbs_args.append('--no-coalesce')
+        p = subprocess.Popen(gbs_args)
         if p.wait():
             raise GitPusherException('Could not create patches')
 
