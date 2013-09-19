@@ -29,18 +29,18 @@ if not os.path.isdir(args.outdir):
     sys.stderr.write('Invalid output directory: %s\n' % (args.outdir,))
     sys.exit(1)
 
-gbp = subprocess.Popen(['git', 'branchpoint'], stdout=subprocess.PIPE,
-                       stderr=subprocess.PIPE)
-gbp.wait()
-branchpoint = gbp.stdout.readlines()[0].strip()
+gmb = subprocess.Popen(['git', 'merge-base', 'mozilla/master', 'HEAD'],
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+gmb.wait()
+mergebase = gmb.stdout.readlines()[0].strip()
 
-grl = subprocess.Popen(['git', 'rev-list', '%s...HEAD' % (branchpoint,)],
+grl = subprocess.Popen(['git', 'rev-list', '%s...HEAD' % (mergebase,)],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 revs = map(lambda x: x.strip(), grl.stdout.readlines())
 grl.wait()
 
 glg = subprocess.Popen(['git', 'log', '--format=format:%f',
-                        '%s...HEAD' % (branchpoint,)],
+                        '%s...HEAD' % (mergebase,)],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 filenames = map(lambda x: x.strip(), glg.stdout.readlines())
 glg.wait()
