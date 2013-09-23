@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cd /Users/hurley/src/mozilla
+git clone m-c "$1"
+cd "$1"
+cp ../m-c/.ycm_extra_conf.py .
+git remote rm origin
+git remote add origin git@github.com:todesschaf/mozilla-central.git
+git remote add mozilla git://github.com/mozilla/mozilla-central
+git fetch --all
+# TODO - handle branch existing
+git checkout -b "wip/$1" mozilla/master
+git push -u origin "wip/$1"
