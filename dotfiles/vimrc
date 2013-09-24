@@ -132,6 +132,8 @@ highlight clear StatusLineNC
 highlight link StatusLineNC CursorLineNr
 highlight clear SignColumn
 highlight link SignColumn LineNr
+autocmd Syntax * call matchadd('nwghTodo', '\W\zs\(NWH\|NWGH\)')
+highlight link nwghTodo Todo
 let python_highlight_all = 1
 
 " Functions to make my status line show more like powerline, without all the
@@ -259,7 +261,6 @@ let g:ycm_filetype_blacklist = {
     \ 'gitcommit' : 1
     \}
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_key_list_select_completion=['<Enter>', '<TAB>', '<Down>']
 let g:ycm_confirm_extra_conf=0
 
 " Connect to the system clipboard
