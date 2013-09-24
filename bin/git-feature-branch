@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [[ -z "$1" ]] ; then
+    echo "Usage: git feature-branch <branchname>"
+    exit 1
+fi
+
 cd /Users/hurley/src/mozilla
 git clone m-c "$1"
 cd "$1"
@@ -8,6 +13,12 @@ git remote rm origin
 git remote add origin git@github.com:todesschaf/mozilla-central.git
 git remote add mozilla git://github.com/mozilla/mozilla-central
 git fetch --all
-# TODO - handle branch existing
-git checkout -b "wip/$1" mozilla/master
-git push -u origin "wip/$1"
+branch="wip/$1"
+if git branch -a | grep -q "remotes/origin/$branch" ; then
+    echo "Checking out existing branch $branch"
+    git checkout "$branch"
+else
+    echo "Creating new branch $branch"
+    git checkout -b "$branch" mozilla/master
+    git push -u origin "$branch"
+fi
