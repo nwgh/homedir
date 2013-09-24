@@ -5,6 +5,8 @@ gdbm
 gettext
 git
 glib
+gnupg
+gnupg2 --8192 --with-readline
 libffi
 libidl
 libyaml
@@ -22,6 +24,7 @@ rbenv
 readline
 ruby-build
 rust
+signing-party
 sqlite
 ssh-copy-id
 xz

@@ -1,5 +1,6 @@
-distribute
 flake8
+git-remote-helpers
+mercurial
 pgl
 stevedore
 virtualenv
