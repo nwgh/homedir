@@ -254,7 +254,7 @@ class Tryer(object):
 
         self.ui.write('done!\n')
         self.ui.write('Your results will be at '
-                'http://tbpl.mozilla.org/?tree=Try&rev=%s\n' % (rev,))
+                'https://tbpl.mozilla.org/?tree=Try&rev=%s\n' % (rev,))
 
 def run_try(ui, repo, *args, **opts):
     """Push current branch to try using the given options
