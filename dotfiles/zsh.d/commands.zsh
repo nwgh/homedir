@@ -39,3 +39,9 @@ if type dgit > /dev/null 2>&1 ; then
     alias git=dgit
     compdef dgit=git
 fi
+
+httplog() {
+    export NSPR_LOG_MODULES=timestamp,nsHttp:5,nsSocketTransport:5,nsHostResolver:5
+    export NSPR_LOG_FILE=~/nspr.log
+    "$@"
+}
