@@ -171,17 +171,18 @@ class GitPusher(object):
 
         # Make sure our hg repo doesn't have any outstanding changes or patches
         sys.stdout.write('checking hg repository...\n')
-        p = subprocess.Popen(['hg', 'qseries'], stdout=subprocess.PIPE,
+        p = subprocess.Popen(['hg', 'qapplied'], stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE, cwd=self.repo)
         p.wait()
         if p.stdout.read().strip():
             raise GitPusherException('Hg repo already has mq patches')
 
-        p = subprocess.Popen(['hg', 'status'], stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE, cwd=self.repo)
-        p.wait()
-        if p.stdout.read().strip():
-            raise GitPusherException('Hg repo has outstanding changes')
+        if not self.args.force:
+            p = subprocess.Popen(['hg', 'status'], stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE, cwd=self.repo)
+            p.wait()
+            if p.stdout.read().strip():
+                raise GitPusherException('Hg repo has outstanding changes')
 
         # Go to our hg repo and update to the latest
         sys.stdout.write('updating hg repository...\n')
@@ -192,7 +193,7 @@ class GitPusher(object):
 
         # Apply the patches
         sys.stdout.write('applying patches...\n')
-        self.patches = glob.glob(os.path.join(self.tmpdir, '*.patch'))
+        self.patches = sorted(glob.glob(os.path.join(self.tmpdir, '*.patch')))
         for patch in self.patches:
             p = subprocess.Popen(['hg', 'qimport', patch], cwd=self.repo)
             if p.wait():
