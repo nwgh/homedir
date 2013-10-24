@@ -2,6 +2,7 @@ flake8
 git-remote-helpers
 mercurial
 pgl
+requests
 stevedore
 virtualenv
 virtualenv-clone

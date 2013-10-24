@@ -1,5 +1,6 @@
 ack
 autoconf213
+ccache
 cmake
 gdbm
 gettext
@@ -7,6 +8,7 @@ git
 glib
 gnupg
 gnupg2 --8192 --with-readline
+gnutls
 libffi
 libidl
 libyaml
