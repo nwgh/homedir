@@ -23,6 +23,8 @@ parser.add_argument('-o', dest='outdir', default=os.getcwd(),
     help='Directory to output patches to (default: .)')
 parser.add_argument('--no-coalesce', dest='no_coalesce', default=False,
                     action='store_true')
+parser.add_argument('--print-base', dest='print_base', default=False,
+                    action='store_true')
 args = parser.parse_args()
 
 if not os.path.isdir(args.outdir):
@@ -83,3 +85,6 @@ for i, patch in enumerate(patches):
     with file(fpath, 'w') as f:
         f.write(patch.getvalue())
     patch.close()
+
+if args.print_base:
+    sys.stdout.write(mergebase)

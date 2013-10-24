@@ -21,6 +21,7 @@ class GitPusher(object):
         self.tmpdir = None
         self.patches = []
         self.applied_patches = []
+        self.base_rev = None
 
         p = subprocess.Popen(['git', 'config', '--get',
                               '%s.repo' % (self.args.repo,)],
@@ -63,12 +64,16 @@ class GitPusher(object):
                             help='Use mozilla-central configuration')
         parser.add_argument('--force', action='store_true',
                             help='Force push (only for pushes to try)')
+        parser.add_argument('--tip', action='store_true',
+                            help='Push on top of hg tip instead of matching base (only for pushes to try)')
         parser.add_argument('repo', nargs='?', default='try',
                             help='Repository to land to')
 
         self.args = parser.parse_args()
         if self.args.force and self.args.repo != 'try':
             raise GitPusherException('--force can only be used on try')
+        if self.args.tip and self.args.repo != 'try':
+            raise GitPusherException('--tip can only be used on try')
 
     def _build_try_args(self):
         args = []
@@ -114,6 +119,11 @@ class GitPusher(object):
                 p = subprocess.Popen(['hg', 'qdel', patch], cwd=self.repo)
                 p.wait()
 
+        if self.base_rev:
+            sys.stdout.write('Returning hg repo to default tip...\n')
+            p = subprocess.Popen(['hg', 'up', '--rev', 'tip'], cwd=self.repo)
+            p.wait()
+
     def _push_to_try(self):
         sys.stdout.write('running hg try extension...\n')
         args = self._build_try_args()
@@ -147,6 +157,13 @@ class GitPusher(object):
         if p.wait():
             raise GitPusherException('hg push failed')
 
+    def _do_git_log(self, logfmt):
+        p = subprocess.Popen(['git', 'log', '-n', '1', self.base_rev,
+                              '--pretty=format:%s' % (logfmt,)],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.wait()
+        return p.stdout.read().strip()
+
     def run(self):
         # Make our working directory
         self.tmpdir = tempfile.mkdtemp(prefix='gitland', dir='/tmp')
@@ -165,9 +182,13 @@ class GitPusher(object):
         gbs_args = ['git', 'branchseries', '-o', self.tmpdir]
         if self.args.repo == 'try':
             gbs_args.append('--no-coalesce')
-        p = subprocess.Popen(gbs_args)
+            if not self.args.tip:
+                gbs_args.append('--print-base')
+        p = subprocess.Popen(gbs_args, stdout=subprocess.PIPE)
         if p.wait():
             raise GitPusherException('Could not create patches')
+        if self.args.repo == 'try' and not self.args.tip:
+            self.base_rev = p.stdout.read().strip()
 
         # Make sure our hg repo doesn't have any outstanding changes or patches
         sys.stdout.write('checking hg repository...\n')
@@ -190,6 +211,42 @@ class GitPusher(object):
                 stderr=subprocess.PIPE, cwd=self.repo)
         if p.wait():
             raise GitPusherException('Could not check out hg repository')
+
+        if self.base_rev:
+            sys.stdout.write('finding matching hg base commit...\n')
+            commit_user = self._do_git_log('%an <%ae>')
+            commit_user = commit_user.replace(' <none@none>', '')
+            commit_date = self._do_git_log('%aD')
+            search_str = self._do_git_log(' %s')
+
+            p = subprocess.Popen(['hg', 'log', '--user', commit_user,
+                                  '--date', commit_date,
+                                  '--template', '{node} {desc|firstline}\n'],
+                                 cwd=self.repo, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+            p.wait()
+            commits = []
+            for line in p.stdout:
+                if search_str in line:
+                    commits.append(line.strip().split(' ', 1)[0])
+            if len(commits) == 1:
+                sys.stdout.write('updating hg repository to matching base '
+                                 'commit...\n')
+                p = subprocess.Popen(['hg', 'up', '--rev', commits[0]],
+                                     cwd=self.repo)
+                if p.wait():
+                    sys.stdout.write('WARNING: could not update to matching '
+                                     'base commit, pushing on top of hg tip '
+                                     'instead\n')
+            elif len(commits) > 1:
+                sys.stdout.write('WARNING: multiple matching hg revs found, '
+                                 'pushing on top of hg tip instead\n')
+            else:
+                sys.stdout.write('WARNING: no matching hg revs found, '
+                                 'pushing on top of hg tip instead\n')
+        elif self.args.repo == 'try' and not self.args.tip:
+            sys.stdout.write('WARNING: no git base rev, pushing on top of hg '
+                             'tip\n')
 
         # Apply the patches
         sys.stdout.write('applying patches...\n')
