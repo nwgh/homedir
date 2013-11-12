@@ -284,11 +284,11 @@ class GitPusher(object):
             self.try_rev = p.stdout.read().strip()[:12]
 
         sys.stdout.write('pushing to try...\n')
-        #p = subprocess.Popen(['hg', 'push', '-f', 'ssh://hg.mozilla.org/try'],
-        #                     cwd=self.repo)
-        #if p.wait():
-        #    self.try_rev = None
-        #    raise GitPusherException('failed to push to try')
+        p = subprocess.Popen(['hg', 'push', '-f', 'ssh://hg.mozilla.org/try'],
+                             cwd=self.repo)
+        if p.wait():
+            self.try_rev = None
+            raise GitPusherException('failed to push to try')
 
     def _push_to_hg(self):
         # Finish the queue series
