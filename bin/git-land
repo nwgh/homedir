@@ -3,10 +3,36 @@
 import argparse
 import glob
 import os
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
+
+PLATFORMS = ('linux', 'linux64', 'macosx64', 'win32', 'win64', 'android',
+             'android-armv6', 'android-noion', 'android-x86',
+             'ics_armv7a_gecko', 'emulato', 'panda', 'unagi', 'all', 'none')
+MOCHITESTS = ('mochitest-1', 'mochitest-2', 'mochitest-3', 'mochitest-4',
+              'mochitest-5', 'mochitest-o', 'mochitest-bc')
+UNITTESTS = ('reftest', 'reftest-ipc', 'reftest-no-accel', 'crashtest',
+             'crashtest-ipc', 'xpcshell', 'jsreftest', 'jetpack', 'marionette',
+             'mozmill', 'mochitests', 'plain-reftest-1', 'plain-reftest-2',
+             'plain-reftest-3', 'plain-reftest-4', 'jsreftest-1', 'jsreftest-2',
+             'jsreftest-3', 'mochitest-6', 'mochitest-7', 'mochitest-8',
+             'mochitest-gl', 'robocop-1', 'robocop-2', 'crashtest-1',
+             'crashtest-2', 'crashtest-3', 'reftest-1', 'reftest-2',
+             'reftest-3', 'reftest-4', 'reftest-5', 'reftest-6', 'reftest-7',
+             'reftest-8', 'reftest-9', 'reftest-10', 'marionette-webapi', 'all',
+             'none') + MOCHITESTS
+TALOS = ('chromez', 'dromaeojs', 'other', 'dirtypaint', 'svgr', 'tp5o', 'xperf',
+         'remote-trobocheck', 'remote-trobocheck2', 'remote-trobopan',
+         'remote-troboprovider', 'remote-tsvg', 'remote-tp4m_nochrome',
+         'remote-ts', 'all', 'none')
+RESTRICTIONS = ('Fedora', 'Ubuntu', 'x64', '10.6', '10.7', '10.8',
+                'Windows XP', 'Windows 7', '6.2')
+
+RESTRICTION_RE = re.compile('[-a-z0-9]+\\[')
+BUILD_RE = re.compile('[do]+')
 
 class GitPusherException(Exception):
     def __init__(self, msg):
@@ -22,9 +48,10 @@ class GitPusher(object):
         self.patches = []
         self.applied_patches = []
         self.base_rev = None
+        self.try_rev = None
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.repo' % (self.args.repo,)],
+                              '%s.repo' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         self.repo = p.stdout.read().strip()
@@ -32,104 +59,236 @@ class GitPusher(object):
             raise GitPusherException('Missing path to HG repo')
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.interactive' % (self.args.repo,)],
+                              '%s.interactive' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         interactive = p.stdout.read().strip().lower()
         self.interactive = interactive not in ['0', 'no', 'f', 'false']
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.url' % (self.args.repo,)],
+                              '%s.url' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         self.url = p.stdout.read().strip()
 
-    def _parse_args(self, args):
-        parser = argparse.ArgumentParser(prog='git land')
-        parser.add_argument('-b', '--build', action='append',
-                            help='Build type to make')
-        parser.add_argument('-p', '--platform', action='append',
-                            help='Platforms to build')
-        parser.add_argument('-u', '--unittests', action='append',
-                            help='Unit tests to run')
-        parser.add_argument('-t', '--talos', action='append',
-                            help='Talos tests to run')
-        parser.add_argument('-e', '--all-emails', action='store_true',
-                            help='Send all emails')
-        parser.add_argument('-n', '--no-emails', action='store_true',
-                            help='Send no email')
-        parser.add_argument('-f', '--failure-emails', action='store_true',
-                            help='Send only failure emails')
-        parser.add_argument('-m', '--mozilla-central', action='store_true',
-                            help='Use mozilla-central configuration')
-        parser.add_argument('--force', action='store_true',
-                            help='Force push (only for pushes to try)')
-        parser.add_argument('--tip', action='store_true',
-                            help='Push on top of hg tip instead of matching base (only for pushes to try)')
-        parser.add_argument('repo', nargs='?', default='try',
-                            help='Repository to land to')
+    def _create_b_args(self, rawargs):
+        debug = False
+        opt = False
 
-        self.args = parser.parse_args()
-        if self.args.force and self.args.repo != 'try':
+        for a in rawargs:
+            if not BUILD_RE.match(a):
+                raise GitPusherException('invalid build selection %s' % (a,))
+
+            if 'd' in a:
+                debug = True
+            if 'o' in a:
+                opt = True
+
+        return '%s%s' % ('d' if debug else '', 'o' if opt else '')
+
+    def _create_args(self, atype, rawargs):
+        args = []
+        for a in rawargs:
+            args.extend(a.split(','))
+
+        if atype == 'talos':
+            choices = TALOS
+        elif atype == 'platform':
+            choices = PLATFORMS
+        else:
+            raise GitPusherException('internal error')
+
+        for a in args:
+            if a not in choices:
+                raise GitPusherException('invalid %s: %s' % (atype, a))
+
+        if 'all' in args:
+            if len(args) != 1:
+                raise GitPusherException(
+                    'all can not be used with any other %s' % (atype,))
+            return 'all'
+
+        if 'none' in args:
+            if len(args) != 1:
+                raise GitPusherException(
+                    'none can not be used with any other %s' % (atype,))
+            return 'none'
+
+        # Make a set here to ensure there are no duplicates
+        return ','.join(set(args))
+
+    def _create_u_args(self, args):
+        unittests = set()
+        restrictions = set()
+        for a in args:
+            if RESTRICTION_RE.match(a):
+                test, rest = a.split('[', 1)
+                restrs = rest[:-1].split(',')
+                if test not in UNITTESTS:
+                    raise GitPusherException('invalid unit test: %s' % (test,))
+                unittests.add(test)
+                restrictions.update(restrs)
+            else:
+                if a not in UNITTESTS:
+                    raise GitPusherException('invalid unit test: %s' % (a,))
+                unittests.add(a)
+
+        if 'mochitests' in unittests:
+            for m in MOCHITESTS:
+                if m in unittests:
+                    raise GitPusherException(
+                        'mochitests can not be used with any other mochitest')
+
+        for r in restrictions:
+            if r not in RESTRICTIONS:
+                raise GitPusherException('invalid restriction: %s' % (r,))
+
+        if not restrictions:
+            return ','.join(unittests)
+        else:
+            res = []
+            restrs = ','.join(restrictions)
+            for u in unittests:
+                res.append('%s[%s]' % (u, restrs))
+            return ','.join(res)
+
+    def _parse_args(self, args):
+        p = argparse.ArgumentParser(prog='git land')
+        p.add_argument('-b', '--build', action='append')
+        p.add_argument('-p', '--platform',
+                help='Platforms to build', action='append')
+        p.add_argument('-u', '--unittests',
+                help='Unit tests to run', action='append')
+        p.add_argument('-t', '--talos',
+                help='Talos tests to run', action='append')
+        p.add_argument('-e', '--all-emails', help='Send all email',
+                action='store_true')
+        p.add_argument('-n', '--no-emails', help='Send no email',
+                action='store_true')
+        p.add_argument('-f', '--failure-emails', help='Send email on failures',
+                       action='store_true')
+        p.add_argument('-m', '--mozilla-central', action='store_true',
+                help='Use mozilla-central configuration')
+        p.add_argument('--force', action='store_true',
+                       help='Force push (only for pushes to try)')
+        p.add_argument('--tip', action='store_true',
+                       help='Push on top of hg tip instead of matching base (only for pushes to try)')
+        p.add_argument('repo', nargs='?', default='try',
+                       help='Repository to land to')
+
+        args = p.parse_args(args)
+
+        self.force = args.force
+        self.tip = args.tip
+        self.pushto = args.repo
+
+        self.args = {'build':None, 'platform':None, 'unittests':None,
+                     'talos':None, 'email':None}
+
+        if args.build:
+            # Use a set to ensure there are no duplicates
+            self.args['build'] = self._create_b_args(args.build)
+
+        if args.platform:
+            self.args['platform'] = self._create_args('platform', args.platform)
+
+        if args.unittests:
+            self.args['unittests'] = self._create_u_args(args.unittests)
+
+        if args.talos:
+            self.args['talos'] = self._create_args('talos', args.talos)
+
+        if sum(map(int, [args.all_emails, args.no_emails, args.failure_emails])) > 1:
+            raise GitPusherException('-e, -n, and -f are exclusive')
+
+        if args.all_emails:
+            self.args['email'] = '-e'
+
+        if args.no_emails:
+            self.args['email'] = '-n'
+
+        if args.failure_emails:
+            self.args['email'] = '-f'
+
+        if args.mozilla_central:
+            if args.build or args.platform or args.unittests or args.talos:
+                raise GitPusherException('-m may not be used with -b, -p, -u or -t')
+            self.args['build'] = 'do'
+            self.args['platform'] = 'all'
+            self.args['unittests'] = 'all'
+            self.args['talos'] = 'all'
+
+        if not self.args['build'] or not self.args['platform']:
+            raise GitPusherException('missing -b and -p')
+
+        if args.force and args.repo != 'try':
             raise GitPusherException('--force can only be used on try')
-        if self.args.tip and self.args.repo != 'try':
+        if args.tip and args.repo != 'try':
             raise GitPusherException('--tip can only be used on try')
 
     def _build_try_args(self):
-        args = []
-        if self.args.build:
-            for build in self.args.build:
-                args.extend(['-b', build])
+        args = ['-b', self.args['build'], '-p', self.args['platform']]
 
-        if self.args.platform:
-            for platform in self.args.platform:
-                args.extend(['-p', platform])
+        if self.args['unittests']:
+            args.extend(['-u', self.args['unittests']])
 
-        if self.args.unittests:
-            for unittest in self.args.unittests:
-                args.extend(['-u', unittest])
+        if self.args['talos']:
+            args.extend(['-t', self.args['talos']])
 
-        if self.args.talos:
-            for talos in self.args.talos:
-                args.extend(['-t', talos])
+        if self.args['email']:
+            args.append(self.args['email'])
 
-        if self.args.all_emails:
-            args.append('-e')
-
-        if self.args.no_emails:
-            args.append('-n')
-
-        if self.args.failure_emails:
-            args.append('-f')
-
-        if self.args.mozilla_central:
-            args.append('-m')
-
-        return args
+        return ' '.join(args)
 
     def cleanup(self):
         if self.tmpdir:
             shutil.rmtree(self.tmpdir)
 
         if self.applied_patches:
-            p = subprocess.Popen(['hg', 'qpop', '-a'], cwd=self.repo)
+            sys.stdout.write('removing patches...\n')
+            p = subprocess.Popen(['hg', 'qpop', '-a'], cwd=self.repo,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             p.wait()
             for patch in self.applied_patches:
                 patch = os.path.basename(patch)
-                p = subprocess.Popen(['hg', 'qdel', patch], cwd=self.repo)
+                p = subprocess.Popen(['hg', 'qdel', patch], cwd=self.repo,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE)
                 p.wait()
 
         if self.base_rev:
-            sys.stdout.write('Returning hg repo to default tip...\n')
-            p = subprocess.Popen(['hg', 'up', '--rev', 'tip'], cwd=self.repo)
+            sys.stdout.write('returning hg repo to default tip...\n')
+            p = subprocess.Popen(['hg', 'up', '--rev', 'tip'], cwd=self.repo,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             p.wait()
 
+        if self.try_rev:
+            sys.stdout.write('your results will be at https://tbpl.mozilla.org/?tree=Try&rev=%s\n' % (self.try_rev,))
+        else:
+            sys.stdout.write('done!\n')
+
     def _push_to_try(self):
-        sys.stdout.write('running hg try extension...\n')
         args = self._build_try_args()
-        p = subprocess.Popen(['hg', 'try'] + args, cwd=self.repo)
+        sys.stdout.write('setting try selections...\n')
+        p = subprocess.Popen(['hg', 'qnew', '-m', 'try: %s' % (args,),
+                              'try_config'], cwd=self.repo,
+                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         if p.wait():
-            raise GitPusherException('hg try failed')
+            raise GitPusherException('failed setting try selections')
+        self.applied_patches.append('try_config')
+
+        p = subprocess.Popen(['hg', 'log', '-r', 'tip', '--template', '{node}'],
+                             cwd=self.repo, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        if not p.wait():
+            self.try_rev = p.stdout.read().strip()[:12]
+
+        sys.stdout.write('pushing to try...\n')
+        #p = subprocess.Popen(['hg', 'push', '-f', 'ssh://hg.mozilla.org/try'],
+        #                     cwd=self.repo)
+        #if p.wait():
+        #    self.try_rev = None
+        #    raise GitPusherException('failed to push to try')
 
     def _push_to_hg(self):
         # Finish the queue series
@@ -168,7 +327,7 @@ class GitPusher(object):
         # Make our working directory
         self.tmpdir = tempfile.mkdtemp(prefix='gitland', dir='/tmp')
 
-        if not self.args.force:
+        if not self.force:
             # Ensure there aren't any outstanding changes
             sys.stdout.write('checking git repository...\n')
             p = subprocess.Popen(['git', 'status', '--porcelain', '-z'],
@@ -180,14 +339,14 @@ class GitPusher(object):
         # Get the contents of the patches
         sys.stdout.write('making patches...\n')
         gbs_args = ['git', 'branchseries', '-o', self.tmpdir]
-        if self.args.repo == 'try':
+        if self.pushto == 'try':
             gbs_args.append('--no-coalesce')
-            if not self.args.tip:
+            if not self.tip:
                 gbs_args.append('--print-base')
         p = subprocess.Popen(gbs_args, stdout=subprocess.PIPE)
         if p.wait():
             raise GitPusherException('Could not create patches')
-        if self.args.repo == 'try' and not self.args.tip:
+        if self.pushto == 'try' and not self.tip:
             self.base_rev = p.stdout.read().strip()
 
         # Make sure our hg repo doesn't have any outstanding changes or patches
@@ -198,7 +357,7 @@ class GitPusher(object):
         if p.stdout.read().strip():
             raise GitPusherException('Hg repo already has mq patches')
 
-        if not self.args.force:
+        if not self.force:
             p = subprocess.Popen(['hg', 'status'], stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE, cwd=self.repo)
             p.wait()
@@ -233,7 +392,8 @@ class GitPusher(object):
                 sys.stdout.write('updating hg repository to matching base '
                                  'commit...\n')
                 p = subprocess.Popen(['hg', 'up', '--rev', commits[0]],
-                                     cwd=self.repo)
+                                     cwd=self.repo, stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE)
                 if p.wait():
                     sys.stdout.write('WARNING: could not update to matching '
                                      'base commit, pushing on top of hg tip '
@@ -244,24 +404,34 @@ class GitPusher(object):
             else:
                 sys.stdout.write('WARNING: no matching hg revs found, '
                                  'pushing on top of hg tip instead\n')
-        elif self.args.repo == 'try' and not self.args.tip:
+        elif self.pushto == 'try' and not self.tip:
             sys.stdout.write('WARNING: no git base rev, pushing on top of hg '
                              'tip\n')
 
         # Apply the patches
         sys.stdout.write('applying patches...\n')
         self.patches = sorted(glob.glob(os.path.join(self.tmpdir, '*.patch')))
-        for patch in self.patches:
-            p = subprocess.Popen(['hg', 'qimport', patch], cwd=self.repo)
-            if p.wait():
-                raise GitPusherException('Could not import patch to hg')
-            self.applied_patches.append(patch)
-            p = subprocess.Popen(['hg', 'qpush'], cwd=self.repo)
-            if p.wait():
-                raise GitPusherException('Could not apply patch to hg')
+        prevlen = 0
+        try:
+            for patch in self.patches:
+                sys.stdout.write('\r%s' % (' ' * prevlen,))
+                prevlen = len(os.path.basename(patch))
+                sys.stdout.write('\r%s' % (os.path.basename(patch),))
+                sys.stdout.flush()
+                p = subprocess.Popen(['hg', 'qimport', patch], cwd=self.repo,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if p.wait():
+                    raise GitPusherException('Could not import patch to hg')
+                self.applied_patches.append(patch)
+                p = subprocess.Popen(['hg', 'qpush'], cwd=self.repo,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if p.wait():
+                    raise GitPusherException('Could not apply patch to hg')
+        finally:
+            sys.stdout.write('\r%s\r' % (' ' * prevlen,))
 
         try:
-            if self.args.repo == 'try':
+            if self.pushto == 'try':
                 self._push_to_try()
             else:
                 # No patches applied after this point, don't try to pop them
@@ -270,8 +440,6 @@ class GitPusher(object):
         finally:
             sys.stdout.write('cleaning up...\n')
             self.cleanup()
-
-        sys.stdout.write('done!\n')
 
 if __name__ == '__main__':
     try:
