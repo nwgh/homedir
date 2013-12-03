@@ -411,24 +411,27 @@ class GitPusher(object):
         # Apply the patches
         sys.stdout.write('applying patches...\n')
         self.patches = sorted(glob.glob(os.path.join(self.tmpdir, '*.patch')))
-        prevlen = 0
+        npatches = len(self.patches)
+        patchno = 1
         try:
             for patch in self.patches:
-                sys.stdout.write('\r%s' % (' ' * prevlen,))
-                prevlen = len(os.path.basename(patch))
-                sys.stdout.write('\r%s' % (os.path.basename(patch),))
+                sys.stdout.write('\r%s/%s' % (patchno, npatches))
+                patchno += 1
                 sys.stdout.flush()
                 p = subprocess.Popen(['hg', 'qimport', patch], cwd=self.repo,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 if p.wait():
-                    raise GitPusherException('Could not import patch to hg')
+                    raise GitPusherException('Could not import patch %s to hg' %
+                                             (patch,))
                 self.applied_patches.append(patch)
                 p = subprocess.Popen(['hg', 'qpush'], cwd=self.repo,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 if p.wait():
-                    raise GitPusherException('Could not apply patch to hg')
+                    raise GitPusherException('Could not apply patch %s to hg' %
+                                             (patch,))
         finally:
-            sys.stdout.write('\r%s\r' % (' ' * prevlen,))
+            nspaces = len(str(patchno)) + len(str(npatches)) + 1
+            sys.stdout.write('\r%s\r' % (' ' * nspaces,))
 
         try:
             if self.pushto == 'try':
