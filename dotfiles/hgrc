@@ -2,6 +2,9 @@
 username = Nicholas Hurley <hurley@todesschaf.org>
 ignore = ~/.hgignore
 
+[hooks]
+pre-push = python:~/.hgext/mozprepush.py:mozprepush
+
 [extensions]
 transplant =
 rebase =
