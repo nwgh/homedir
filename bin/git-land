@@ -49,6 +49,7 @@ class GitPusher(object):
         self.applied_patches = []
         self.base_rev = None
         self.try_rev = None
+        self.cleaned = False
 
         p = subprocess.Popen(['git', 'config', '--get',
                               '%s.repo' % (self.pushto,)],
@@ -182,6 +183,20 @@ class GitPusher(object):
         self.tip = args.tip
         self.pushto = args.repo
 
+        if self.pushto != 'try':
+            if self.tip:
+                raise GitPusherException('Can not use --tip for non-try pushes')
+
+            if self.force:
+                raise GitPusherException('Can not use --force for non-try pushes')
+
+            if args.mozilla_central or args.failure_emails or \
+               args.no_emails or args.all_emails or args.talos \
+               or args.unittests or args.platform or args.build:
+                raise GitPusherException('Can not use try syntax for non-try pushes')
+
+            return
+
         self.args = {'build':None, 'platform':None, 'unittests':None,
                      'talos':None, 'email':None}
 
@@ -241,6 +256,11 @@ class GitPusher(object):
         return ' '.join(args)
 
     def cleanup(self):
+        if self.cleaned:
+            return
+
+        self.cleaned = True
+
         if self.tmpdir:
             shutil.rmtree(self.tmpdir)
 
@@ -291,6 +311,11 @@ class GitPusher(object):
             raise GitPusherException('failed to push to try')
 
     def _push_to_hg(self):
+        npatches = len(self.applied_patches)
+
+        # No patches applied after this point, don't try to pop them
+        self.applied_patches = []
+
         # Finish the queue series
         sys.stdout.write('finishing queue series...\n')
         p = subprocess.Popen(['hg', 'qfinish', '-a'], cwd=self.repo)
@@ -314,6 +339,25 @@ class GitPusher(object):
         sys.stdout.write('running hg push...\n')
         p = subprocess.Popen(['hg', 'push', self.url], cwd=self.repo)
         if p.wait():
+            while npatches:
+                p = subprocess.Popen(['hg', 'qimport', '-r', 'tip'],
+                                     cwd=self.repo, stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE)
+                p.wait()
+
+                p = subprocess.Popen(['hg', 'qpop'], cwd=self.repo,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE)
+                p.wait()
+                patchname = p.stdout.readlines()[0].strip().split()[1]
+
+                p = subprocess.Popen(['hg', 'qdel', patchname], cwd=self.repo,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE)
+                p.wait()
+
+                npatches -= 1
+
             raise GitPusherException('hg push failed')
 
     def _do_git_log(self, logfmt):
@@ -437,8 +481,6 @@ class GitPusher(object):
             if self.pushto == 'try':
                 self._push_to_try()
             else:
-                # No patches applied after this point, don't try to pop them
-                self.applied_patches = []
                 self._push_to_hg()
         finally:
             sys.stdout.write('cleaning up...\n')
@@ -448,7 +490,8 @@ if __name__ == '__main__':
     try:
         t = GitPusher(sys.argv[1:])
     except Exception as e:
-        sys.stderr.write('Failed creating pusher: %s' % (e,))
+        sys.stderr.write('Failed creating pusher: %s\n' % (e,))
+        sys.exit(1)
     try:
         t.run()
     except GitPusherException as e:
