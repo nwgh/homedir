@@ -28,11 +28,11 @@
 	insteadOf = gh:
 	insteadOf = github:
 [try]
-	repo = /Users/hurley/src/mozilla/central
+	repo = ~/src/mozilla/central
 [push]
 	default = simple
 [inbound]
-    repo = /Users/hurley/src/mozilla/inbound
+    repo = ~/src/mozilla/inbound
     interactive = true
     url = ssh://hg.mozilla.org/integration/mozilla-inbound
 [diff]

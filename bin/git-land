@@ -58,6 +58,7 @@ class GitPusher(object):
         self.repo = p.stdout.read().strip()
         if not self.repo:
             raise GitPusherException('Missing path to HG repo')
+        self.repo = os.path.expanduser(self.repo)
 
         p = subprocess.Popen(['git', 'config', '--get',
                               '%s.interactive' % (self.pushto,)],
