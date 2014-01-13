@@ -4,6 +4,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	pager = less -FRXi
+	editor = vim
 [svn]
 	edit = true
 [color]
