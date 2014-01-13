@@ -478,6 +478,8 @@ class GitPusher(object):
             nspaces = len(str(patchno)) + len(str(npatches)) + 1
             sys.stdout.write('\r%s\r' % (' ' * nspaces,))
 
+        sys.stdout.write('applied %s patches...\n' % (npatches,))
+
         try:
             if self.pushto == 'try':
                 self._push_to_try()
