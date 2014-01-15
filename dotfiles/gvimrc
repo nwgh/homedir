@@ -8,6 +8,9 @@ set guioptions-=L
 set guioptions+=a
 set guioptions+=A
 
+" Don't use GUI popups
+set guioptions+=c
+
 " Don't let the cursor blink ever. EVER
 set guicursor=a:blinkwait0-blinkoff0-blinkon0
 
