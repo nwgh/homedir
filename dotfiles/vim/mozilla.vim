@@ -2,6 +2,8 @@ so $HOME/.vim/cpp.vim
 
 setlocal expandtab
 
+setlocal list listchars=tab:>>
+
 setlocal sts=2
 setlocal sw=2
 
