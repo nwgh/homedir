@@ -9,9 +9,11 @@ import subprocess
 import sys
 import tempfile
 
-PLATFORMS = ('linux', 'linux64', 'macosx64', 'win32', 'win64', 'android',
-             'android-armv6', 'android-noion', 'android-x86',
-             'ics_armv7a_gecko', 'emulato', 'panda', 'unagi', 'all', 'none')
+PLATFORMS = ('linux', 'linux64', 'linux64-valgrind', 'linux64-st-an',
+             'linux64-asan', 'linux64-br-haz', 'linux64-sh-haz', 'macosx64',
+             'win32', 'win64', 'android', 'android-armv6', 'android-noion',
+             'android-x86', 'ics_armv7a_gecko', 'emulator', 'emulator-jb',
+             'linux_gecko', 'linux64_gecko', 'macosx64_gecko', 'all', 'none')
 MOCHITESTS = ('mochitest-1', 'mochitest-2', 'mochitest-3', 'mochitest-4',
               'mochitest-5', 'mochitest-o', 'mochitest-bc')
 UNITTESTS = ('reftest', 'reftest-ipc', 'reftest-no-accel', 'crashtest',
