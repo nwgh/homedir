@@ -9,6 +9,7 @@ glib
 gnupg
 gnupg2 --8192 --with-readline
 gnutls
+irssi
 libffi
 libidl
 libyaml
