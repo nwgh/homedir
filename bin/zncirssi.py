@@ -9,6 +9,9 @@ import sys
 homedir = os.getenv('HOME')
 outdefault = os.path.join(homedir, '.irssi', 'forward.log')
 
+ircdefault = '/usr/bin/irssi'
+sshdefault = '/usr/bin/ssh'
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--output', default=outdefault)
 parser.add_argument('--localport', default='6667')
@@ -17,12 +20,14 @@ parser.add_argument('--forward-to-port', default='6667')
 parser.add_argument('--user', default=None, required=True)
 parser.add_argument('--host', default=None, required=True)
 parser.add_argument('--shell-on-failure', default=False, action='store_true')
+parser.add_argument('--irc', default=ircdefault)
+parser.add_argument('--ssh', default=sshdefault)
 args = parser.parse_args()
 
 forwardstring = '%s:%s:%s' % (args.localport, args.forward_to_host,
                               args.forward_to_port)
 
-sshstat = subprocess.call(['/usr/bin/ssh',
+sshstat = subprocess.call([args.ssh,
                            '-a', # No agent forwarding
                            '-E', args.output, # SSH will put all output in a file
                            '-f', # Go into the background after connected
@@ -43,18 +48,17 @@ if sshstat != 0:
     if args.shell_on_failure:
         sys.exit(subprocess.call(['/bin/sh']))
 
-subprocess.call(['/usr/bin/irssi'])
+subprocess.call([args.irc])
 
 ps = subprocess.Popen(['/bin/ps',
                        '-u', str(os.getuid()),
-                       '--no-headers',
                        '-o', 'pid args'],
                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 killedssh = False
 for line in ps.stdout:
     line = line.strip()
     pid, command = line.split(' ', 1)
-    if command.startswith('/usr/bin/ssh') and forwardstring in command:
+    if command.startswith(args.ssh) and forwardstring in command:
         os.kill(int(pid), signal.SIGTERM)
         killedssh = True
         break
