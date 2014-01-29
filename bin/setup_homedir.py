@@ -81,7 +81,7 @@ def __safelink(src, dst, act=True, verbose=False):
 
 
 def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
-    packages=False):
+    packages=False, vundle=True):
     """For each file, f, in setupdir, do the equivalent of:
        ln -s <setupdir>/<f> <homedir>/<f>
     Except for <setupdir>/dotfiles, where for each file f there, do:
@@ -115,7 +115,8 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
             setupfiles.discard(osname)
             if verbose:
                 print 'Found osdir at %s' % (osdir,)
-            setup_homedir(homedir, osdir, act=act, verbose=verbose, in_os=True)
+            setup_homedir(homedir, osdir, act=act, verbose=verbose, in_os=True,
+                          vundle=False)
     if not in_os and verbose and not osdir:
         print 'No osdir found'
 
@@ -171,6 +172,22 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
             src = os.path.join(dotfiledir, f)
             __safelink(src, dst, act=act, verbose=verbose)
 
+        # Vundle goes in the dotfile directory, if anywhere
+        if vundle:
+            vimbundles = os.path.join(dotfiledir, 'vim', 'bundle')
+            if not os.path.exists(vimbundles):
+                if verbose:
+                    print >>sys.stderr, 'Install vundle to %s' % (vimbundles,)
+                if act:
+                    os.mkdir(vimbundles)
+                    cwd = os.getcwd()
+                    os.chdir(vimbundles)
+                    os.system('git clone https://github.com/gmarik/vundle.git vundle')
+                    os.chdir(cwd)
+            elif verbose:
+                print >>sys.stderr, 'Not installing vundle: %s already exists' \
+                        % (vimbundles,)
+
     # Handle installing packages if requested
     if packages:
         packagefiles = __listdir(packagesdir)
@@ -210,6 +227,7 @@ if __name__ == '__main__':
     def usage():
         print >>sys.stderr, '%s [-n] [-h homedir] [-p] [-s setupdir] [-v]' % (
             sys.argv[0],)
+        print >>sys.stderr, '   -b            DO NOT install vundle'
         print >>sys.stderr, '   -n            Do nothing, just print what ' \
             'would be done (implies -v)'
         print >>sys.stderr, '   -h homedir    Put links in <homedir> ' \
@@ -221,7 +239,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'nh:ps:v')
+        opts, args = getopt.getopt(sys.argv[1:], 'bnh:ps:v')
     except:
         usage()
 
@@ -230,9 +248,12 @@ if __name__ == '__main__':
     setupdir = os.getcwd()
     verbose = False
     packages = False
+    vundle = True
 
     for o, a in opts:
-        if o == '-n':
+        if o == '-b':
+            vundle = False
+        elif o == '-n':
             act = False
             verbose = True
         elif o == '-h':
@@ -252,7 +273,7 @@ if __name__ == '__main__':
 
     try:
         setup_homedir(homedir, setupdir, act=act, verbose=verbose,
-            packages=packages)
+            packages=packages, vundle=vundle)
     except Exception, e:
         print >>sys.stderr, str(e)
         sys.exit(1)

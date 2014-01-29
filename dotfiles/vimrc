@@ -1,8 +1,33 @@
 set nocompatible
 
-" Set up pathogen
-call pathogen#infect()
+" Set up pathogen - this is only for things that aren't vundle-able
+call pathogen#infect('pathogen-bundles/{}')
 call pathogen#helptags()
+
+" Set up vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Vundle manages vundle. Woh.
+Bundle 'gmarik/vundle'
+
+" From original sources on github
+Bundle 'mileszs/ack.vim'
+Bundle 'sjbach/lusty'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'garbas/vim-snipmate'
+Bundle 'derekwyatt/vim-fswitch'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'klen/python-mode'
+Bundle 'scrooloose/syntastic'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'sjl/gundo.vim'
+Bundle 'Lokaltog/vim-easymotion'
+
+" From vim-scripts
+Bundle 'hgrev'
 
 filetype on
 filetype plugin on
