@@ -2,6 +2,7 @@ ack
 autoconf213
 ccache
 cmake
+gdb
 gdbm
 gettext
 git
