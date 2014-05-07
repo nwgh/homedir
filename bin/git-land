@@ -76,6 +76,14 @@ class GitPusher(object):
         p.wait()
         self.url = p.stdout.read().strip()
 
+        p = subprocess.Popen(['git', 'config', '--get',
+                              '%s.base' % (self.pushto,)],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.wait()
+        self.diffbase = p.stdout.read().strip()
+        if not self.diffbase:
+            self.diffbase = 'mozilla/master'
+
     def _create_b_args(self, rawargs):
         debug = False
         opt = False
@@ -386,7 +394,7 @@ class GitPusher(object):
 
         # Get the contents of the patches
         sys.stdout.write('making patches...\n')
-        gbs_args = ['git', 'branchseries', '-o', self.tmpdir]
+        gbs_args = ['git', 'branchseries', '-b', self.diffbase, '-o', self.tmpdir]
         if self.pushto == 'try':
             gbs_args.append('--no-coalesce')
             if not self.tip:

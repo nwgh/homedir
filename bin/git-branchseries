@@ -19,6 +19,8 @@ def find_patch_start(revs, filenames, rev_to_idx):
     return i
 
 parser = argparse.ArgumentParser()
+parser.add_argument('-b', dest='diffbase', default='master',
+    help='Branch that HEAD is based on')
 parser.add_argument('-o', dest='outdir', default=os.getcwd(),
     help='Directory to output patches to (default: .)')
 parser.add_argument('--no-coalesce', dest='no_coalesce', default=False,
@@ -31,7 +33,7 @@ if not os.path.isdir(args.outdir):
     sys.stderr.write('Invalid output directory: %s\n' % (args.outdir,))
     sys.exit(1)
 
-gmb = subprocess.Popen(['git', 'merge-base', 'mozilla/master', 'HEAD'],
+gmb = subprocess.Popen(['git', 'merge-base', args.diffbase, 'HEAD'],
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 gmb.wait()
 mergebase = gmb.stdout.readlines()[0].strip()
