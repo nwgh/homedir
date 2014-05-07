@@ -36,6 +36,21 @@
     repo = ~/src/mozilla/inbound
     interactive = true
     url = ssh://hg.mozilla.org/integration/mozilla-inbound
+[aurora]
+    repo = ~/src/mozilla/aurora
+    interactive = true
+    url = ssh://hg.mozilla.org/releases/mozilla-aurora
+    base = mozilla/aurora
+[beta]
+    repo = ~/src/mozilla/beta
+    interactive = true
+    url = ssh://hg.mozilla.org/releases/mozilla-beta
+    base = mozilla/beta
+[release]
+    repo = ~/src/mozilla/release
+    interactive = true
+    url = ssh://hg.mozilla.org/releases/mozilla-release
+    base = mozilla/release
 [diff]
 	tool = p4merge
 [difftool "p4merge"]
