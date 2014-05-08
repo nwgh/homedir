@@ -55,7 +55,7 @@ class GitPusher(object):
         self.cleaned = False
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.repo' % (self.pushto,)],
+                              'land.%s.repo' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         self.repo = p.stdout.read().strip()
@@ -64,20 +64,20 @@ class GitPusher(object):
         self.repo = os.path.expanduser(self.repo)
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.interactive' % (self.pushto,)],
+                              'land.%s.interactive' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         interactive = p.stdout.read().strip().lower()
         self.interactive = interactive not in ['0', 'no', 'f', 'false']
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.url' % (self.pushto,)],
+                              'land.%s.url' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         self.url = p.stdout.read().strip()
 
         p = subprocess.Popen(['git', 'config', '--get',
-                              '%s.base' % (self.pushto,)],
+                              'land.%s.base' % (self.pushto,)],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.wait()
         self.diffbase = p.stdout.read().strip()

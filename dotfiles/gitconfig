@@ -28,25 +28,25 @@
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
-[try]
+[land "try"]
 	repo = ~/src/mozilla/central
 [push]
 	default = simple
-[inbound]
+[land "inbound"]
     repo = ~/src/mozilla/inbound
     interactive = true
     url = ssh://hg.mozilla.org/integration/mozilla-inbound
-[aurora]
+[land "aurora"]
     repo = ~/src/mozilla/aurora
     interactive = true
     url = ssh://hg.mozilla.org/releases/mozilla-aurora
     base = mozilla/aurora
-[beta]
+[land "beta"]
     repo = ~/src/mozilla/beta
     interactive = true
     url = ssh://hg.mozilla.org/releases/mozilla-beta
     base = mozilla/beta
-[release]
+[land "release"]
     repo = ~/src/mozilla/release
     interactive = true
     url = ssh://hg.mozilla.org/releases/mozilla-release
