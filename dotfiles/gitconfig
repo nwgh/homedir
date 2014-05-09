@@ -62,3 +62,6 @@
 	keepBackup = false
 [help]
 	autocorrect = 1
+[update "master"]
+    upstream = mozilla/master
+    remotes = origin bb
