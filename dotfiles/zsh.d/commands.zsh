@@ -42,6 +42,6 @@ fi
 
 httplog() {
     export NSPR_LOG_MODULES=timestamp,nsHttp:5,nsSocketTransport:5,nsHostResolver:5
-    export NSPR_LOG_FILE=~/nspr.log
+    export NSPR_LOG_FILE=/tmp/nspr.log
     "$@"
 }
