@@ -1,3 +1,3 @@
-if [ -f /usr/local/share/python/virtualenvwrapper.sh ] ; then
-    source /usr/local/share/python/virtualenvwrapper.sh
+if [ -f /usr/local/bin/virtualenvwrapper.sh ] ; then
+    source /usr/local/bin/virtualenvwrapper.sh
 fi
