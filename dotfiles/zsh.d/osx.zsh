@@ -12,5 +12,7 @@ alias gvim="gvim --remote-silent"
 export MINIDUMP_STACKWALK="${HOME}/Cloud Drive/Documents/moz/minidump_stackwalk_osx"
 export NWH_ZSH_CONFIG="osx"
 export MOZCONFIG="$MOZCONFIG_ROOT/mac_debug"
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
 
 # vim: set noexpandtab:
