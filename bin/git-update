@@ -40,21 +40,27 @@ class GitUpdater(object):
         args = p.parse_args(args)
         self.update = args.update[0]
 
+    def msg(self, msg):
+        sys.stdout.write('%s\n' % (msg,))
+        sys.stdout.flush()
+
+    def err(self, msg):
+        sys.stderr.write('%s\n' % (msg,))
+
     def cleanup(self):
-        sys.stdout.write('Cleaning up...\n')
+        self.msg('Cleaning up...')
         if not self.starting_branch:
             return
 
         p = subprocess.Popen(['git', 'checkout', self.starting_branch],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if p.wait():
-            sys.stderr.write('Failed returning to %s\n' %
-                             (self.starting_branch,))
+            self.err('Failed returning to %s' % (self.starting_branch,))
 
         self.starting_branch = None
 
     def run(self):
-        sys.stdout.write('Checking current branch...\n')
+        self.msg('Checking current branch...')
         p = subprocess.Popen(['git', 'status', '--porcelain', '-z'],
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         p.wait()
@@ -72,13 +78,14 @@ class GitUpdater(object):
             # We'll have no cleanup to do
             self.starting_branch = None
 
-        sys.stdout.write('Switching to branch %s...\n' % (self.update,))
-        p = subprocess.Popen(['git', 'checkout', self.update],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if p.wait():
-            raise GitUpdaterException('Failed checking out %s' % (self.update,))
+        if self.starting_branch is not None:
+            self.msg('Switching to branch %s...' % (self.update,))
+            p = subprocess.Popen(['git', 'checkout', self.update],
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if p.wait():
+                raise GitUpdaterException('Failed checking out %s' % (self.update,))
 
-        sys.stdout.write('Updating local copy...\n')
+        self.msg('Updating local copy...')
         p = subprocess.Popen(['git', 'fetch', '--all'], stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         if p.wait():
@@ -92,12 +99,13 @@ class GitUpdater(object):
 
         failed = False
         for remote in self.remotes:
-            sys.stdout.write('Pushing to %s...\n' % (remote,))
-            p = subprocess.Popen(['git', 'push', remote, self.update],
-                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.msg('Pushing to %s...' % (remote,))
+            p = subprocess.Popen(['git', 'push', remote, self.update])
+            sys.stdout.flush()
             if p.wait():
-                sys.stderr.write('Failed pushing to %s\n' % (remote,))
+                self.err('Failed pushing to %s' % (remote,))
                 failed = True
+            self.msg('')
 
         self.cleanup()
         if failed:
