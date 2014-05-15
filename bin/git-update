@@ -13,6 +13,7 @@ class GitUpdaterException(Exception):
 
 class GitUpdater(object):
     def __init__(self, args):
+        self.starting_branch = None
         self._parse_args(args)
 
         p = subprocess.Popen(['git', 'config', '--get',
