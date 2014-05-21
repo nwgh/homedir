@@ -45,3 +45,8 @@ httplog() {
     export NSPR_LOG_FILE=/tmp/nspr.log
     "$@"
 }
+
+keylog() {
+    export SSLKEYLOGFILE=/tmp/nsskeys.log
+    "$@"
+}
