@@ -40,6 +40,12 @@ if type dgit > /dev/null 2>&1 ; then
     compdef dgit=git
 fi
 
+seerlog() {
+    export NSPR_LOG_MODULES=timestamp,NetworkPredictor:5
+    export NSPR_LOG_FILE=/tmp/nspr.log
+    "$@"
+}
+
 httplog() {
     export NSPR_LOG_MODULES=timestamp,nsHttp:5,nsSocketTransport:5,nsHostResolver:5
     export NSPR_LOG_FILE=/tmp/nspr.log
