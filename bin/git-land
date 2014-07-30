@@ -296,6 +296,8 @@ class GitPusher(object):
 
         if self.try_rev:
             sys.stdout.write('your results will be at https://tbpl.mozilla.org/?tree=Try&rev=%s\n' % (self.try_rev,))
+            sys.stdout.write('OR @ https://treeherder.mozilla.org/ui/#/jobs?repo=try&revision=%s\n' % (self.try_rev,))
+            sys.stdout.write('OR @ https://secure.pub.build.mozilla.org/buildapi/self-serve/try/rev/%s\n' % (self.try_rev,))
         else:
             sys.stdout.write('done!\n')
 
