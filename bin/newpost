@@ -26,7 +26,7 @@ with file(filename, 'w') as f:
     f.write('title: %s\n' % (args.title,))
     f.write('date: 3000-01-01 00:00:00\n')
     if args.tags:
-        f.write('tags: %s\n' % (', '.join(args.tags),))
+        f.write('tags: %s\n' % (str(args.tags),))
     if args.nocomments:
         f.write('nocomments: 1\n')
     f.write('disqusid: %s\n' % (postid,))
