@@ -153,6 +153,9 @@ class GitPusher(object):
                         'mochitests can not be used with any other mochitest')
 
         for r in restrictions:
+            if r.startswith('-'):
+                # Handle the case when we're removing something from a set
+                r = r[1:]
             if r not in RESTRICTIONS:
                 raise GitPusherException('invalid restriction: %s' % (r,))
 
