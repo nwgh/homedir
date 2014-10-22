@@ -1,1 +1,0 @@
-More safety when applying patches

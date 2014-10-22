@@ -1,6 +1,7 @@
 [ui]
 username = Nicholas Hurley <hurley@todesschaf.org>
 ignore = ~/.hgignore
+ssh = /usr/bin/ssh -F ~/.ssh/config_hg
 
 [hooks]
 pre-push = python:~/.hgext/mozprepush.py:mozprepush
@@ -14,10 +15,6 @@ record =
 pager =
 mq =
 relink =
-qimportbz = ~/.hgext/qimportbz
-bzexport = ~/.hgext/bzexport/bzexport.py
-try = ~/.hgext/try_extension/try.py
-qbranch = ~/.hgext/qbranch_extension/qbranch.py
 purge =
 
 [diff]

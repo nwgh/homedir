@@ -1,3 +1,0 @@
-[paths]
-default = http://hg.mozilla.org/users/hurley_mozilla.com/try_extension
-default-push = ssh://hg.mozilla.org/users/hurley_mozilla.com/try_extension
