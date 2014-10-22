@@ -18,11 +18,12 @@ set guicursor=a:blinkwait0-blinkoff0-blinkon0
 set title
 set titlestring=vim
 
-" I much prefer Ubuntu Mono
+" I much prefer Fira Mono
 if has("macunix")
-    set gfn=Ubuntu\ Mono:h14
+    set gfn=Fira\ Mono:h12
+    set transparency=1
 else
-    set gfn=Ubuntu\ Mono\ 14
+    set gfn=Fira\ Mono\ 12
 endif
 
 " Add my custom match groups
