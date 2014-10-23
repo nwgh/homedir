@@ -21,7 +21,7 @@ set titlestring=vim
 " I much prefer Fira Mono
 if has("macunix")
     set gfn=Fira\ Mono:h12
-    set transparency=1
+    set transparency=3
 else
     set gfn=Fira\ Mono\ 12
 endif
