@@ -15,4 +15,18 @@ export MOZCONFIG="$MOZCONFIG_ROOT/mac_debug"
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 
+function irctunnel() {
+	case "$1" in
+	"start")
+		launchctl load ~/Library/LaunchAgents/sshtunnel.plist
+		;;
+	"stop")
+		launchctl unload ~/Library/LaunchAgents/sshtunnel.plist
+		;;
+	*)
+		echo "Unknown action $1"
+		;;
+	esac
+}
+
 # vim: set noexpandtab:
