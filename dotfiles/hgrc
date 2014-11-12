@@ -7,15 +7,22 @@ ssh = /usr/bin/ssh -F ~/.ssh/config_hg
 pre-push = python:~/.hgext/mozprepush.py:mozprepush
 
 [extensions]
-transplant =
-rebase =
-color =
-parentrevspec =
-record =
-pager =
-mq =
-relink =
-purge =
+transplant = 
+rebase = 
+color = 
+parentrevspec = 
+record = 
+pager = 
+mq = 
+relink = 
+purge = 
+progress = 
+histedit = 
+bzexport = /Users/hurley/.mozbuild/version-control-tools/hgext/bzexport
+reviewboard = /Users/hurley/.mozbuild/version-control-tools/hgext/reviewboard/client.py
+firefoxtree = /Users/hurley/.mozbuild/version-control-tools/hgext/firefoxtree
+mqext = /Users/hurley/.mozbuild/mercurial/extensions/mqext
+qimportbz = /Users/hurley/.mozbuild/version-control-tools/hgext/qimportbz
 
 [diff]
 git = 1
@@ -34,6 +41,7 @@ ignore = update, push, pull, merge, fetch, clone, record, qrecord
 [defaults]
 commit = -v
 annotate = -cuvd
+qnew = -U
 
 [alias]
 apply = import --no-commit
@@ -55,3 +63,9 @@ p4.binary = False
 vimdiff.priority = 30
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close
+[bugzilla]
+username = hurley@todesschaf.org
+[hostfingerprints]
+bugzilla.mozilla.org = 47:13:a2:14:0c:46:45:53:12:0d:e5:36:16:a5:60:26:3e:da:3a:60
+bitbucket.org = 45:ad:ae:1a:cf:0e:73:47:06:07:e0:88:f5:cc:10:e5:fa:1c:f7:99
+hg.mozilla.org = af:27:b9:34:47:4e:e5:98:01:f6:83:2b:51:c9:aa:d8:df:fb:1a:27
