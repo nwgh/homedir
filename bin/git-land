@@ -198,13 +198,14 @@ class GitPusher(object):
         self.tip = args.tip
         self.pushto = args.repo
 
-        if self.pushto != 'try':
+        if self.pushto not in ('try', 'review'):
             if self.tip:
-                raise GitPusherException('Can not use --tip for non-try pushes')
+                raise GitPusherException('Can not use --tip for real pushes')
 
             if self.force:
-                raise GitPusherException('Can not use --force for non-try pushes')
+                raise GitPusherException('Can not use --force for real pushes')
 
+        if self.pushto != 'try':
             if args.mozilla_central or args.failure_emails or \
                args.no_emails or args.all_emails or args.talos \
                or args.unittests or args.platform or args.build:
@@ -251,10 +252,10 @@ class GitPusher(object):
         if not self.args['build'] or not self.args['platform']:
             raise GitPusherException('missing -b and -p')
 
-        if args.force and args.repo != 'try':
-            raise GitPusherException('--force can only be used on try')
-        if args.tip and args.repo != 'try':
-            raise GitPusherException('--tip can only be used on try')
+        if args.force and args.repo not in ('try', 'review'):
+            raise GitPusherException('--force can only be used on try or review')
+        if args.tip and args.repo not in ('try', 'review'):
+            raise GitPusherException('--tip can only be used on try or review')
 
     def _build_try_args(self):
         args = ['-b', self.args['build'], '-p', self.args['platform']]
@@ -326,6 +327,14 @@ class GitPusher(object):
         if p.wait():
             self.try_rev = None
             raise GitPusherException('failed to push to try')
+
+    def _push_to_review(self):
+        sys.stdout.write('pushing to reviewboard...\n')
+        p = subprocess.Popen(['hg', 'push', '-f',
+                              'ssh://reviewboard-hg.mozilla.org/gecko'],
+                             cwd=self.repo)
+        if p.wait():
+            raise GitPusherException('failed to push to reviewboard')
 
     def _push_to_hg(self):
         npatches = len(self.applied_patches)
@@ -402,12 +411,12 @@ class GitPusher(object):
         gbs_args = ['git', 'branchseries', '-b', self.diffbase, '-o', self.tmpdir]
         if self.pushto == 'try':
             gbs_args.append('--no-coalesce')
-            if not self.tip:
-                gbs_args.append('--print-base')
+        if self.pushto in ('try', 'review') and not self.tip:
+            gbs_args.append('--print-base')
         p = subprocess.Popen(gbs_args, stdout=subprocess.PIPE)
         if p.wait():
             raise GitPusherException('Could not create patches')
-        if self.pushto == 'try' and not self.tip:
+        if self.pushto in ('try', 'review') and not self.tip:
             self.base_rev = p.stdout.read().strip()
 
         # Make sure our hg repo doesn't have any outstanding changes or patches
@@ -465,7 +474,7 @@ class GitPusher(object):
             else:
                 sys.stdout.write('WARNING: no matching hg revs found, '
                                  'pushing on top of hg tip instead\n')
-        elif self.pushto == 'try' and not self.tip:
+        elif self.pushto in ('try', 'review') and not self.tip:
             sys.stdout.write('WARNING: no git base rev, pushing on top of hg '
                              'tip\n')
 
@@ -499,6 +508,8 @@ class GitPusher(object):
         try:
             if self.pushto == 'try':
                 self._push_to_try()
+            elif self.pushto == 'review':
+                self._push_to_review()
             else:
                 self._push_to_hg()
         finally:
