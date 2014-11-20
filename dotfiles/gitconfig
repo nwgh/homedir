@@ -30,6 +30,9 @@
 	insteadOf = github:
 [land "try"]
 	repo = ~/src/mozilla/central
+[land "review"]
+    repo = ~/src/mozilla/central
+    url = ssh://reviewboard-hg.mozilla.org/gecko
 [push]
 	default = simple
 [land "inbound"]
