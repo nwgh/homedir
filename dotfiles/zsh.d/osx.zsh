@@ -18,10 +18,10 @@ export CPPFLAGS=-Qunused-arguments
 function irctunnel() {
 	case "$1" in
 	"start")
-		launchctl load ~/Library/LaunchAgents/sshtunnel.plist
+		launchctl load -w ~/Library/LaunchAgents/sshtunnel.plist
 		;;
 	"stop")
-		launchctl unload ~/Library/LaunchAgents/sshtunnel.plist
+		launchctl unload -w ~/Library/LaunchAgents/sshtunnel.plist
 		;;
 	*)
 		echo "Unknown action $1"
