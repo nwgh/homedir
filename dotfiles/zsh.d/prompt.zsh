@@ -26,6 +26,9 @@ function make_prompt {
                 hginfo="$(hg log -r . -T "{bookmarks}:{tags}")"
                 bookmark="$(echo "$hginfo" | cut -d: -f1 | cut -d' ' -f1)"
                 tag="$(echo "$hginfo" | cut -d: -f2 | cut -d' ' -f1)"
+                if [[ "$tag" == "tip" ]] ; then
+                    tag=""
+                fi
                 if [[ -n "$bookmark" ]] ; then
                     # Try bookmarks first
                     branch="$bookmark"
