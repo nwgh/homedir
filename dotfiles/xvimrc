@@ -1,0 +1,8 @@
+set ignorecase
+set smartcase
+set number
+set hlsearch
+set clipboard=unnamed
+set vimregex
+nmap ,<Space> /asdfghjkl<CR>
+nmap ,s :%s/[ \t]+$//g<CR>
