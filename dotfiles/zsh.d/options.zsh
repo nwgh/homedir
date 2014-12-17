@@ -52,5 +52,8 @@ setopt prompt_subst
 # Don't use global RC files, I want full control
 setopt no_global_rcs
 
+# Safety first!
+setopt rm_star_wait
+
 # Use emacs-style keybindings (muscle memory sucks)
 bindkey -e
