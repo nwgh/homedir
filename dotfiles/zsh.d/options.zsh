@@ -33,6 +33,9 @@ setopt hist_save_no_dups
 
 # All history from all shells everywhere
 setopt inc_append_history
+setopt extended_history
+setopt share_history
+setopt hist_fcntl_lock
 
 # Do a pushd every time I cd, don't tell me about it, and don't push dupes
 setopt auto_pushd
