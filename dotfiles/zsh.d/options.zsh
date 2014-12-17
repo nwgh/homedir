@@ -31,6 +31,9 @@ setopt no_correct_all
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 
+# All history from all shells everywhere
+setopt inc_append_history
+
 # Do a pushd every time I cd, don't tell me about it, and don't push dupes
 setopt auto_pushd
 setopt pushd_silent
