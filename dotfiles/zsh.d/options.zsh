@@ -49,5 +49,8 @@ setopt no_case_glob
 # Prompt and such
 setopt prompt_subst
 
+# Don't use global RC files, I want full control
+setopt no_global_rcs
+
 # Use emacs-style keybindings (muscle memory sucks)
 bindkey -e
