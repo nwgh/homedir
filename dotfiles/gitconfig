@@ -67,3 +67,6 @@
 [update "master"]
     upstream = mozilla/master
     remotes = origin bb
+[dgit]
+    git-remote-hg = /Users/hurley/src/git-remote-hg
+    pythonpath = /usr/local/lib/python2.7/site-packages
