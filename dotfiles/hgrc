@@ -26,6 +26,7 @@ reviewboard = /Users/hurley/.mozbuild/version-control-tools/hgext/reviewboard/cl
 firefoxtree = /Users/hurley/.mozbuild/version-control-tools/hgext/firefoxtree
 mqext = /Users/hurley/.mozbuild/mercurial/extensions/mqext
 qimportbz = /Users/hurley/.mozbuild/version-control-tools/hgext/qimportbz
+prompt = /Users/hurley/.hgext/prompt.py
 
 [diff]
 git = 1

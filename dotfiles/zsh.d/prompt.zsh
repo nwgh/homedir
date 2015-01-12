@@ -19,31 +19,23 @@ function make_prompt {
         sha="$(echo "$vcs_info_msg_0_" | cut -d: -f5)"
         act="$(echo "$vcs_info_msg_0_" | cut -d: -f7)"
         if [[ $vtype = "hg" ]] ; then
-            qtop="$(hg qtop 2>/dev/null)"
-            if [[ "$qtop" != "no patches applied" ]] ; then
-                branch="$qtop"
+            hgp="$(hg prompt "{node|short}:{branch}:{update}:{bookmark}:{tags}")"
+            node="$(echo "$hgp" | cut -d: -f1)"
+            hgbranch="$(echo "$hgp" | cut -d: -f2)"
+            update="$(echo "$hgp" | cut -d: -f3)"
+            bookmark="$(echo "$hgp" | cut -d: -f4)"
+            tag="$(echo "$hgp" | cut -d: -f5)"
+            if [[ "$tag" == "tip" ]] ; then
+                tag = ""
+            fi
+            if [[ -n "$bookmark" ]] ; then
+                branch="$bookmark"
+            elif [[ -n "$tag" ]] ; then
+                branch="$tag"
+            elif [[ -n "$update" ]] ; then
+                branch="$node"
             else
-                hginfo="$(hg log -r . -T "{bookmarks}:{tags}")"
-                bookmark="$(echo "$hginfo" | cut -d: -f1 | cut -d' ' -f1)"
-                tag="$(echo "$hginfo" | cut -d: -f2 | cut -d' ' -f1)"
-                if [[ "$tag" == "tip" ]] ; then
-                    tag=""
-                fi
-                if [[ -n "$bookmark" ]] ; then
-                    # Try bookmarks first
-                    branch="$bookmark"
-                elif [[ -n "$tag" ]] ; then
-                    # Next try tags
-                    branch="$tag"
-                else
-                    # Finally get branch name, use sha if that's not the
-                    # same as what corresponds to the branch's tip,
-                    # otherwise use the branch name
-                    branchtip="$(hg log -r "$branch" -T "{node|short}")"
-                    if [[ "$sha" != "$branchtip" ]] ; then
-                        branch="$sha"
-                    fi
-                fi
+                branch="$hgbranch"
             fi
         fi
         pathinfo="$PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
