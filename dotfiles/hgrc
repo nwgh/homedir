@@ -42,6 +42,7 @@ qseries.guarded = none
 [pager]
 pager = LESS='-FRXi' less
 ignore = update, push, pull, merge, fetch, clone, record, qrecord
+attend =
 
 [defaults]
 commit = -v
