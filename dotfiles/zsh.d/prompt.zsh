@@ -26,7 +26,7 @@ function make_prompt {
             bookmark="$(echo "$hgp" | cut -d: -f4)"
             tag="$(echo "$hgp" | cut -d: -f5)"
             if [[ "$tag" == "tip" ]] ; then
-                tag = ""
+                tag=""
             fi
             if [[ -n "$bookmark" ]] ; then
                 branch="$bookmark"
