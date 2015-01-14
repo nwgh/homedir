@@ -29,6 +29,7 @@ qimportbz = ~/.mozbuild/version-control-tools/hgext/qimportbz
 prompt = ~/.hgext/prompt.py
 bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
 debugshell = ~/.hgext/debugshell.py
+try = ~/.hgext/try.py
 
 [diff]
 git = 1
