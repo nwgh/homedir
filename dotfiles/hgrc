@@ -28,6 +28,7 @@ mqext = ~/.mozbuild/mercurial/extensions/mqext
 qimportbz = ~/.mozbuild/version-control-tools/hgext/qimportbz
 prompt = ~/.hgext/prompt.py
 bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
+debugshell = ~/.hgext/debugshell.py
 
 [diff]
 git = 1
@@ -41,7 +42,7 @@ qseries.guarded = none
 
 [pager]
 pager = LESS='-FRXi' less
-ignore = update, push, pull, merge, fetch, clone, record, qrecord
+ignore = update, push, pull, merge, fetch, clone, record, qrecord, debugshell, dbsh
 attend =
 
 [defaults]
