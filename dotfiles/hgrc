@@ -43,7 +43,7 @@ qseries.guarded = none
 
 [pager]
 pager = LESS='-FRXi' less
-ignore = update, push, pull, merge, fetch, clone, record, qrecord, debugshell, dbsh
+ignore = update, push, pull, merge, fetch, clone, record, qrecord, debugshell, dbsh, histedit
 attend =
 
 [defaults]
