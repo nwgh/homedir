@@ -43,8 +43,7 @@ qseries.guarded = none
 
 [pager]
 pager = LESS='-FRXi' less
-ignore = update, push, pull, merge, fetch, clone, record, qrecord, debugshell, dbsh, histedit
-attend =
+attend = annotate, cat, diff, export, glog, log, qdiff, help
 
 [defaults]
 commit = -v
