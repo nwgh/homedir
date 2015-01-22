@@ -1,2 +1,2 @@
-script topsrcdir = "/Users/hurley/src/mozilla/m-c"
-command source -s true "/Users/hurley/src/mozilla/m-c/.lldbinit"
+script topsrcdir = "/Users/hurley/src/mozilla/gecko"
+command source -s true "/Users/hurley/src/mozilla/gecko/.lldbinit"
