@@ -1,7 +1,6 @@
 [ui]
 username = Nicholas Hurley <hurley@todesschaf.org>
 ignore = ~/.hgignore
-ssh = /usr/bin/ssh -F ~/.ssh/config_hg
 
 [hooks]
 pre-push = python:~/.hgext/mozprepush.py:mozprepush
