@@ -1,6 +1,7 @@
 [ui]
 username = Nicholas Hurley <hurley@todesschaf.org>
 ignore = ~/.hgignore
+merge = internal:merge
 
 [hooks]
 pre-push = python:~/.hgext/mozprepush.py:mozprepush
@@ -55,20 +56,6 @@ qexport = export -g qtip
 
 [mq]
 git = yes
-
-[merge]
-kdiff3.priority = 10
-kdiff3.executable = /Applications/kdiff3.app/Contents/MacOS/kdiff3
-kdiff3.args = $base $local $other -o $output
-p4.priority = 20
-p4.premerge = True
-p4.executable = /Applications/p4merge.app/Contents/MacOS/p4merge
-p4.gui = True
-p4.args = $base $local $other $output
-p4.binary = False
-vimdiff.priority = 30
-vimdiff.executable = vim
-vimdiff.args = -d $base $local $output $other +close +close
 
 [mozilla]
 ircnick = hurley
