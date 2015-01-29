@@ -40,19 +40,53 @@ if type dgit > /dev/null 2>&1 ; then
     compdef dgit=git
 fi
 
+_add_to_nspr_log_modules() {
+    local module;
+    module="$1"
+    if [[ -z "$module" ]] ; then
+        return
+    fi
+
+    if [[ -z "$NSPR_LOG_MODULES" ]] ; then
+        NSPR_LOG_MODULES=timestamp
+        export NSPR_LOG_FILE=/tmp/nspr.log
+    fi
+
+    NSPR_LOG_MODULES="$NSPR_LOG_MODULES","$module"
+    export NSPR_LOG_MODULES
+}
+
+_cleanup_nspr_logging() {
+    unset NSPR_LOG_MODULES
+    unset NSPR_LOG_FILE
+}
+
 seerlog() {
-    export NSPR_LOG_MODULES=timestamp,NetworkPredictor:5
-    export NSPR_LOG_FILE=/tmp/nspr.log
+    _add_to_nspr_log_modules "NetworkPredictor:5"
     "$@"
+    _cleanup_nspr_logging
 }
 
 httplog() {
-    export NSPR_LOG_MODULES=timestamp,nsHttp:5,nsSocketTransport:5,nsHostResolver:5
-    export NSPR_LOG_FILE=/tmp/nspr.log
+    _add_to_nspr_log_modules "nsHttp:5"
     "$@"
+    _cleanup_nspr_logging
+}
+
+socketlog() {
+    _add_to_nspr_log_modules "nsSocketTransport:5"
+    "$@"
+    _cleanup_nspr_logging
+}
+
+dnslog() {
+    _add_to_nspr_log_modules "nsHostResolver:5"
+    "$@"
+    _cleanup_nspr_logging
 }
 
 keylog() {
     export SSLKEYLOGFILE=/tmp/nsskeys.log
     "$@"
+    unset SSLKEYLOGFILE
 }
