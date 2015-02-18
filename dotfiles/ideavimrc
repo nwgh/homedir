@@ -1,0 +1,10 @@
+set ignorecase
+set smartcase
+set visualbell
+set history=1000
+set hlsearch
+set number
+set scrolloff=10
+set wrapscan
+set clipboard=unnamed
+nmap ,<Space> :noh<CR>
