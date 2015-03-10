@@ -5,8 +5,6 @@
 	excludesfile = ~/.gitignore
 	pager = less -FRXi
 	editor = vim
-[svn]
-	edit = true
 [color]
 	ui = auto
 [merge]
@@ -28,31 +26,8 @@
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
-[land "try"]
-	repo = ~/src/mozilla/central
-[land "review"]
-    repo = ~/src/mozilla/central
 [push]
 	default = simple
-[land "inbound"]
-    repo = ~/src/mozilla/inbound
-    interactive = true
-    url = ssh://hg.mozilla.org/integration/mozilla-inbound
-[land "aurora"]
-    repo = ~/src/mozilla/aurora
-    interactive = true
-    url = ssh://hg.mozilla.org/releases/mozilla-aurora
-    base = mozilla/aurora
-[land "beta"]
-    repo = ~/src/mozilla/beta
-    interactive = true
-    url = ssh://hg.mozilla.org/releases/mozilla-beta
-    base = mozilla/beta
-[land "release"]
-    repo = ~/src/mozilla/release
-    interactive = true
-    url = ssh://hg.mozilla.org/releases/mozilla-release
-    base = mozilla/release
 [diff]
 	tool = p4merge
 [difftool "p4merge"]
@@ -64,9 +39,7 @@
 	keepBackup = false
 [help]
 	autocorrect = 1
-[update "master"]
-    upstream = mozilla/master
-    remotes = origin bb
-[dgit]
-    git-remote-hg = /Users/hurley/src/git-remote-hg
-    pythonpath = /usr/local/lib/python2.7/site-packages
+[bz]
+	default-tracker = bugzilla.mozilla.org
+	default-product = Core
+	default-component = Networking
