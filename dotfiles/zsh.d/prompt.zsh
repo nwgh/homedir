@@ -47,7 +47,16 @@ function make_prompt {
         pathinfo="%~"
     fi
 
-    echo -e "%m $pathinfo%(!.#.>) "
+    echo -e "$pathinfo%(!.#.>) "
+}
+
+function make_rprompt {
+    rprompt_string=""
+    if [ -n "$SSH_CONNECTION" ] ; then
+        rprompt_string="$PR_RED%m$PR_RESET"
+    fi
+    echo -e "$rprompt_string"
 }
 
 export PROMPT="\$(make_prompt)"
+export RPROMPT="\$(make_rprompt)"
