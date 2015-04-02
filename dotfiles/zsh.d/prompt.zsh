@@ -8,7 +8,12 @@ zstyle ':vcs_info:hg:prompt:*' formats "%s:%r:%S:%b:%i"
 zstyle ':vcs_info:git:prompt:*' actionformats "%s:%r:%S:%b:%i::%a"
 zstyle ':vcs_info:hg:prompt:*' actionformats "%s:%r:%S:%b:%i:%a"
 
-function make_prompt {
+function make_rprompt {
+    rprompt_string=""
+    if [ -n "$SSH_CONNECTION" ] ; then
+        rprompt_string="$PR_RED%m$PR_RESET"
+    fi
+
     vcs_info prompt
 
     if [[ -n "$vcs_info_msg_0_" ]] ; then
@@ -38,25 +43,16 @@ function make_prompt {
                 branch="$hgbranch"
             fi
         fi
-        pathinfo="$PR_GREEN$repo$PR_RESET:$PR_BLUE$branch$PR_RESET"
+        vcsinfo="$PR_BLUE$branch$PR_RESET"
         if [[ -n "$act" ]] ; then
-            pathinfo="$pathinfo $PR_RED($act)$PR_RESET"
+            vcsinfo="$pathinfo $PR_RED($act)$PR_RESET"
         fi
-        pathinfo="$pathinfo $rpath"
-    else
-        pathinfo="%~"
+
+        rprompt_string="$rprompt_string $vcsinfo"
     fi
 
-    echo -e "$pathinfo%(!.#.>) "
-}
-
-function make_rprompt {
-    rprompt_string=""
-    if [ -n "$SSH_CONNECTION" ] ; then
-        rprompt_string="$PR_RED%m$PR_RESET"
-    fi
     echo -e "$rprompt_string"
 }
 
-export PROMPT="\$(make_prompt)"
+export PROMPT="%~%(!.#.>) "
 export RPROMPT="\$(make_rprompt)"
