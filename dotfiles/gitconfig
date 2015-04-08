@@ -9,6 +9,8 @@
 	ui = auto
 [merge]
 	tool = p4merge
+[pretty]
+	hgpatch = "format:# HG changeset patch%n# User %an <%ae>%n%n%s%n%b"
 [alias]
 	stat = status -sb
 	cdiff = diff --cached
@@ -16,7 +18,7 @@
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	asrebase = rebase -i --autosquash
-	hgpatch = !sh -c 'git format-patch --stdout --no-signature -p -1 HEAD | hgify'
+	hgpatch = show --format=hgpatch
 	tlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	addrm = add -A
 	slog = log --stat
