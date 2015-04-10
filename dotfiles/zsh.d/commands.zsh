@@ -90,3 +90,5 @@ keylog() {
     "$@"
     unset SSLKEYLOGFILE
 }
+
+alias debugnoclean='touch ~/.mozprofiles/debug/nwgh_do_not_clean'
