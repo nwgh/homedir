@@ -1,9 +1,5 @@
 set nocompatible
 
-" Set up pathogen - this is only for things that aren't vundle-able
-call pathogen#infect('pathogen-bundles/{}')
-call pathogen#helptags()
-
 " Set up vundle
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -12,23 +8,15 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " From original sources on github
-Bundle 'mileszs/ack.vim'
-Bundle 'sjbach/lusty'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/ctrlp.vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'klen/python-mode'
 Bundle 'scrooloose/syntastic'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'sjl/gundo.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'SirVer/ultisnips'
-
-" From vim-scripts
-Bundle 'hgrev'
+Bundle 'honza/vim-snippets'
 
 filetype on
 filetype plugin on
@@ -108,7 +96,6 @@ nnoremap <C-j> :bn<CR>
 " Here are some other handy keybindings I use
 let mapleader = ","
 nnoremap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
-nnoremap <leader>j :LustyJuggler<CR>
 nnoremap <leader>m :CtrlPMixed<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>r :CtrlPMRU<CR>
@@ -236,9 +223,6 @@ cnoremap <C-K> <Up>
 
 " Easy way to clear hilight from search
 nnoremap <leader><space> :noh<CR>
-
-" Easy way to ack for things
-nnoremap <leader><C-]> :LAck! <C-R><C-W><CR>
 
 " Easy way to force diagnostics in C/C++
 nnoremap <leader>l :YcmForceCompileAndDiagnostics<CR>
