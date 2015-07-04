@@ -85,6 +85,12 @@ dnslog() {
     _cleanup_nspr_logging
 }
 
+cookielog() {
+    _add_to_nspr_log_modules "cookie:4"
+    "$@"
+    _cleanup_nspr_logging
+}
+
 keylog() {
     export SSLKEYLOGFILE=/tmp/nsskeys.log
     "$@"
