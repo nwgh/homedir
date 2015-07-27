@@ -8,20 +8,20 @@ ssh = /usr/local/bin/ssh
 pre-push = python:~/.hgext/mozprepush.py:mozprepush
 
 [extensions]
-transplant = 
-rebase = 
-color = 
-parentrevspec = 
-record = 
-pager = 
-mq = 
-relink = 
-purge = 
-progress = 
-histedit = 
-share = 
-strip = 
-shelve = 
+transplant =
+rebase =
+color =
+parentrevspec =
+record =
+pager =
+mq =
+relink =
+purge =
+progress =
+histedit =
+share =
+strip =
+shelve =
 bzexport = ~/.mozbuild/version-control-tools/hgext/bzexport
 reviewboard = ~/.mozbuild/version-control-tools/hgext/reviewboard/client.py
 firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
@@ -32,6 +32,8 @@ bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
 debugshell = ~/.hgext/debugshell.py
 try = ~/.hgext/try.py
 evolve = ~/src/mutable-history/hgext/evolve.py
+bundleclone = ~/.mozbuild/version-control-tools/hgext/bundleclone
+push-to-try = ~/.mozbuild/version-control-tools/hgext/push-to-try
 
 [diff]
 git = 1
