@@ -58,6 +58,7 @@ qnew = -U
 apply = import --no-commit
 qexport = export -g qtip
 merge-base = log -r 'max(ancestor($1, $2))'
+glog = log -r .:0
 
 [mq]
 git = yes
