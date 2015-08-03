@@ -22,6 +22,7 @@ histedit =
 share =
 strip =
 shelve =
+hgwatchman = ~/src/hgwatchman/hgwatchman
 bzexport = ~/.mozbuild/version-control-tools/hgext/bzexport
 reviewboard = ~/.mozbuild/version-control-tools/hgext/reviewboard/client.py
 firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
