@@ -105,6 +105,10 @@ def prompt(ui, repo, fs='', **opts):
 
     def _bookmark(m):
         try:
+            return repo._activebookmark
+        except:
+            pass
+        try:
             book = extensions.find('bookmarks').current(repo)
         except AttributeError:
             book = getattr(repo, '_bookmarkcurrent', None)
