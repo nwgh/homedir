@@ -29,7 +29,6 @@ firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
 mqext = ~/.mozbuild/version-control-tools/hgext/mqext
 qimportbz = ~/.mozbuild/version-control-tools/hgext/qimportbz
 prompt = ~/.hgext/prompt.py
-bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
 debugshell = ~/.hgext/debugshell.py
 try = ~/.hgext/try.py
 evolve = ~/src/mutable-history/hgext/evolve.py
