@@ -24,7 +24,7 @@ function make_rprompt {
         sha="$(echo "$vcs_info_msg_0_" | cut -d: -f5)"
         act="$(echo "$vcs_info_msg_0_" | cut -d: -f7)"
         if [[ $vtype = "hg" ]] ; then
-            hgp="$(hg prompt "{node|short}:{branch}:{update}:{bookmark}:{tags}")"
+            hgp="$(hg prompt "{node|short}:{branch}:{update}:{bookmark}:{tags|quiet}")"
             node="$(echo "$hgp" | cut -d: -f1)"
             hgbranch="$(echo "$hgp" | cut -d: -f2)"
             update="$(echo "$hgp" | cut -d: -f3)"
