@@ -321,13 +321,18 @@ def prompt(ui, repo, fs='', **opts):
         g = m.groups()
 
         sep = g[2][1:] if g[2] else ' '
-        tags = repo[None].tags()
+        tags = repo.tags()
 
         quiet = _get_filter('quiet', g)
         if quiet:
-            tags = filter(lambda tag: tag != 'tip', tags)
+            tagnames = filter(lambda tag: tag != 'tip', tags)
+        else:
+            tagnames = tags.keys()
 
-        return _with_groups(g, sep.join(tags)) if tags else ''
+        curr_node = repo['.'].node()
+        curr_tags = [t for t in tagnames if tags[t] == curr_node]
+
+        return _with_groups(g, sep.join(curr_tags)) if curr_tags else ''
 
     def _task(m):
         try:
