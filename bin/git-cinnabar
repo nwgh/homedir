@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ ! -d "$HOME/src/git-cinnabar" ] ; then
+    exit 1
+fi
+
+PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
+PATH="$HOME/src/git-cinnabar:$PATH"
+export PYTHONPATH
+export PATH
+exec git-cinnabar "$@"
