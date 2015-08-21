@@ -91,6 +91,14 @@ cookielog() {
     _cleanup_nspr_logging
 }
 
+mozlog() {
+    logmodule="$1"
+    shift
+    _add_to_nspr_log_modules "$logmodule:5"
+    "$@"
+    _cleanup_nspr_logging
+}
+
 keylog() {
     export SSLKEYLOGFILE=/tmp/nsskeys.log
     "$@"
