@@ -64,7 +64,7 @@ glog = log -r .:0
 git = yes
 
 [mozilla]
-ircnick = hurley
+ircnick = nwgh
 
 [hostfingerprints]
 bugzilla.mozilla.org = 47:13:a2:14:0c:46:45:53:12:0d:e5:36:16:a5:60:26:3e:da:3a:60
