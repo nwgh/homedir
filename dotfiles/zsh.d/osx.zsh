@@ -29,4 +29,17 @@ function irctunnel() {
 	esac
 }
 
+# Overwrite from commands.zsh to make this faster on mac
+_do_find() {
+    spath="$2"
+
+    if [[ -z "$spath" ]] ; then
+        spath="."
+    fi
+
+    mdfind -onlyin "$spath" -name "$1" | $PAGER
+}
+
+alias locate="mdfind -name"
+
 # vim: set noexpandtab:
