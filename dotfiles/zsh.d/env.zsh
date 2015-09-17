@@ -28,4 +28,6 @@ elif [ -f "/usr/local/bin/vim" ] ; then
 	export EDITOR=/usr/local/bin/vim
 fi
 
+chpwd_functions=()
+export chpwd_functions
 # vim: set noexpandtab:

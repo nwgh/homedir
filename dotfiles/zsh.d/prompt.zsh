@@ -14,6 +14,11 @@ function make_rprompt {
         rprompt_string="$PR_RED%m$PR_RESET"
     fi
 
+    if [ -n "$VIRTUAL_ENV" ] ; then
+        venv_name="$(basename "$VIRTUAL_ENV")"
+        rprompt_string="$rprompt_string $PR_GREEN$venv_name$PR_RESET"
+    fi
+
     vcs_info prompt
 
     if [[ -n "$vcs_info_msg_0_" ]] ; then
