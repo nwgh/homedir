@@ -7,6 +7,10 @@ elif [ -f /usr/local/bin/virtualenvwrapper.sh ] ; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+if [ -n "$PYENV_SHELL" ] ; then
+    pyenv virtualenvwrapper
+fi
+
 function nwgh_autovenv {
     if [ -z "$WORKON_HOME" ] ; then
         return
