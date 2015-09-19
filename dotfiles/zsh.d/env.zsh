@@ -29,5 +29,6 @@ elif [ -f "/usr/local/bin/vim" ] ; then
 fi
 
 chpwd_functions=()
-export chpwd_functions
+precmd_functions=()
+export chpwd_functions precmd_functions
 # vim: set noexpandtab:
