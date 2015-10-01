@@ -38,5 +38,7 @@ function nwgh_autovenv {
     fi
 }
 
-chpwd_functions+="nwgh_autovenv"
-export chpwd_functions
+# Ensure this comes at the front of the array, so we know everything
+# will be set properly when our prompt script goes to make the top line
+precmd_functions=("nwgh_autovenv" $precmd_functions)
+export precmd_functions
