@@ -202,9 +202,24 @@ function make_pwdprompt {
         head="${pcttilde:h}"
         pwdbits=(${(@s./.)head})
         for bit in $pwdbits ; do
-            finalbits+="$(echo "$bit" | cut -c1)"
+            shortbit="$(echo "$bit" | cut -c1)"
+            if [ "$shortbit" = "." ] ; then
+                # Add the second char if we're in a dot directory
+                shortbit="$shortbit$(echo "$bit" | cut -c2)"
+            fi
+            finalbits+="$shortbit"
         done
         rval="${(j./.)finalbits}/${pcttilde:t}"
+
+        # Add leading / in case we're outside ~ and not in / or a directory
+        # directly under /
+        case "$rval[1]" in
+            [~/])
+                ;;
+            *)
+                rval="/$rval"
+                ;;
+        esac
     fi
     echo -e "$rval"
 }
