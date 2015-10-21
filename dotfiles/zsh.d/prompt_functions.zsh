@@ -74,7 +74,7 @@ function make_vcsprompt {
                     esac
                     case $unstaged in
                         "D" )
-                            missingcount=$((dirtycount + 1))
+                            missingcount=$((missingcount + 1))
                             ;;
                         "M" )
                             unstagedcount=$((unstagedcount + 1))
