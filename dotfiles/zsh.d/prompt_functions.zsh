@@ -176,6 +176,53 @@ function make_vcsprompt {
             if [ -n "$action" ] ; then
                 vcs_prompt="$vcs_prompt $fg[red]$action$reset_color"
             fi
+            commitcount="$(hg log -r 'only(.)' --template "{node}\n" | wc -l | sed -e "s/ //g")"
+            if [[ ( $commitcount -gt 0 ) ]] ; then
+                vcs_prompt="$vcs_prompt ↑$commitcount"
+            fi
+            modifycount=0
+            addcount=0
+            removedcount=0
+            missingcount=0
+            untrackedcount=0
+            OIFS="$IFS"
+            IFS="\n"
+            for line in $(hg status) ; do
+               hgstatus="$(echo "$line" | cut -c1)"
+               case $hgstatus in
+                   "A" )
+                       addcount=$((addcount + 1))
+                       ;;
+                   "R" )
+                       removedcount=$((removedcount + 1))
+                       ;;
+                   "M" )
+                       modifycount=$((modifycount + 1))
+                       ;;
+                   "!" )
+                       missingcount=$((missingcount + 1))
+                       ;;
+                   "?" )
+                       untrackedcount=$((untrackedcount + 1))
+                       ;;
+               esac
+            done
+            IFS="$OIFS"
+            if [[ ( $addcount -gt 0 ) ]] ; then
+                vcs_prompt="$vcs_prompt A$fg[green]$addcount$reset_color"
+            fi
+            if [[ ( $removedcount -gt 0 ) ]] ; then
+                vcs_prompt="$vcs_prompt R$fg[green]$removedcount$reset_color"
+            fi
+            if [[ ( $modifycount -gt 0 ) ]] ; then
+                vcs_prompt="$vcs_prompt M$fg[green]$modifycount$reset_color"
+            fi
+            if [[ ( $missingcount -gt 0 ) ]] ; then
+                vcs_prompt="$vcs_prompt !$fg[green]$missingcount$reset_color"
+            fi
+            if [[ ( $untrackedcount -gt 0 ) ]] ; then
+                vcs_prompt="$vcs_prompt ?$fg[green]$untrackedcount$reset_color"
+            fi
         fi
     fi
 
