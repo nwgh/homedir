@@ -10,7 +10,7 @@
 [merge]
 	tool = p4merge
 [pretty]
-	hgpatch = "format:# HG changeset patch%n# User %an <%ae>%n%n%s%n%b"
+	hgpatch = "format:# HG changeset patch%n# User %an <%ae>%n# Date %ad%n%s%n%b"
 [alias]
 	stat = status -sb
 	cdiff = diff --cached
