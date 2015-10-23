@@ -176,7 +176,11 @@ function make_vcsprompt {
             if [ -n "$action" ] ; then
                 vcs_prompt="$vcs_prompt $fg[red]$action$reset_color"
             fi
-            commitcount="$(hg log -r 'only(.)' --template "{node}\n" | wc -l | sed -e "s/ //g")"
+            if [[ -n "$bookmark" ]] ; then
+                commitcount="$(hg log -r 'only(.)' --template "{node}\n" | wc -l | sed -e "s/ //g")"
+            else
+                commitcount=0
+            fi
             if [[ ( $commitcount -gt 0 ) ]] ; then
                 vcs_prompt="$vcs_prompt ↑$commitcount"
             fi
