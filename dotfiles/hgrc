@@ -45,6 +45,14 @@ qseries.applied = blue underline
 qseries.unapplied = none
 qseries.guarded = none
 
+log.bookmark=yellow
+log.tag=yellow
+log.activebookmark = yellow underline
+
+changeset.public=red
+changeset.secret=blue
+changeset.draft=green
+
 [pager]
 pager = LESS='-FRXi' less
 attend = annotate, cat, diff, export, glog, log, qdiff, help
@@ -59,6 +67,7 @@ apply = import --no-commit
 qexport = export -g qtip
 merge-base = log -r 'max(ancestor($1, $2))'
 glog = log -r .:0
+wip = log --graph --rev=wip --template=wip
 
 [mq]
 git = yes
@@ -76,6 +85,10 @@ mqcommit = auto
 
 [revsetalias]
 HEAD = .
+wip = (parents(not public()) or not public() or . or head()) and (not obsolete() or unstable()^) and not closed()
+
+[templates]
+wip = '{label("changeset.{phase}", rev)} {author}{label("log.tag", if(tags,ifcontains("tip", tags, sub("tip ", "", sub(" tip", "", " {tags}")), " {tags}")))} {bookmarks % "{ifeq(bookmark, currentbookmark, label('log.activebookmark', bookmark), label('log.bookmark', bookmark))} "}\n{label(ifcontains(rev, revset('parents()'), 'desc.here'),desc|firstline)}'
 
 [histedit]
 defaultrev = only(.)
