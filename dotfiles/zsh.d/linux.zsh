@@ -9,4 +9,8 @@ export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_linu
 export NWH_ZSH_CONFIG="linux"
 export MOZCONFIG="$MOZCONFIG_ROOT/linux_debug"
 
+if [ -d "$HOME/.linuxbrew" ] ; then
+	export PATH="$PATH:$HOME/.linuxbrew/bin"
+fi
+
 # vim: set noexpandtab:
