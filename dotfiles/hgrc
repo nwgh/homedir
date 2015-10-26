@@ -45,13 +45,13 @@ qseries.applied = blue underline
 qseries.unapplied = none
 qseries.guarded = none
 
-log.bookmark=yellow
-log.tag=yellow
+log.bookmark = yellow
+log.tag = yellow
 log.activebookmark = yellow underline
 
-changeset.public=red
-changeset.secret=blue
-changeset.draft=green
+changeset.public = red
+changeset.secret = blue
+changeset.draft = green
 
 [pager]
 pager = LESS='-FRXi' less
