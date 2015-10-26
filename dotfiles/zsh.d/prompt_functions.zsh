@@ -177,7 +177,7 @@ function make_vcsprompt {
                 vcs_prompt="$vcs_prompt $fg[red]$action$reset_color"
             fi
             if [[ -n "$bookmark" ]] ; then
-                commitcount="$(hg log -r 'only(.)' --template "{node}\n" | wc -l | sed -e "s/ //g")"
+                commitcount="$(hg log -r 'only(.) and not(public())' --template "{node}\n" | wc -l | sed -e "s/ //g")"
             else
                 commitcount=0
             fi
