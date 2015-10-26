@@ -34,6 +34,7 @@ try = ~/.hgext/try.py
 evolve = ~/src/mutable-history/hgext/evolve.py
 bundleclone = ~/.mozbuild/version-control-tools/hgext/bundleclone
 push-to-try = ~/.mozbuild/version-control-tools/hgext/push-to-try
+bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
 
 [diff]
 git = 1
