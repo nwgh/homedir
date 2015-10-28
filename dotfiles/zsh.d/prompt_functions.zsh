@@ -190,7 +190,7 @@ function make_vcsprompt {
             missingcount=0
             untrackedcount=0
             OIFS="$IFS"
-            IFS="\n"
+            IFS=$'\n'
             for line in $(hg status) ; do
                hgstatus="$(echo "$line" | cut -c1)"
                case $hgstatus in
