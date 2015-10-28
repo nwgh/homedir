@@ -106,3 +106,9 @@ keylog() {
 }
 
 alias debugnoclean='touch ~/.mozprofiles/debug/nwgh_do_not_clean'
+
+dd() {
+    echo "Are you sure you want to use raw dd? Try"
+    echo "    pv <inputfile> | /bin/dd of=<outputfile>"
+    echo "(or just call /bin/dd directly)"
+}
