@@ -27,6 +27,7 @@ if [ -f "/todesschaf/bin/vim" ] ; then
 elif [ -f "/usr/local/bin/vim" ] ; then
 	export EDITOR=/usr/local/bin/vim
 fi
+export MACH_NOTIFY_MINTIME=0
 
 chpwd_functions=()
 precmd_functions=()
