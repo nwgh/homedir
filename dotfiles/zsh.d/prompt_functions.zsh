@@ -182,7 +182,8 @@ function make_vcsprompt {
                 commitcount=0
             fi
             if [[ ( $commitcount -gt 0 ) ]] ; then
-                vcs_prompt="$vcs_prompt ↑$commitcount"
+                outcount="$(hg out -r . -q | wc -l | sed -e "s/ //g")"
+                vcs_prompt="$vcs_prompt ↑$commitcount/$outcount"
             fi
             modifycount=0
             addcount=0
