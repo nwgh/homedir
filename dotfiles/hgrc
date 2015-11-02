@@ -2,7 +2,6 @@
 username = Nicholas Hurley <hurley@todesschaf.org>
 ignore = ~/.hgignore
 merge = internal:merge
-ssh = /usr/local/bin/ssh
 
 [hooks]
 pre-push = python:~/.hgext/mozprepush.py:mozprepush
