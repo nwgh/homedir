@@ -232,9 +232,6 @@ function make_vcsprompt {
 }
 
 function make_virtualenvprompt {
-    if [ -n "$TMUX" ] ; then
-        VIRTUAL_ENV="$(tmux display-message -p -F "#T" -t0)"
-    fi
     virtualenv_prompt=""
     if [ -n "$VIRTUAL_ENV" ] ; then
         virtualenv_prompt="$(basename "$VIRTUAL_ENV")"
@@ -274,10 +271,6 @@ function make_pwdprompt {
 }
 
 function make_topline {
-    if [ -n "$TMUX" ] ; then
-        printf "\033]2;$VIRTUAL_ENV\033\\"
-        return
-    fi
     virtualenvprompt="$(make_virtualenvprompt)"
     topline="$(make_vcsprompt)"
     if [ -n "$virtualenvprompt" ] ; then
