@@ -9,15 +9,12 @@ zstyle ':vcs_info:hg:prompt:*' get-bookmarks "true"
 #zstyle ':vcs_info:*:prompt:*' stagedstr ""
 #zstyle ':vcs_info:*:prompt:*' unstagedstr ""
 zstyle ':vcs_info:hg:prompt:*' hgrevformat "%h"
-zstyle ':vcs_info:git:prompt:*' formats "λ $fg[blue]%b$reset_color"
+zstyle ':vcs_info:git:prompt:*' formats "λ %b"
 zstyle ':vcs_info:hg:prompt:*' formats "☿ "
-zstyle ':vcs_info:git:prompt:*' actionformats "λ $fg[blue]%b$reset_color $fg[red]%a$reset_color"
+zstyle ':vcs_info:git:prompt:*' actionformats "λ %b %a"
 zstyle ':vcs_info:hg:prompt:*' actionformats "☿ %a"
 
 function make_sshprompt {
-    if [ -n "$TMUX" ] ; then
-        return
-    fi
     ssh_prompt=""
     if [ -n "$SSH_CONNECTION" ] ; then
         ssh_prompt="$PR_RED%m$PR_RESET"
@@ -108,11 +105,11 @@ function make_vcsprompt {
             add=""
             if [[ ( $addcount -gt 0 ) || ( $untrackedcount -gt 0 ) ]] ; then
                 if [ $addcount -gt 0 ] ; then
-                    add="$fg[green]$addcount$reset_color"
+                    add="$addcount"
                 fi
                 add="${add}A"
                 if [ $untrackedcount -gt 0 ] ; then
-                    add="$add$fg[red]$untrackedcount$reset_color"
+                    add="$add$untrackedcount"
                 fi
                 add="$add "
             fi
@@ -120,11 +117,11 @@ function make_vcsprompt {
             modify=""
             if [[ ( $modifycount -gt 0 ) || ( $unstagedcount -gt 0 ) ]] ; then
                 if [ $modifycount -gt 0 ] ; then
-                    modify="$fg[green]$modifycount$reset_color"
+                    modify="$modifycount"
                 fi
                 modify="${modify}M"
                 if [ $unstagedcount -gt 0 ] ; then
-                    modify="$modify$fg[red]$unstagedcount$reset_color"
+                    modify="$modify$unstagedcount"
                 fi
                 modify="$modify "
             fi
@@ -132,25 +129,25 @@ function make_vcsprompt {
             delete=""
             if [[ ( $deletecount -gt 0 ) || ( $missingcount -gt 0 ) ]] ; then
                 if [ $deletecount -gt 0 ] ; then
-                    delete="$fg[green]$deletecount$reset_color"
+                    delete="$deletecount"
                 fi
                 delete="${delete}D"
                 if [ $missingcount -gt 0 ] ; then
-                    delete="$delete$fg[red]$missingcount$reset_color"
+                    delete="$delete$missingcount"
                 fi
                 delete="$delete "
             fi
 
             rename=""
             if [ $renamecount -gt 0 ] ; then
-                rename="$fg[green]$renamecount${reset_color}R "
+                rename="${renamecount}R "
             fi
 
             conflict=""
             if [ $conflictcount -gt 0 ] ; then
-                conflict="$fg[red]$conflictcount${reset_color}C "
+                conflict="${conflictcount}C "
             fi
-            vcs_prompt="$prefix $ab$add$modify$rename$conflict\b"
+            vcs_prompt="$prefix $ab$add$modify$rename$conflict"
         else
             # We got mercurial
             hgp="$(hg prompt "{node|short}:{branch}:{update}:{bookmark}:{tags|quiet}")"
@@ -171,10 +168,10 @@ function make_vcsprompt {
             else
                 branch="$hgbranch"
             fi
-            vcs_prompt="☿ $fg[blue]$branch$reset_color"
+            vcs_prompt="☿ $branch"
             action="$(echo $vcs_info_msg_0_ | cut -d' ' -f2)"
             if [ -n "$action" ] ; then
-                vcs_prompt="$vcs_prompt $fg[red]$action$reset_color"
+                vcs_prompt="$vcs_prompt $action"
             fi
             if [[ -n "$bookmark" ]] ; then
                 commitcount="$(hg log -r 'only(.) and not(public())' --template "{node}\n" | wc -l | sed -e "s/ //g")"
@@ -214,19 +211,19 @@ function make_vcsprompt {
             done
             IFS="$OIFS"
             if [[ ( $addcount -gt 0 ) ]] ; then
-                vcs_prompt="$vcs_prompt A$fg[green]$addcount$reset_color"
+                vcs_prompt="$vcs_prompt A$addcount"
             fi
             if [[ ( $removedcount -gt 0 ) ]] ; then
-                vcs_prompt="$vcs_prompt R$fg[green]$removedcount$reset_color"
+                vcs_prompt="$vcs_prompt R$removedcount"
             fi
             if [[ ( $modifycount -gt 0 ) ]] ; then
-                vcs_prompt="$vcs_prompt M$fg[green]$modifycount$reset_color"
+                vcs_prompt="$vcs_prompt M$modifycount"
             fi
             if [[ ( $missingcount -gt 0 ) ]] ; then
-                vcs_prompt="$vcs_prompt !$fg[green]$missingcount$reset_color"
+                vcs_prompt="$vcs_prompt !$missingcount"
             fi
             if [[ ( $untrackedcount -gt 0 ) ]] ; then
-                vcs_prompt="$vcs_prompt ?$fg[green]$untrackedcount$reset_color"
+                vcs_prompt="$vcs_prompt ?$untrackedcount"
             fi
         fi
     fi
@@ -240,7 +237,7 @@ function make_virtualenvprompt {
     fi
     virtualenv_prompt=""
     if [ -n "$VIRTUAL_ENV" ] ; then
-        virtualenv_prompt="$fg[green]$(basename "$VIRTUAL_ENV")$reset_color"
+        virtualenv_prompt="$(basename "$VIRTUAL_ENV")"
     fi
     echo -e "$virtualenv_prompt"
 }
@@ -284,12 +281,10 @@ function make_topline {
     virtualenvprompt="$(make_virtualenvprompt)"
     topline="$(make_vcsprompt)"
     if [ -n "$virtualenvprompt" ] ; then
-        if [ -n "$topline" ] ; then
-            topline="$topline "
-        fi
         topline="$topline$virtualenvprompt"
     fi
-    if [ -n "$topline" ] ; then
-        echo "$topline"
+    if [ -z "$topline" ] ; then
+        topline="Shell"
     fi
+    echo -ne "\033]0;$topline\007"
 }
