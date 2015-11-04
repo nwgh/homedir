@@ -173,10 +173,9 @@ function make_vcsprompt {
             if [ -n "$action" ] ; then
                 vcs_prompt="$vcs_prompt $action"
             fi
+            commitcount=0
             if [[ -n "$bookmark" ]] ; then
                 commitcount="$(hg log -r 'only(.) and not(public())' --template "{node}\n" | wc -l | sed -e "s/ //g")"
-            else
-                commitcount=0
             fi
             if [[ ( $commitcount -gt 0 ) ]] ; then
                 outcount="$(hg out -r . -q | wc -l | sed -e "s/ //g")"
@@ -271,6 +270,7 @@ function make_pwdprompt {
 }
 
 function make_topline {
+    cd "$1"
     virtualenvprompt="$(make_virtualenvprompt)"
     topline="$(make_vcsprompt)"
     if [ -n "$virtualenvprompt" ] ; then
@@ -279,5 +279,22 @@ function make_topline {
     if [ -z "$topline" ] ; then
         topline="Shell"
     fi
-    echo -ne "\033]0;$topline\007"
+    echo -e "$topline"
+}
+
+source $HOME/.zsh.d/async.zsh
+async_init
+
+function async_term_title_callback {
+    echo -ne "\033]0;$3\007"
+}
+
+function async_term_title {
+    ((!${async_term_title_setup:-0})) && {
+        async_start_worker "async_term_title_worker" -u -n
+        async_register_callback "async_term_title_worker" async_term_title_callback
+        async_term_title_setup=0
+    }
+
+    async_job "async_term_title_worker" make_topline "$PWD"
 }
