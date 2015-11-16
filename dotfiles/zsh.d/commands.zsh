@@ -91,6 +91,12 @@ cookielog() {
     _cleanup_nspr_logging
 }
 
+cachelog() {
+    _add_to_nspr_log_modules "cache2:5"
+    "$@"
+    _cleanup_nspr_logging
+}
+
 mozlog() {
     logmodule="$1"
     shift
