@@ -96,4 +96,7 @@ defaultrev = only(.)
 [bugzilla]
 username = hurley@todesschaf.org
 
+[bzpost]
+excludetrees = try mozilla-inbound inbound integration/mozilla-inbound
+
 %include ~/.local.hgrc
