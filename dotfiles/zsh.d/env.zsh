@@ -6,8 +6,8 @@ export PATH
 
 export PYTHONSTARTUP=~/.pythonrc
 export HISTFILE=~/.zsh_history
-export HISTSIZE=500
-export SAVEHIST=500
+export HISTSIZE=5000
+export SAVEHIST=5000
 export LANG=en_US.UTF-8
 export PAGER=less
 export RSYNC_RSH=ssh
