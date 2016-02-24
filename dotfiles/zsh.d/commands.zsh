@@ -40,6 +40,13 @@ if type dgit > /dev/null 2>&1 ; then
     compdef dgit=git
 fi
 
+logfile() {
+    export NSPR_LOG_FILE="$1"
+    shift
+    "$@"
+    unset NSPR_LOG_FILE
+}
+
 _add_to_nspr_log_modules() {
     local module;
     module="$1"
@@ -49,6 +56,8 @@ _add_to_nspr_log_modules() {
 
     if [[ -z "$NSPR_LOG_MODULES" ]] ; then
         NSPR_LOG_MODULES=timestamp
+    fi
+    if [[ -z "$NSPR_LOG_FILE" ]] ; then
         export NSPR_LOG_FILE=/tmp/nspr.log
     fi
 
@@ -107,6 +116,13 @@ mozlog() {
 
 keylog() {
     export SSLKEYLOGFILE=/tmp/nsskeys.log
+    "$@"
+    unset SSLKEYLOGFILE
+}
+
+keylogtofile() {
+    export SSLKEYLOGFILE="$1"
+    shift
     "$@"
     unset SSLKEYLOGFILE
 }
