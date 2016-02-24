@@ -12,8 +12,6 @@ alias gvim="gvim --remote-silent"
 export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_osx"
 export NWH_ZSH_CONFIG="osx"
 export MOZCONFIG="$MOZCONFIG_ROOT/mac_debug"
-export CFLAGS=-Qunused-arguments
-export CPPFLAGS=-Qunused-arguments
 
 function irctunnel() {
 	case "$1" in
