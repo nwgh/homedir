@@ -165,6 +165,17 @@ function make_vcsprompt {
                 branch="$tag"
             elif [[ -n "$update" ]] ; then
                 branch="$node"
+                OIFS="$IFS"
+                IFS=$'\n'
+                for line in $(hg fxheads -T "{node|short}:{fxheads}\n")
+                do
+                    headnode="$(echo "$line" | cut -d: -f1)"
+                    head="$(echo "$line" | cut -d: -f2)"
+                    if [[ "$node" == "$headnode" ]] ; then
+                        branch="$head"
+                    fi
+                done
+                IFS="$OIFS"
             else
                 branch="$hgbranch"
             fi
