@@ -27,6 +27,18 @@ function irctunnel() {
 	esac
 }
 
+function startvm() {
+	"/Applications/VMware Fusion.app/Contents/Library/vmrun" -T fusion start "${HOME}/Documents/Virtual Machines.localized/Fedora.vmwarevm/Fedora.vmx" nogui
+}
+
+function stopvm() {
+	"/Applications/VMware Fusion.app/Contents/Library/vmrun" -T fusion stop "${HOME}/Documents/Virtual Machines.localized/Fedora.vmwarevm/Fedora.vmx" soft
+}
+
+function killvm() {
+	"/Applications/VMware Fusion.app/Contents/Library/vmrun" -T fusion stop "${HOME}/Documents/Virtual Machines.localized/Fedora.vmwarevm/Fedora.vmx" hard
+}
+
 # Overwrite from commands.zsh to make this faster on mac
 _do_find() {
     spath="$2"
