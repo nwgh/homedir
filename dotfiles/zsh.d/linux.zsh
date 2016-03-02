@@ -7,7 +7,7 @@ open() {
 }
 export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_linux_x86"
 export NWH_ZSH_CONFIG="linux"
-export MOZCONFIG="$MOZCONFIG_ROOT/linux_debug"
+export MOZCONFIG="$MOZCONFIG_ROOT/linux_debug_noopt"
 
 if [ -d "$HOME/.linuxbrew" ] ; then
 	export PATH="$PATH:$HOME/.linuxbrew/bin"
