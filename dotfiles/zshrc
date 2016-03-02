@@ -35,5 +35,10 @@ fi
 if [[ -f "${HOME}/.local.zsh" ]] ; then
     source "${HOME}/.local.zsh"
 fi
+if [[ -d "${HOME}/.local.zsh.d" ]] ; then
+	for f in ${HOME}/.local.zsh.d/* ; do
+		source "$f"
+	done
+fi
 
 # vim: set noexpandtab:
