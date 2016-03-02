@@ -17,7 +17,9 @@ zstyle ':vcs_info:hg:prompt:*' actionformats "☿ %a"
 function make_sshprompt {
     ssh_prompt=""
     if [ -n "$SSH_CONNECTION" ] ; then
-        ssh_prompt="$PR_RED%m$PR_RESET"
+        if [ -z "$NWGH_ITERM2_INTEGRATION_ENABLED" ] ; then
+            ssh_prompt="$PR_RED%m$PR_RESET"
+        fi
     fi
     echo -e "$ssh_prompt"
 }

@@ -13,11 +13,6 @@ export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_osx"
 export NWH_ZSH_CONFIG="osx"
 export MOZCONFIG="$MOZCONFIG_ROOT/mac_debug"
 
-# Enable iterm2 integration
-if [[ -n "$ITERM_SESSION_ID" ]] ; then
-	source ~/.zsh.d/iterm2.zsh
-fi
-
 function irctunnel() {
 	case "$1" in
 	"start")

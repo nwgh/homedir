@@ -66,5 +66,6 @@ if [[ -o login ]]; then
 
     iterm2_print_state_data
     printf "\033]1337;ShellIntegrationVersion=1\007"
+    export NWGH_ITERM2_INTEGRATION_ENABLED="yes"
   fi
 fi
