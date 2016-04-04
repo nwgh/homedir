@@ -69,6 +69,7 @@ qexport = export -g qtip
 merge-base = log -r 'max(ancestor($1, $2))'
 glog = log -r .:0
 wip = log --graph --rev=wip --template=wip
+deletebookmark = !$HG strip --no-backup -B $1 && $HG push -B $1
 
 [mq]
 git = yes
