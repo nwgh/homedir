@@ -54,3 +54,5 @@
 	trustExitCode = true
 [include]
     path = ~/.local.gitconfig
+[mozreview]
+	nickname = nwgh

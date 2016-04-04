@@ -1,0 +1,11 @@
+#!/bin/sh
+
+VCT_COMMANDS="$HOME/.version-control-tools/git/commands"
+
+if [ ! -d "$VCT_COMMANDS" ] ; then
+    exit 1
+fi
+
+PATH="$VCT_COMMANDS:$PATH"
+export PATH
+exec git-mozreview "$@"
