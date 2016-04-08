@@ -1,25 +1,5 @@
 set nocompatible
 
-" Set up vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" Vundle manages vundle. Woh.
-Bundle 'gmarik/vundle'
-
-" From original sources on github
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'kien/ctrlp.vim'
-Bundle 'derekwyatt/vim-fswitch'
-Bundle 'klen/python-mode'
-Bundle 'scrooloose/syntastic'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'jmcantrell/vim-virtualenv'
-
 filetype on
 filetype plugin on
 filetype indent on
@@ -61,19 +41,10 @@ set expandtab " By default, use spaces instead of tabs
 set wildmode=longest:list
 set wildmenu
 
-
-" Config for autocomplete
-set completeopt=menu,menuone,longest
-set pumheight=15
-inoremap <expr> <C-J> pumvisible() ? "\<C-N>" : "\<C-J>"
-inoremap <expr> <C-K> pumvisible() ? "\<C-P>" : "\<C-K>"
-
 " Herein lies all the magic for file types
 autocmd!
-syntax on
 autocmd BufNewFile,BufRead **/mozilla/*.cpp,**/mozilla/*.h,**/mozilla/*.idl,**/mozilla/*.ipdl so $HOME/.vim/mozilla.vim
 autocmd BufNewFile,BufRead **/mozilla/*.js,**/mozilla/*.jsm so $HOME/.vim/mozilla_js.vim
-autocmd BufNewFile,BufRead *.pyx,*.pxd set ft=pyrex
 autocmd BufNewFile,BufRead *.md set ft=markdown
 autocmd FileType javascript so $HOME/.vim/js.vim
 autocmd FileType c so $HOME/.vim/c.vim
@@ -81,78 +52,22 @@ autocmd FileType cpp so $HOME/.vim/cpp.vim
 autocmd FileType makefile so $HOME/.vim/Make.vim
 autocmd FileType sql so $HOME/.vim/sql.vim
 autocmd FileType python so $HOME/.vim/python.vim
-autocmd FileType pyrex so $HOME/.vim/pyrex.vim
 autocmd FileType text so $HOME/.vim/txt.vim
 autocmd FileType vim so $HOME/.vim/vim.vim
 
 " according to smartindent help, this makes comments align as i wish
 inoremap # X#
 
-" Easy way to get out of insert mode
-inoremap jk <Esc>
-
-" Easy way to cycle through buffers
-nnoremap <C-k> :bp<CR>
-nnoremap <C-j> :bn<CR>
-
 " Here are some other handy keybindings I use
 let mapleader = ","
 nnoremap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
-nnoremap <leader>m :CtrlPMixed<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
-nnoremap <leader>r :CtrlPMRU<CR>
-nnoremap <leader>f :CtrlP<CR>
-nnoremap <leader>s :FSHere<CR>
 
-" Setup for ctrlp
-let g:ctrlp_working_path_mode = 2 " Find project if possible, otherwise $CWD
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\.git$\|\.hg$\|obj-ff-.*$\|\.dropbox$\|\.fontconfig$\|\.cups$\|\.vimswap$\|\.wireshark.*$\|Library$\|\.ctrlp_cache$\|\.config$\|\.gem$\|Virtual Machines\.localized$\|Music$\|\.ccache$\|\.gem$\|\.hgext$\|\.pentadactyl$\|\.pip$\|\.clamquarantine$\|Movies$\|Pictures$\|Public$\|\.Trash$\|\.ssh$\|mozmisc$\|\.rvm$\|\.rbenv$\|\.subversion$\|\.android$\|\.irssi$\|\.app$',
-    \ 'file': '\.o$\|\.so$\|\.pyc$\|\.DS_Store$\|\.localized$\|Icon.$\|\.dmg$\|\.jpg$\|\.png$\|\.zip$\|\.tar$\|\.xpi$\|\.gif$\|\.tgz$\|\.tar\.bz2$\|\.tar\.gz$\|\.CFUserTextEncoding$\|\.Rapp\.history$\|\.X.*$\|\..*_history$\|\.lesshst$\|\.mozconfig.*$\|\.netrc$\|\.rnd$\|\.zcompdump\|\.patch$\|\.pdf$\|\.viminfo$\|\.parentlock$\|\.sqlite.*$\|\.p12$\|\.dia.*$\|\.plist$\|\.doc$\|\.rtf$\|\.odt$\|\.wav$\|\.pages$\|\.rdp$\|\.rdf$\|\.exe$\|\.tbz$\|\.docx$\|\.gdoc$\|\.diff$\|\.3gp$\|\.itermcolors$\|mseed.*$\|\.dropbox$\|\.ogg$\|\.mp3$\|\.m4a$\|\.mp4$\|\.mpg$\|\.mov$\|\.jpeg$\|\.orig$\|\.rej$',
-    \ }
-let g:ctrlp_by_filename = 1 " Default to look at just the filename
-let g:ctrlp_max_history = 0 " Disable history in ctrlp
-let g:ctrlp_max_files = 0 " Index ALL the files!
-" Make it so I don't have to take my fingers off the home row to cycle
-" through options that ctrlp gives me
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtSelectMove("j")': ['<c-j>', '<down>', '<c-n>'],
-    \ 'PrtSelectMove("k")': ['<c-k>', '<up>', '<c-p>'],
-    \ 'PrtHistory(-1)':     [],
-    \ 'PrtHistory(1)':      [],
-    \ }
-let g:ctrlp_command = 'CtrlPRoot' " Use C-p to get default behavior of ctrlp
-
-let g:snips_author = 'Nick Hurley' " Author for snipmate
-
-set tags=tags;/,~/src/**/tags " Find tags filesj
+set tags=tags;/,~/src/**/tags " Find tags files
 
 " Make terminal colors things I like
 set bg=dark
-let g:solarized_bold=0
-let g:solarized_italic=0
-let g:solarized_underline=0
-if exists('$TERM_SESSION_CLASS_ID')
-    let g:solarized_termcolors=256
-endif
-colorscheme solarized
 
-" Some custom highlights
-highlight LineTooLong cterm=underline term=underline
-highlight TrailingWhitespace ctermbg=darkred term=underline
-highlight link javaScriptNumber Number
-highlight clear StatusLine
-highlight link StatusLine LineNr
-highlight clear StatusLineNC
-highlight link StatusLineNC CursorLineNr
-highlight clear SignColumn
-highlight link SignColumn LineNr
-autocmd Syntax * call matchadd('nwghTodo', '\W\zs\(NWH\|NWGH\)')
-highlight link nwghTodo Todo
-let python_highlight_all = 1
-
-" Functions to make my status line show more like powerline, without all the
-" extra color cruft that comes along with it (which screws things up in tmux)
+" Functions to make my status line work the way I like it
 function! GetEditMode()
     let mode = mode()
     let rval=''
@@ -226,63 +141,11 @@ cnoremap <C-K> <Up>
 " Easy way to clear hilight from search
 nnoremap <leader><space> :noh<CR>
 
-" Easy way to force diagnostics in C/C++
-nnoremap <leader>l :YcmForceCompileAndDiagnostics<CR>
-
 " Easy way to edit my vimrc
 nnoremap <leader>v :edit $MYVIMRC<CR>
 
 " Sane encoding ahoy!
 set encoding=utf-8
-
-" Set up python-mode
-let g:pymode_doc=0
-let g:pymode_run=0
-let g:pymode_lint=0
-let g:pymode_rope=0
-let g:pymode_folding=0
-let g:pymode_breakpoint=0
-let g:pymode_options=0
-let g:pymode_virtualenv=0
-
-" Set up virtualenv integration
-let g:virtualenv_projects="~/src"
-
-" Set up syntastic
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_highlighting=0
-let g:syntastic_auto_loc_list=2
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_javascript_checkers=['jshint']
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_c_checkers=['ycm']
-let g:syntastic_cpp_checkers=['ycm']
-
-" Set up YouCompleteMe
-let g:ycm_filetype_blacklist = {
-    \ 'notes' : 1,
-    \ 'markdown' : 1,
-    \ 'text' : 1,
-    \ 'vim' : 1,
-    \ 'gitcommit' : 1
-    \}
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_confirm_extra_conf=0
-let g:ycm_always_populate_location_list=1
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsListSnippets="<c-tab>"
-
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#completions_command = ""
-let g:jedi#show_call_signature = "1"
 
 " Connect to the system clipboard
 set clipboard=unnamed
