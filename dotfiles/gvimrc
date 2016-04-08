@@ -26,41 +26,6 @@ else
     set gfn=Fira\ Mono\ 12
 endif
 
-" Add my custom match groups
-highlight LineTooLong gui=underline
-highlight TrailingWhitespace guibg=#dc322f
-
-" Fix up the cursor line number
-highlight CursorLineNr gui=NONE guifg=#586e75 guibg=bg
-
-" Label tabs with just the filename (no path)
-set guitablabel=%t
-
-" Let's do a giant hack to get some environment variables set properly
-python << EOF
-import vim, subprocess
-p = subprocess.Popen(['/bin/zsh', '-l', '-i', '-c', 'echo $PATH'],
-                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-p.wait()
-path = p.stdout.read().strip()
-vim.command('let $PATH="%s"' % (path,))
-
-p = subprocess.Popen(['/bin/zsh', '-l', '-i', '-c', 'echo $MOZCONFIG_ROOT'],
-                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-p.wait()
-mozconfig_root = p.stdout.read().strip()
-vim.command('let $MOZCONFIG_ROOT="%s"' % (mozconfig_root,))
-
-p = subprocess.Popen(['/bin/zsh', '-l', '-i', '-c', 'echo $MOZCONFIG'],
-                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-p.wait()
-mozconfig = p.stdout.read().strip()
-vim.command('let $MOZCONFIG="%s"' % (mozconfig,))
-EOF
-
-" Just in case someone ever breaks "mach compileflags" again
-let $I_PREFER_A_SUBOPTIMAL_MERCURIAL_EXPERIENCE = 'yes'
-
 " Bring in machine-local customizations
 if filereadable(glob("~/.gvimrc.local"))
     so ~/.gvimrc.local

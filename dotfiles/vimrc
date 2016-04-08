@@ -30,7 +30,6 @@ set nobackup " Don't keep backups around after write succeeds
 set writebackup " But do write them while writing a buffer, just in case
 set number " Show line numbers
 set cursorline " Hilight the current line
-set directory^=~/.vimswap// " Put .sw* files out of the way
 
 " see :help smartindent for inoremap details
 set smartindent " Smart auto indentation
@@ -61,69 +60,6 @@ inoremap # X#
 " Here are some other handy keybindings I use
 let mapleader = ","
 nnoremap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
-
-set tags=tags;/,~/src/**/tags " Find tags files
-
-" Make terminal colors things I like
-set bg=dark
-
-" Functions to make my status line work the way I like it
-function! GetEditMode()
-    let mode = mode()
-    let rval=''
-
-    if &paste
-        let rval.='PASTE '
-    endif
-
-    if mode ==# 'v'
-        let rval.='VISUAL'
-    elseif mode ==# 'V'
-        let rval.='V-LINE'
-    elseif mode ==# ''
-        let rval.='V-BLOCK'
-    elseif mode ==# 's'
-        let rval.='SELECT'
-    elseif mode ==# 'S'
-        let rval.='S-LINE'
-    elseif mode ==# ''
-        let rval.='S-BLOCK'
-    elseif mode =~# '\vi'
-        let rval.='INSERT'
-    elseif mode =~# '\v(R|Rv)'
-        let rval.='REPLACE'
-    else
-        " Fallback to normal mode
-        let rval.='NORMAL'
-    endif
-
-    return rval
-endfunction
-
-function! GetFileStatus()
-    let rval=''
-
-    if &readonly
-        let rval.='RO '
-    elseif &mod
-        let rval.='+ '
-    endif
-
-    if strlen(&ft)
-        let rval.=&ft
-    endif
-
-    return rval
-endfunction
-
-" Have the status line show the filename, whether or not it's modified,
-" read-only, a help buffer, and type on the left. Show line number, column
-" number, and percentage through file on right
-set statusline=%{GetEditMode()}\ %t\ %{GetFileStatus()}%=%p%%\ L:%l\ C:%v
-
-" Setup hilighting for certain line conditions
-autocmd FileType javascript,c,cpp,makefile,sql,python,vim let w:m1=matchadd('LineTooLong', '\%>80v.\+', -1)
-autocmd FileType javascript,c,cpp,makefile,sql,python,vim let w:m2=matchadd('TrailingWhitespace', '\s\+\%#\@<!$', -1)
 
 " Make editing in command-line mode simpler for me - emacs-style
 cnoremap <C-A> <Home>
