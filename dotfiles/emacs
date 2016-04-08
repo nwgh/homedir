@@ -1,29 +1,7 @@
 (setq make-backup-files nil)
 (auto-save-mode nil)
-(require 'package)
 (if (display-graphic-p)
   (progn
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)))
-(package-initialize)
-
-(add-to-list 'package-archives
-    '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-    '("marmalade" . "http://marmalade-repo.org/packages/") t)
-
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(defun ensure-packages-installed (packages)
-  (dolist (p packages)
-    (when (not (package-installed-p p))
-      (package-install p))))
-
-(ensure-packages-installed '(evil))
-(require 'evil)
-(evil-mode t)
-
-(ensure-packages-installed '(color-theme-solarized))
-(load-theme 'solarized-dark t)
