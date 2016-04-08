@@ -1,9 +1,0 @@
-set ignorecase
-set smartcase
-set number
-set hlsearch
-set incsearch
-set clipboard=unnamed
-set vimregex
-set noblinkcursor
-nmap ,<Space> :noh<CR>
