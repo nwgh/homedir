@@ -10,7 +10,9 @@ export NWH_ZSH_CONFIG="linux"
 export MOZCONFIG="$MOZCONFIG_ROOT/linux_debug_noopt"
 
 if [ -d "$HOME/.linuxbrew" ] ; then
-	export PATH="$PATH:$HOME/.linuxbrew/bin"
+	# Linuxbrew needs to be at the front to override anything that may also
+	# have been installed by system packages
+	export PATH="$HOME/.linuxbrew/bin:$PATH"
 fi
 
 # vim: set noexpandtab:
