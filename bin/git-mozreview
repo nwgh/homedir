@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VCT_COMMANDS="$HOME/.version-control-tools/git/commands"
+VCT_COMMANDS="$HOME/.mozbuild/version-control-tools/git/commands"
 
 if [ ! -d "$VCT_COMMANDS" ] ; then
     exit 1
