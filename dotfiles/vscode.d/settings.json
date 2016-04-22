@@ -5,5 +5,6 @@
     "amVim.bindCtrlC": true,
     "git.autofetch": false,
     "editor.renderWhitespace": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "window.reopenFolders": "all"
 }
