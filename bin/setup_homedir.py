@@ -70,8 +70,15 @@ def __getos():
 
 def __safelink(src, dst, act=True, verbose=False):
     """Like os.symlink, but does't behave badly if dst already exists.
+    Also, ensures parent directory exists.
     """
     if not os.path.exists(dst):
+        dirname = os.path.dirname(dst)
+        if not os.path.exsits(dirname):
+            if verbose:
+                print 'mkdir %s' % (dirname,)
+            if act:
+                os.makedirs(dirname)
         if verbose:
             print '%s -> %s' % (dst, src)
         if act:
@@ -153,23 +160,21 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
     if dotfiledir:
         dotfiles = __listdir(dotfiledir)
         for f in dotfiles:
-            if f == 'sublime':
+            dests = []
+            if f == 'vscode.d':
                 if osname == 'osx':
-                    dst = os.path.join(homedir, 'Library',
-                        'Application Support', 'Sublime Text 2', 'Packages',
-                        'User')
+                    dests.append(os.path.join(homedir, 'Library', 'Application Support', 'Code - Insiders', 'User'))
                 elif osname == 'linux':
-                    dst = os.path.join(homedir, '.Sublime Text 2', 'Packages',
-                        'User')
+                    # TODO
+                    if verbose:
+                        print >>sys.stderr, 'OS Linux is not yet setup for VS Code'
                 else:
                     if verbose:
-                        print >>sys.stderr, 'Unknown os type for Sublime: %s' \
-                            % (osname,)
-                    continue
-            else:
-                dst = os.path.join(homedir, '.%s' % (f,))
+                        print >>sys.stderr, 'Do not use VS Code on Windows!'
+            dests.append(os.path.join(homedir, '.%s' % (f,)))
             src = os.path.join(dotfiledir, f)
-            __safelink(src, dst, act=act, verbose=verbose)
+            for dst in dests:
+                __safelink(src, dst, act=act, verbose=verbose)
 
     # Handle installing packages if requested
     if packages:

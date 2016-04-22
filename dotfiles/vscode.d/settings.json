@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.fontFamily": "Fira Mono",
+    "editor.fontSize": 13,
+    "amVim.bindCtrlC": true,
+    "git.autofetch": false,
+    "editor.renderWhitespace": true,
+    "files.trimTrailingWhitespace": true
+}
