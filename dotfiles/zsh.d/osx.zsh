@@ -12,6 +12,8 @@ alias gvim="gvim --remote-silent"
 export MINIDUMP_STACKWALK="${HOME}/Dropbox/Documents/moz/minidump_stackwalk_osx"
 export NWH_ZSH_CONFIG="osx"
 export MOZCONFIG="$MOZCONFIG_ROOT/mac_debug_noopt"
+export MOZ_NODE_PATH="/usr/local/bin/node"
+export NODE_HTTP2_ROOT="${HOME}/src/node-http2"
 
 function irctunnel() {
 	case "$1" in
