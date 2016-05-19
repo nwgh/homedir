@@ -16,6 +16,7 @@ export LESS=-FRXi
 export GIT_DIFF_OPTS=--unified=8
 export PROJECT_HOME="$HOME/src"
 export HOMEBREW_NO_EMOJI=1
+export HOMEBREW_NO_ANALYTICS=1
 export BLOG_HOME="$HOME/src/todesschaf.github.com"
 export BLOG_POSTS="$BLOG_HOME/_posts"
 export MOZCONFIG_ROOT="$HOME/src/mozilla/mozconfigs"
