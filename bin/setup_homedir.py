@@ -165,9 +165,7 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
                 if osname == 'osx':
                     dests.append(os.path.join(homedir, 'Library', 'Application Support', 'Code - Insiders', 'User'))
                 elif osname == 'linux':
-                    # TODO
-                    if verbose:
-                        print >>sys.stderr, 'OS Linux is not yet setup for VS Code'
+                    dests.append(os.path.join(homedir, '.config', 'Code - Insiders', 'User'))
                 else:
                     if verbose:
                         print >>sys.stderr, 'Do not use VS Code on Windows!'
