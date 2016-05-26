@@ -42,8 +42,10 @@ fi
 
 logfile() {
     export NSPR_LOG_FILE="$1"
+    export MOZ_LOG_FILE="$1"
     shift
     "$@"
+    unset MOZ_LOG_FILE
     unset NSPR_LOG_FILE
 }
 
@@ -54,20 +56,25 @@ _add_to_nspr_log_modules() {
         return
     fi
 
-    if [[ -z "$NSPR_LOG_MODULES" ]] ; then
+    if [[ -z "$MOZ_LOG" ]] ; then
+        MOZ_LOG=timestamp
         NSPR_LOG_MODULES=timestamp
     fi
-    if [[ -z "$NSPR_LOG_FILE" ]] ; then
+    if [[ -z "$MOZ_LOG_FILE" ]] ; then
+        export MOZ_LOG_FILE=/tmp/nspr.log
         export NSPR_LOG_FILE=/tmp/nspr.log
     fi
 
+    MOZ_LOG="$MOZ_LOG","$module"
     NSPR_LOG_MODULES="$NSPR_LOG_MODULES","$module"
-    export NSPR_LOG_MODULES
+    export MOZ_LOG NSPR_LOG_MODULES
 }
 
 _cleanup_nspr_logging() {
     unset NSPR_LOG_MODULES
     unset NSPR_LOG_FILE
+    unset MOZ_LOG_FILE
+    unset MOZ_LOG
 }
 
 seerlog() {
