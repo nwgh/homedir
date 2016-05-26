@@ -1,0 +1,44 @@
+# Herein lies the general config
+source "${HOME}/.zsh.d/env.zsh"
+source "${HOME}/.zsh.d/options.zsh"
+source "${HOME}/.zsh.d/prompt.zsh"
+
+# Get setup that is specific to particular pieces of software that may be
+# installed
+for f in ${HOME}/.zsh.d/packages/* ; do
+	source "$f"
+done
+
+# Some of these commands may depend on paths being set up by packages
+source "${HOME}/.zsh.d/commands.zsh"
+
+# Load OS-specific zsh configuration
+case "$(uname)" in
+	"Linux")
+		source "${HOME}/.zsh.d/linux.zsh"
+		;;
+	"Darwin")
+		source "${HOME}/.zsh.d/osx.zsh"
+		;;
+	*)
+		source "${HOME}/.zsh.d/generic.zsh"
+		;;
+esac
+
+# Enable iTerm2 integration. This is not mac-specific, because I may be sshing
+# into a linux vm from my mac, and I want the iTerm2 integration there.
+if [[ -n "$ITERM_SESSION_ID" ]] ; then
+	source "${HOME}/.zsh.d/iterm2.zsh"
+fi
+
+# Finally, let the local machine override anything it wants, if it wants
+if [[ -f "${HOME}/.local.zsh" ]] ; then
+    source "${HOME}/.local.zsh"
+fi
+if [[ -d "${HOME}/.local.zsh.d" ]] ; then
+	for f in ${HOME}/.local.zsh.d/* ; do
+		source "$f"
+	done
+fi
+
+# vim: set noexpandtab:
