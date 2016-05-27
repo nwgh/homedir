@@ -74,7 +74,7 @@ def __safelink(src, dst, act=True, verbose=False):
     """
     if not os.path.exists(dst):
         dirname = os.path.dirname(dst)
-        if not os.path.exsits(dirname):
+        if not os.path.exists(dirname):
             if verbose:
                 print 'mkdir %s' % (dirname,)
             if act:
