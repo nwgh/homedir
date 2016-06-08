@@ -5,6 +5,8 @@
 	excludesfile = ~/.gitignore
 	pager = less -FRXi
 	editor = vim
+	autocrlf = input
+	eol = lf
 [color]
 	ui = auto
 [merge]
