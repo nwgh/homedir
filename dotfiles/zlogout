@@ -1,3 +1,13 @@
+if [ "$TERM_PROGRAM" = "Apple_Terminal" ] ; then
+    TERM_PID=$(/usr/bin/pgrep -U $USER -a Terminal)
+    NUM_PROCESSES=$(/usr/local/bin/pstree -u $USER -s login -l 2 $TERM_PID | wc -l)
+
+    # This is 2 because the Terminal takes up one process
+    if [ $NUM_PROCESSES -eq 2 ] ; then
+        /usr/bin/nohup $HOME/.zsh.d/delayquit > /dev/null 2>&1 &
+    fi
+fi
+
 /usr/bin/clear
 
 # vim: set noexpandtab:

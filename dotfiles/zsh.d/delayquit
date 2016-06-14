@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+/bin/sleep 1
+/usr/bin/osascript -e "tell application \"Terminal.app\" to quit"
