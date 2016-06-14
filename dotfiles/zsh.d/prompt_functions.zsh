@@ -99,7 +99,7 @@ function make_vcsprompt {
                     else # $aheadbehind = "ahead n, behind m"
                         aheadcount="$(echo "$part1" | cut -d' ' -f2)"
                         behindcount="$(echo "$part2" | cut -d' ' -f3)"
-                        ab="⥮$aheadcount/$behindcount "
+                        ab="${aheadcount}⥮${behindcount} "
                     fi
                 fi
             done
