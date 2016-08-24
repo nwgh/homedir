@@ -34,6 +34,7 @@
 	default = simple
 [diff]
 	tool = p4merge
+	compactionHeuristic = true
 [difftool "p4merge"]
 	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
 [mergetool "p4merge"]
