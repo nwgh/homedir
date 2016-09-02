@@ -6,5 +6,9 @@
     "git.autofetch": false,
     "editor.renderWhitespace": true,
     "editor.trimAutoWhitespace": true,
-    "window.reopenFolders": "all"
+    "window.reopenFolders": "all",
+    "rust.formatOnSave": true,
+    "rust.checkOnSave": true,
+    "rust.useNewErrorFormat": true,
+    "rust.rustLangSrcPath": "$HOME/src/mozilla/rust/src"
 }
