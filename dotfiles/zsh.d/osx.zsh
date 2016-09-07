@@ -14,6 +14,7 @@ export NWH_ZSH_CONFIG="osx"
 export MOZCONFIG="$MOZCONFIG_ROOT/mac_debug_noopt"
 export MOZ_NODE_PATH="/usr/local/bin/node"
 export NODE_HTTP2_ROOT="${HOME}/src/node-http2"
+export MOZHTTP2_PORT=48872 # "HTTP2" on a phone keypad
 
 function irctunnel() {
 	case "$1" in
