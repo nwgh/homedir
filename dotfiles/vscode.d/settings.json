@@ -10,5 +10,6 @@
     "rust.formatOnSave": true,
     "rust.checkOnSave": true,
     "rust.useNewErrorFormat": true,
-    "rust.rustLangSrcPath": "$HOME/src/mozilla/rust/src"
+    "rust.rustLangSrcPath": "$HOME/src/mozilla/rust/src",
+    "workbench.quickOpen.closeOnFocusLost": false
 }
