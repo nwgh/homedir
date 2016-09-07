@@ -85,7 +85,7 @@ seerlog() {
 
 httplog() {
     _add_to_nspr_log_modules "nsHttp:5"
-    "$@"
+    keylog "$@"
     _cleanup_nspr_logging
 }
 
