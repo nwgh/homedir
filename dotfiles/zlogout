@@ -1,3 +1,8 @@
+# Only do this stuff if we're exiting the top-level shell
+if [ $SHLVL -gt 1 ] ; then
+    return
+fi
+
 if [ "$TERM_PROGRAM" = "Apple_Terminal" ] ; then
     TERM_PID=$(/usr/bin/pgrep -U $USER -a Terminal)
     NUM_PROCESSES=$(/usr/local/bin/pstree -u $USER -s login -l 2 $TERM_PID | wc -l)
