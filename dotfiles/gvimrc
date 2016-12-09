@@ -1,3 +1,33 @@
+" A few other useful bundles for gvim
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'vim-syntastic/syntastic'
+
+" Easy way to force diagnostics in C/C++
+nnoremap <leader>l :YcmForceCompileAndDiagnostics<CR>
+
+" Set up syntastic
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_highlighting=0
+let g:syntastic_auto_loc_list=2
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_c_checkers=['ycm']
+let g:syntastic_cpp_checkers=['ycm']
+
+" Set up YCM
+let g:ycm_filetype_blacklist = {
+    \ 'notes' : 1,
+    \ 'markdown' : 1,
+    \ 'text' : 1,
+    \ 'vim' : 1,
+    \ 'gitcommit' : 1,
+    \ }
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_confirm_extra_conf=0
+let g:ycm_always_populate_location_list=1
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
+
 " Remove toolbar, menubar, scrollbars
 set guioptions-=T
 set guioptions-=m
@@ -14,6 +44,12 @@ set guioptions+=c
 " Don't let the cursor blink ever. EVER
 set guicursor=a:blinkwait0-blinkoff0-blinkon0
 
+" Appropriate colors
+set bg=dark
+colorscheme solarized
+hi clear CursorLineNr
+hi link CursorLineNr LineNr
+
 " Have a simple title string
 set title
 set titlestring=vim
@@ -21,7 +57,6 @@ set titlestring=vim
 " I much prefer Fira Mono
 if has("macunix")
     set gfn=Fira\ Mono:h12
-    set transparency=3
 else
     set gfn=Fira\ Mono\ 12
 endif
