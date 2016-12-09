@@ -59,3 +59,5 @@
     path = ~/.local.gitconfig
 [mozreview]
 	nickname = nwgh
+[cinnabar]
+	helper = /Users/nwgh/src/git-cinnabar/git-cinnabar-helper
