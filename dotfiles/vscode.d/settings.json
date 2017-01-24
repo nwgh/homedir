@@ -17,6 +17,7 @@
     "editor.cursorBlinking": "solid",
     "vim.useSystemClipboard": true,
     "vim.useSolidBlockCursor": true,
+    "vim.useCtrlKeys": false,
     "editor.rulers": [80, 100, 120],
     "files.insertFinalNewline": true,
     "sync.gist": "7d6911de860914f3fbb15d33522aee4c",
