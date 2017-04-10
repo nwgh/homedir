@@ -28,5 +28,13 @@
     "sync.version": 241,
     "sync.showSummary": false,
     "sync.forceDownload": false,
-    "sync.workspaceSync": false
+    "sync.workspaceSync": false,
+    "workbench.colorTheme": "Solarized Dark",
+    "workbench.iconTheme": "vs-seti",
+    "[cpp]": {
+        "editor.quickSuggestions": false
+    },
+    "[c]": {
+        "editor.quickSuggestions": false
+    }
 }
