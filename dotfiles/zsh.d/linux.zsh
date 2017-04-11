@@ -1,3 +1,6 @@
+if [[ -f "${HOME}/.dircolors-solarized" ]] ; then
+    eval $(dircolors "${HOME}/.dircolors-solarized")
+fi
 alias l='/bin/ls --color=auto'
 alias ls='/bin/ls --color=auto'
 alias la='/bin/ls -A --color=auto'
