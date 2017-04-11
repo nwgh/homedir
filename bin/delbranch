@@ -1,0 +1,5 @@
+#!/bin/bash
+
+git branch -D "$1"
+git branch -D -r "nwgh/$1"
+git push nwgh :"$1"
