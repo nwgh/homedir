@@ -27,10 +27,9 @@ reviewboard = ~/.mozbuild/version-control-tools/hgext/reviewboard/client.py
 firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
 mqext = ~/.mozbuild/version-control-tools/hgext/mqext
 qimportbz = ~/.mozbuild/version-control-tools/hgext/qimportbz
-bundleclone = ~/.mozbuild/version-control-tools/hgext/bundleclone
 push-to-try = ~/.mozbuild/version-control-tools/hgext/push-to-try
 bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
-evolve = ~/src/evolve/hgext/evolve.py
+evolve =
 blackbox = 
 
 [diff]
