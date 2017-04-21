@@ -1,4 +1,0 @@
-brew
-pip
-gem
-npm
