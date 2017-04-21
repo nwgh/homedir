@@ -3,6 +3,7 @@
     "editor.fontFamily": "Fira Mono",
     "editor.fontSize": 18,
     "git.autofetch": false,
+    "git.autorefresh": false,
     "editor.renderWhitespace": "boundary",
     "editor.trimAutoWhitespace": true,
     "window.reopenFolders": "all",
