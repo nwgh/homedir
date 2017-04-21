@@ -114,4 +114,4 @@ graphshorten = true
 [paths]
 review = ssh://reviewboard-hg.mozilla.org/autoreview
 
-%include ~/.local.hgrc
+%include ~/.local/hgrc
