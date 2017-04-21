@@ -1,15 +1,5 @@
 set nocompatible
 
-" Set up vundle
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-
-" Vundleception!
-Bundle 'gmarik/vundle'
-
-" A few other useful things
-Bundle 'kien/ctrlp.vim'
-
 filetype on
 filetype plugin on
 filetype indent on
@@ -71,25 +61,6 @@ inoremap # X#
 " Here are some other handy keybindings I use
 let mapleader = ","
 nnoremap <leader>e :edit <C-R>=expand('%:p:h') . "/"<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
-nnoremap <leader>f :CtrlP<CR>
-
-" Setup for ctrlp
-let g:ctrlp_working_path_mode = 2 " Find project, if possible
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\.git$\|\.hg$\|obj-.*$\|\.ctrlp_cache$',
-    \ 'file': '\.o$\|\.so$\|\.pyc$\|\.DS_Store$\|\.localized$\|Icon.$\|\.dmg$\|\.jpg$\|\.png$\|\.zip$\|\.tar$\|\.xpi$\|\.gif$\|\.tgz$\|\.tar\.bz2$\|\.tar\.gz$\|\.CFUserTextEncoding$\|\.Rapp\.history$\|\.X.*$\|\..*_history$\|\.lesshst$\|\.mozconfig.*$\|\.netrc$\|\.rnd$\|\.zcompdump\|\.patch$\|\.pdf$\|\.viminfo$\|\.parentlock$\|\.sqlite.*$\|\.p12$\|\.dia.*$\|\.plist$\|\.doc$\|\.rtf$\|\.odt$\|\.wav$\|\.pages$\|\.rdp$\|\.rdf$\|\.exe$\|\.tbz$\|\.docx$\|\.gdoc$\|\.diff$\|\.3gp$\|\.itermcolors$\|mseed.*$\|\.dropbox$\|\.ogg$\|\.mp3$\|\.m4a$\|\.mp4$\|\.mpg$\|\.mov$\|\.jpeg$\|\.orig$\|\.rej$',
-    \ }
-let g:ctrlp_by_filename = 1
-let g:ctrlp_max_history = 0
-let g:ctrlp_max_files = 0
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtSelectMove("j")': ['<c-j>', '<down>', '<c-n>'],
-    \ 'PrtSelectMove("k")': ['<c-k>', '<up>', '<c-p>'],
-    \ 'PrtHistory(-1)':     [],
-    \ 'PrtHistory(1)':      [],
-    \ }
-let g:ctrlp_command = 'CtrlPRoot'
 
 " Make editing in command-line mode simpler for me - emacs-style
 cnoremap <C-A> <Home>
@@ -121,6 +92,10 @@ if exists('$ITERM_PROFILE')
     let &t_SI="\<Esc>]50;CursorShape=1\x7"
     let &t_EI="\<Esc>]50;CursorShape=0\x7"
 endif
+
+" Set up colors how I like
+set background=dark
+colorscheme solarized
 
 " Bring in machine-local customizations
 if filereadable(glob("~/.vimrc.local"))
