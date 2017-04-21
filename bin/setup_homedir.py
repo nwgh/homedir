@@ -34,21 +34,6 @@ __license__ = "BSD"
 __osdirs = ['osx', 'linux', 'windows']
 
 
-def __install_packages(packagefile, command, act=True, verbose=False):
-    with file(packagefile) as f:
-        packages = f.read().strip().split('\n')
-
-    for package in packages:
-        commandline = command.format(package=package)
-        stdout = subprocess.PIPE
-        if verbose:
-            stdout = None
-            print commandline
-        if act:
-            subprocess.call(commandline, shell=True, stdout=stdout,
-                stderr=subprocess.STDOUT)
-
-
 def __listdir(directory):
     """Like os.listdir, but strips out any files beginning with .
     """
@@ -87,8 +72,7 @@ def __safelink(src, dst, act=True, verbose=False):
         print '%s already exists, not creating link' % (dst,)
 
 
-def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
-    packages=False):
+def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
     """For each file, f, in setupdir, do the equivalent of:
        ln -s <setupdir>/<f> <homedir>/<f>
     Except for <setupdir>/dotfiles, where for each file f there, do:
@@ -108,7 +92,6 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
         raise Exception('setupdir must be a directory')
 
     # Setup
-    packagesdir = None
     dotfiledir = None
     osdir = None
     setupfiles = set(__listdir(setupdir))
@@ -139,16 +122,6 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
     if verbose and not dotfiledir:
         print 'No dotfiledir found'
 
-    # See if we have a packages directory
-    if 'packages' in setupfiles:
-        if os.path.isdir(os.path.join(setupdir, 'packages')):
-            packagesdir = os.path.join(setupdir, 'packages')
-            setupfiles.discard('packages')
-            if verbose:
-                print 'Found packagesdir at %s' % (packagesdir,)
-    if not in_os and verbose and not packagesdir:
-        print 'No packagesdir found'
-
     # Symlink all the non-dotfiles
     for f in setupfiles:
         # Create the symlink
@@ -174,39 +147,6 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False,
             for dst in dests:
                 __safelink(src, dst, act=act, verbose=verbose)
 
-    # Handle installing packages if requested
-    if packages:
-        packagefiles = __listdir(packagesdir)
-        installer_file = None
-        for p in packagefiles:
-            filename = os.path.join(packagesdir, p)
-            if p == 'installers.txt':
-                installer_file = filename
-            elif p == 'brews.txt':
-                __install_packages(filename, 'brew install {package}',
-                    act=act, verbose=verbose)
-            elif p == 'python.txt':
-                __install_packages(filename, 'pip install {package}', act=act,
-                    verbose=verbose)
-            elif p == 'ruby.txt':
-                __install_packages(filename, 'gem install {package}', act=act,
-                    verbose=verbose)
-            elif verbose:
-                print 'Invalid packages filename'
-
-        if installer_file:
-            installers = []
-            installer_wrapper = os.path.join(setupdir, 'bin', 'installer.py')
-            destdir = os.path.join(os.path.sep, 'todesschaf', 'bin')
-            with file(installer_file) as f:
-                installers = f.read().strip().split('\n')
-            for installer in installers:
-                dest = os.path.join(destdir, installer)
-                if verbose:
-                    print '%s => %s' % (dest, installer_wrapper)
-                if act:
-                    os.link(installer_wrapper, dest)
-
 
 if __name__ == '__main__':
     # No point in having this usage if we aren't running as main
@@ -217,7 +157,6 @@ if __name__ == '__main__':
             'would be done (implies -v)'
         print >>sys.stderr, '   -h homedir    Put links in <homedir> ' \
             '(default $HOME)'
-        print >>sys.stderr, '   -p            Install packages'
         print >>sys.stderr, '   -s setupdir   Create links to files in ' \
             '<setupdir> (default .)'
         print >>sys.stderr, '   -v            Be verbose'
@@ -232,7 +171,6 @@ if __name__ == '__main__':
     homedir = os.getenv('HOME') or os.getcwd()
     setupdir = os.getcwd()
     verbose = False
-    packages = False
 
     for o, a in opts:
         if o == '-n':
@@ -244,8 +182,6 @@ if __name__ == '__main__':
             setupdir = a
         elif o == '-v':
             verbose = True
-        elif o == '-p':
-            packages = True
         else:
             usage()
 
@@ -254,8 +190,7 @@ if __name__ == '__main__':
         usage()
 
     try:
-        setup_homedir(homedir, setupdir, act=act, verbose=verbose,
-            packages=packages)
+        setup_homedir(homedir, setupdir, act=act, verbose=verbose)
     except Exception, e:
         print >>sys.stderr, str(e)
         sys.exit(1)
