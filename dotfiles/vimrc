@@ -25,10 +25,8 @@ set ttyfast " Generally used locally, so we have fast TTYs
 set mouse=a " Mouse is enabled in all modes
 set notitle " Don't muck with the terminal title
 set ruler " Show line/column at the bottom
-set laststatus=2 " Always show status line
 set nobackup " Don't keep backups around after write succeeds
 set writebackup " But do write them while writing a buffer, just in case
-set number " Show line numbers
 set cursorline " Hilight the current line
 
 " see :help smartindent for inoremap details
@@ -43,20 +41,6 @@ set wildmenu
 " Herein lies all the magic for file types
 autocmd!
 syntax on
-autocmd BufNewFile,BufRead **/mozilla/*.cpp,**/mozilla/*.h,**/mozilla/*.idl,**/mozilla/*.ipdl so $HOME/.vim/mozilla.vim
-autocmd BufNewFile,BufRead **/mozilla/*.js,**/mozilla/*.jsm so $HOME/.vim/mozilla_js.vim
-autocmd BufNewFile,BufRead *.md set ft=markdown
-autocmd FileType javascript so $HOME/.vim/js.vim
-autocmd FileType c so $HOME/.vim/c.vim
-autocmd FileType cpp so $HOME/.vim/cpp.vim
-autocmd FileType makefile so $HOME/.vim/Make.vim
-autocmd FileType sql so $HOME/.vim/sql.vim
-autocmd FileType python so $HOME/.vim/python.vim
-autocmd FileType text so $HOME/.vim/txt.vim
-autocmd FileType vim so $HOME/.vim/vim.vim
-
-" according to smartindent help, this makes comments align as i wish
-inoremap # X#
 
 " Here are some other handy keybindings I use
 let mapleader = ","
@@ -87,15 +71,8 @@ set encoding=utf-8
 " Connect to the system clipboard
 set clipboard=unnamed
 
-" Let vim change the cursor in iTerm
-if exists('$ITERM_PROFILE')
-    let &t_SI="\<Esc>]50;CursorShape=1\x7"
-    let &t_EI="\<Esc>]50;CursorShape=0\x7"
-endif
-
 " Set up colors how I like
 set background=dark
-colorscheme solarized
 
 " Bring in machine-local customizations
 if filereadable(glob("~/.vimrc.local"))
