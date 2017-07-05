@@ -4,6 +4,7 @@
     "editor.fontSize": 18,
     "git.autofetch": false,
     "git.autorefresh": false,
+    "git.countBadge": "off",
     "editor.renderWhitespace": "boundary",
     "editor.trimAutoWhitespace": true,
     "editor.minimap.enabled": false,
@@ -26,5 +27,6 @@
     "[c]": {
         "editor.quickSuggestions": false
     },
-    "vim.disableAnnoyingNeovimMessage": true
+    "vim.disableAnnoyingNeovimMessage": true,
+    "window.menuBarVisibility": "toggle"
 }
