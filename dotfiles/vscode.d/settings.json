@@ -8,7 +8,6 @@
     "editor.renderWhitespace": "boundary",
     "editor.trimAutoWhitespace": true,
     "editor.minimap.enabled": false,
-    "rust.rustLangSrcPath": "$HOME/src/mozilla/rust/src",
     "workbench.quickOpen.closeOnFocusLost": false,
     "terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe",
     "files.autoSave": "afterDelay",
@@ -28,5 +27,16 @@
         "editor.quickSuggestions": false
     },
     "vim.disableAnnoyingNeovimMessage": true,
-    "window.menuBarVisibility": "toggle"
+    "window.menuBarVisibility": "toggle",
+    "sync.gist": "2feb393a8b25392fa7d609eae27e7335",
+    "sync.lastUpload": "2017-07-19T17:41:37.788Z",
+    "sync.autoDownload": true,
+    "sync.autoUpload": true,
+    "sync.lastDownload": "",
+    "sync.forceDownload": false,
+    "sync.anonymousGist": false,
+    "sync.host": "",
+    "sync.pathPrefix": "",
+    "sync.quietSync": true,
+    "sync.askGistName": false
 }

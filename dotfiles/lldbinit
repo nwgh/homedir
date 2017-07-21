@@ -1,3 +1,0 @@
-script topsrcdir = "/Users/nwgh/src/mozilla/gecko"
-settings set target.load-cwd-lldbinit true
-command source -s true "/Users/nwgh/src/mozilla/gecko/.lldbinit"

@@ -4,9 +4,6 @@ ignore = ~/.hgignore
 merge = internal:merge
 interface = curses
 
-[hooks]
-pre-push = python:~/.hgext/mozprepush.py:mozprepush
-
 [extensions]
 transplant = 
 rebase = 
@@ -22,13 +19,6 @@ histedit =
 share = 
 strip = 
 shelve = 
-bzexport = ~/.mozbuild/version-control-tools/hgext/bzexport
-reviewboard = ~/.mozbuild/version-control-tools/hgext/reviewboard/client.py
-firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
-mqext = ~/.mozbuild/version-control-tools/hgext/mqext
-qimportbz = ~/.mozbuild/version-control-tools/hgext/qimportbz
-push-to-try = ~/.mozbuild/version-control-tools/hgext/push-to-try
-bzpost = ~/.mozbuild/version-control-tools/hgext/bzpost
 evolve =
 blackbox = 
 
@@ -81,15 +71,6 @@ glog = log -r .:0
 wip = log --graph --rev=wip --template=wip
 deletebookmark = !$HG strip --no-backup -B $1 && $HG push -B $1
 
-[mq]
-git = yes
-
-[mozilla]
-ircnick = nwgh
-
-[mqext]
-mqcommit = auto
-
 [revsetalias]
 HEAD = .
 wip = (parents(not public()) or not public() or . or (head() and branch(default))) and (not obsolete() or unstable()^) and not closed() and not (fxheads() - date(-90))
@@ -100,18 +81,10 @@ wip = '{label("wip.branch", if(branches,"{branches} "))}{label(ifeq(graphnode,"x
 [histedit]
 defaultrev = only(.)
 
-[bugzilla]
-username = hurley@todesschaf.org
-
-[bzpost]
-excludetrees = try mozilla-inbound inbound integration/mozilla-inbound
 [hostsecurity]
 bitbucket.org:fingerprints = sha256:4e:65:3e:76:0f:81:59:85:5b:50:06:0c:c2:4d:3c:56:53:8b:83:3e:9b:fa:55:26:98:9a:ca:e2:25:03:92:47
-bugzilla.mozilla.org:fingerprints = sha256:10:95:a8:c1:e1:c3:18:fa:e4:95:40:99:11:07:6d:e3:79:ab:e5:b0:29:50:ff:40:e8:e8:63:c4:fd:f3:9f:cb
+
 [experimental]
 graphshorten = true
-
-[paths]
-review = ssh://reviewboard-hg.mozilla.org/autoreview
 
 %include ~/.local/hgrc

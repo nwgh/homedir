@@ -9,22 +9,12 @@
 	eol = lf
 [color]
 	ui = auto
-[merge]
-	tool = p4merge
-[pretty]
-	hgpatch = "format:# HG changeset patch%n# User %an <%ae>%n# Date %ad%n%s%n%b"
 [alias]
 	stat = status -sb
-	cdiff = diff --cached
 	staged = diff --cached
-	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
-	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
-	asrebase = rebase -i --autosquash
-	hgpatch = show --format=hgpatch
 	tlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	addrm = add -A
 	slog = log --stat
-	npush = push origin refs/notes/*
 	flog = log --first-parent
 	root = rev-parse --show-toplevel
 [url "git@github.com:"]
@@ -33,22 +23,9 @@
 [push]
 	default = simple
 [diff]
-	tool = p4merge
 	compactionHeuristic = true
-[difftool "p4merge"]
-	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
-[mergetool "p4merge"]
-	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
-	trustExitCode = false
-[mergetool]
-	keepBackup = false
 [help]
 	autocorrect = 1
-[bz]
-	default-tracker = bugzilla.mozilla.org
-	default-product = Core
-	default-component = Networking
-	username = hurley@mozilla.com
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
@@ -57,7 +34,3 @@
 	trustExitCode = true
 [include]
 	path = ~/.local/gitconfig
-[mozreview]
-	nickname = nwgh
-[cinnabar]
-	helper = ~/src/git-cinnabar/git-cinnabar-helper
