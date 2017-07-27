@@ -25,18 +25,12 @@ case "$(uname)" in
 		;;
 esac
 
-# Enable iTerm2 integration. This is not mac-specific, because I may be sshing
-# into a linux vm from my mac, and I want the iTerm2 integration there.
-if [[ -n "$ITERM_SESSION_ID" ]] ; then
-	source "${HOME}/.zsh.d/iterm2.zsh"
+# Finally, let the local machine add/override anything it wants, if it wants
+if [[ -f "${HOME}/.local/zshrc" ]] ; then
+    source "${HOME}/.local/zshrc"
 fi
-
-# Finally, let the local machine override anything it wants, if it wants
-if [[ -f "${HOME}/.local.zsh" ]] ; then
-    source "${HOME}/.local.zsh"
-fi
-if [[ -d "${HOME}/.local.zsh.d" ]] ; then
-	for f in ${HOME}/.local.zsh.d/* ; do
+if [[ -d "${HOME}/.local/zsh.d" ]] ; then
+	for f in ${HOME}/.local/zsh.d/* ; do
 		source "$f"
 	done
 fi
