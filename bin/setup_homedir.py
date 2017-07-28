@@ -133,19 +133,9 @@ def setup_homedir(homedir, setupdir, act=True, verbose=False, in_os=False):
     if dotfiledir:
         dotfiles = __listdir(dotfiledir)
         for f in dotfiles:
-            dests = []
-            if f == 'vscode.d':
-                if osname == 'osx':
-                    dests.append(os.path.join(homedir, 'Library', 'Application Support', 'Code - Insiders', 'User'))
-                elif osname == 'linux':
-                    dests.append(os.path.join(homedir, '.config', 'Code - Insiders', 'User'))
-                else:
-                    if verbose:
-                        print >>sys.stderr, 'Do not use VS Code on Windows!'
-            dests.append(os.path.join(homedir, '.%s' % (f,)))
+            dst = os.path.join(homedir, '.%s' % (f,))
             src = os.path.join(dotfiledir, f)
-            for dst in dests:
-                __safelink(src, dst, act=act, verbose=verbose)
+            __safelink(src, dst, act=act, verbose=verbose)
 
 
 if __name__ == '__main__':
