@@ -4,4 +4,6 @@
 --color-match=bold red
 --color-lineno=reset
 --color-filename=reset
---ignore-dir=obj-ff-dbg
+--ignore-dir=obj-dbg
+--ignore-dir=obj-dbg-noopt
+--type-set=idl:ext:idl,ipdl,webidl
