@@ -34,5 +34,3 @@
 	trustExitCode = true
 [include]
 	path = ~/.local/gitconfig
-[cinnabar]
-	helper = ~/src/git-cinnabar/git-cinnabar-helper
