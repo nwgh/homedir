@@ -14,6 +14,8 @@ if [ -d "$HOME/.linuxbrew" ] ; then
 	# Linuxbrew needs to be at the front to override anything that may also
 	# have been installed by system packages
 	export PATH="$HOME/.linuxbrew/bin:$PATH"
+elif [ -f "/home/linuxbrew/profile" ] ; then
+	source /home/linuxbrew/profile
 fi
 
 # vim: set noexpandtab:
