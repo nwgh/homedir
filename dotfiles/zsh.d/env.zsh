@@ -4,8 +4,8 @@ if [ -d $HOME/bin ] ; then
 fi
 export PATH
 
-export PYTHONSTARTUP=~/.pythonrc
-export HISTFILE=~/.zsh_history
+export PYTHONSTARTUP="${HOME}/.pythonrc"
+export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=5000
 export SAVEHIST=5000
 export LANG=en_US.UTF-8
