@@ -5,6 +5,9 @@ merge = internal:merge
 interface = curses
 tweakdefaults = true
 
+[experimental]
+topic-mode = enforce
+
 [extensions]
 transplant = 
 rebase = 
@@ -19,6 +22,7 @@ share =
 strip = 
 shelve = 
 evolve = 
+topic =
 blackbox = 
 fsmonitor = 
 
@@ -36,6 +40,7 @@ log.bookmark = yellow
 log.tag = yellow
 log.fxtree = yellow
 log.activebookmark = yellow underline
+log.topic = yellow
 
 changeset.public = red
 changeset.secret = blue
