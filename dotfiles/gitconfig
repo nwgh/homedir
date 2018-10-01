@@ -24,6 +24,7 @@
 	default = simple
 [diff]
 	compactionHeuristic = true
+	context = 8
 [help]
 	autocorrect = 1
 [difftool "sourcetree"]

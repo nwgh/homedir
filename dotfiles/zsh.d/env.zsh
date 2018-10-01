@@ -13,7 +13,6 @@ export PAGER=less
 export RSYNC_RSH=ssh
 export TZ=PST8PDT
 export LESS=-FRXi
-export GIT_DIFF_OPTS=--unified=8
 export HOMEBREW_NO_EMOJI=1
 export HOMEBREW_NO_ANALYTICS=1
 if [ "$TERM" = "xterm" ] ; then
