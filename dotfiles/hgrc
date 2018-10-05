@@ -7,16 +7,13 @@ tweakdefaults = true
 
 [experimental]
 topic-mode = enforce
+graphshorten = true
 
 [extensions]
 githelp =
-transplant = 
 rebase = 
-parentrevspec = 
-record = 
 relink = 
 purge = 
-progress = 
 histedit = 
 share = 
 shelve = 
@@ -55,14 +52,5 @@ glog = log -r .:0
 
 [revsetalias]
 HEAD = .
-
-[histedit]
-defaultrev = only(.)
-
-[hostsecurity]
-bitbucket.org:fingerprints = sha256:4e:65:3e:76:0f:81:59:85:5b:50:06:0c:c2:4d:3c:56:53:8b:83:3e:9b:fa:55:26:98:9a:ca:e2:25:03:92:47
-
-[experimental]
-graphshorten = true
 
 %include ~/.local/hgrc
