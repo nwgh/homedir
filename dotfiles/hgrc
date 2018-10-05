@@ -9,6 +9,7 @@ tweakdefaults = true
 topic-mode = enforce
 
 [extensions]
+githelp =
 transplant = 
 rebase = 
 parentrevspec = 
