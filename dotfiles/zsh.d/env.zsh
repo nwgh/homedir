@@ -18,7 +18,7 @@ export HOMEBREW_NO_ANALYTICS=1
 if [ "$TERM" = "xterm" ] ; then
 	export TERM=xterm-256color
 fi
-export RIPGREPRC="${HOME}/.ripgreprc"
+export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
 chpwd_functions=()
 precmd_functions=()

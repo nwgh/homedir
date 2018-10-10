@@ -37,3 +37,7 @@ dd() {
     echo "    pv <inputfile> | /bin/dd of=<outputfile>"
     echo "(or just call /bin/dd directly)"
 }
+
+rg() {
+    command rg -p "$@" | less -FRXi
+}
