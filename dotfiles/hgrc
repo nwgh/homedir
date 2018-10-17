@@ -43,12 +43,13 @@ pager = LESS='-FRXi' less
 
 [defaults]
 commit = -v
-annotate = -cuvd
+annotate = -cuv
 
 [alias]
 apply = import --no-commit
 merge-base = log -r 'max(ancestor($1, $2))'
 glog = log -r .:0
+fetchall = !${HG} pull default; ${HG} pull nwgh
 
 [revsetalias]
 HEAD = .
