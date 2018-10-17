@@ -38,6 +38,9 @@ setopt extended_history
 setopt share_history
 setopt hist_fcntl_lock
 
+# Don't put things in history that start with a space
+setopt hist_ignore_space
+
 # Do a pushd every time I cd, don't tell me about it, and don't push dupes
 setopt auto_pushd
 setopt pushd_silent
