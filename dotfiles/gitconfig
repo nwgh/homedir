@@ -1,6 +1,6 @@
 [user]
 	name = Nicholas Hurley
-	email = hurley@todesschaf.org
+	email = nwgh@nwgh.org
 [core]
 	excludesfile = ~/.gitignore
 	pager = less -FRXi
