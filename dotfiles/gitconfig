@@ -4,9 +4,9 @@
 [core]
 	excludesfile = ~/.gitignore
 	pager = less -FRXi
-	editor = vim
 	autocrlf = input
 	eol = lf
+	editor = code --new-window --wait
 [color]
 	ui = auto
 [alias]
@@ -25,15 +25,18 @@
 [diff]
 	compactionHeuristic = true
 	context = 8
+	tool = vscode
 [help]
 	autocorrect = 1
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[difftool "vscode"]
+	cmd = code --new-window --wait --diff \"$LOCAL\" \"$REMOTE\"
 [log]
-    mailmap = true
+	mailmap = true
 [include]
 	path = ~/.local/gitconfig
