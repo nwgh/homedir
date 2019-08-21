@@ -34,5 +34,8 @@ if [[ -d "${HOME}/.local/zsh.d" ]] ; then
 		source "$f"
 	done
 fi
+if [[ -d "${HOME}/.local/bin" ]] ; then
+    export PATH="${PATH}:${HOME}/.local/bin"
+fi
 
 # vim: set noexpandtab:
