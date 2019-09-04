@@ -28,12 +28,8 @@
 	tool = vscode
 [help]
 	autocorrect = 1
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+[mergetool "vscode"]
+	cmd = code --new-window --wait \"$MERGED\"
 [difftool "vscode"]
 	cmd = code --new-window --wait --diff \"$LOCAL\" \"$REMOTE\"
 [log]
