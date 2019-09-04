@@ -38,5 +38,7 @@
 	cmd = code --new-window --wait --diff \"$LOCAL\" \"$REMOTE\"
 [log]
 	mailmap = true
+[fetch]
+	prune = true
 [include]
 	path = ~/.local/gitconfig
