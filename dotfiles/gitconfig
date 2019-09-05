@@ -6,7 +6,6 @@
 	pager = less -FRXi
 	autocrlf = input
 	eol = lf
-	editor = code --new-window --wait
 [color]
 	ui = auto
 [alias]
