@@ -2,6 +2,7 @@
 source "${HOME}/.zsh.d/env.zsh"
 source "${HOME}/.zsh.d/options.zsh"
 source "${HOME}/.zsh.d/prompt.zsh"
+source "${HOME}/.zsh.d/keyboard.zsh"
 
 # Get setup that is specific to particular pieces of software that may be
 # installed
