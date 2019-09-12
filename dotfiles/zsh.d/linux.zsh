@@ -8,7 +8,7 @@ alias ll='/bin/ls -Al --color=auto'
 open() {
     xdg-open "$@" 2>>/tmp/open-${USER}
 }
-export NWH_ZSH_CONFIG="linux"
+export NWGH_ZSH_CONFIG="linux"
 
 if [ -d "$HOME/.linuxbrew" ] ; then
 	# Linuxbrew needs to be at the front to override anything that may also

@@ -7,7 +7,7 @@ alias l="/bin/ls ${SPECIFIER}"
 alias ls="/bin/ls ${SPECIFIER}"
 alias la="/bin/ls -A ${SPECIFIER}"
 alias ll="/bin/ls -Al ${SPECIFIER}"
-export NWH_ZSH_CONFIG="osx"
+export NWGH_ZSH_CONFIG="osx"
 
 # Overwrite from commands.zsh to make this faster on mac
 _do_find() {
