@@ -9,7 +9,7 @@ if [ "$TERM_PROGRAM" = "Apple_Terminal" ] ; then
 
     # This is 2 because the Terminal takes up one process
     if [ $NUM_PROCESSES -eq 2 ] ; then
-        /usr/bin/nohup $HOME/.zsh.d/delayquit > /dev/null 2>&1 &
+        /usr/bin/nohup "${NWGH_CONFIG_PATH}/zsh/delayquit" > /dev/null 2>&1 &
     fi
 fi
 

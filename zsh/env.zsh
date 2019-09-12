@@ -1,6 +1,6 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
-if [ -d $HOME/bin ] ; then
-    PATH=$PATH:$HOME/bin
+if [ -d "${NWGH_CONFIG_PATH}/bin" ] ; then
+    PATH="${PATH}:${NWGH_CONFIG_PATH}/bin"
 fi
 export PATH
 

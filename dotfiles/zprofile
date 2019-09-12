@@ -3,30 +3,30 @@
 export NWGH_CONFIG_PATH="$(dirname $(dirname $(readlink ${(%):-%N})))"
 
 # Herein lies the general config
-source "${HOME}/.zsh.d/env.zsh"
-source "${HOME}/.zsh.d/options.zsh"
-source "${HOME}/.zsh.d/prompt.zsh"
-source "${HOME}/.zsh.d/keyboard.zsh"
+source "${NWGH_CONFIG_PATH}/zsh/env.zsh"
+source "${NWGH_CONFIG_PATH}/zsh/options.zsh"
+source "${NWGH_CONFIG_PATH}/zsh/prompt.zsh"
+source "${NWGH_CONFIG_PATH}/zsh/keyboard.zsh"
 
 # Get setup that is specific to particular pieces of software that may be
 # installed
-for f in ${HOME}/.zsh.d/packages/* ; do
+for f in ${NWGH_CONFIG_PATH}/zsh/packages/* ; do
 	source "$f"
 done
 
 # Some of these commands may depend on paths being set up by packages
-source "${HOME}/.zsh.d/commands.zsh"
+source "${NWGH_CONFIG_PATH}/zsh/commands.zsh"
 
 # Load OS-specific zsh configuration
 case "$(uname)" in
 	"Linux")
-		source "${HOME}/.zsh.d/linux.zsh"
+		source "${NWGH_CONFIG_PATH}/zsh/linux.zsh"
 		;;
 	"Darwin")
-		source "${HOME}/.zsh.d/osx.zsh"
+		source "${NWGH_CONFIG_PATH}/zsh/osx.zsh"
 		;;
 	*)
-		source "${HOME}/.zsh.d/generic.zsh"
+		source "${NWGH_CONFIG_PATH}/zsh/generic.zsh"
 		;;
 esac
 
