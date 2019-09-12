@@ -41,3 +41,10 @@ dd() {
 rg() {
     command rg -p "$@" | less -FRXi
 }
+
+fixdirs() {
+    OLD_CWD="$(pwd)"
+    cd
+    popd +1
+    cd "${OLD_CWD}"
+}
