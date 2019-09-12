@@ -1,3 +1,7 @@
+# Before anything else happens, make the real directory of the config
+# (where the git checkout lives) available everywhere else.
+export NWGH_CONFIG_PATH="$(dirname $(dirname $(readlink ${(%):-%N})))"
+
 # Herein lies the general config
 source "${HOME}/.zsh.d/env.zsh"
 source "${HOME}/.zsh.d/options.zsh"
