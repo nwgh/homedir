@@ -16,6 +16,7 @@
 	slog = log --stat
 	flog = log --first-parent
 	root = rev-parse --show-toplevel
+	conflicts = diff --name-only --diff-filter=U
 [url "git@github.com:"]
 	insteadOf = gh:
 	insteadOf = github:
