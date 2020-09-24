@@ -36,5 +36,7 @@
 	mailmap = true
 [fetch]
 	prune = true
+[pull]
+	ff = only
 [include]
 	path = ~/.local/gitconfig
