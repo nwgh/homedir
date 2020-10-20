@@ -75,6 +75,6 @@ set clipboard=unnamed
 set background=dark
 
 " Bring in machine-local customizations
-if filereadable(glob("~/.vimrc.local"))
-    so ~/.vimrc.local
+if filereadable(glob("~/.local/vimrc"))
+    so ~/.local/vimrc
 endif
