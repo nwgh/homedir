@@ -53,12 +53,7 @@ def __safelink(src, dst, act=True, verbose=False):
         if verbose:
             p('%s -> %s' % (dst, src))
         if act:
-            # Most systems don't support hard links to directories, so use
-            # symlinks if the target is a directory. Otherwise, use a hard link.
-            if os.path.isdir(dst):
-                os.symlink(src, dst)
-            else:
-                os.link(src, dst)
+            os.symlink(src, dst)
     elif verbose:
         p('%s already exists, not creating link' % (dst,))
 
