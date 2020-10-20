@@ -10,7 +10,7 @@ topic-mode = enforce
 graphshorten = true
 
 [extensions]
-githelp =
+githelp = 
 rebase = 
 relink = 
 purge = 
@@ -18,9 +18,10 @@ histedit =
 share = 
 shelve = 
 evolve = 
-topic =
+topic = 
 blackbox = 
 fsmonitor = 
+absorb = 
 
 [diff]
 git = 1
@@ -37,6 +38,14 @@ log.topic = yellow
 changeset.public = red
 changeset.secret = blue
 changeset.draft = green
+wip.bookmarks = yellow underline
+wip.branch = yellow
+wip.draft = green
+wip.here = red
+wip.obsolete = none
+wip.public = blue
+wip.tags = yellow
+wip.user = magenta
 
 [pager]
 pager = LESS='-FRXi' less
@@ -50,8 +59,18 @@ apply = import --no-commit
 merge-base = log -r 'max(ancestor($1, $2))'
 glog = log -r .:0
 fetchall = !${HG} pull default; ${HG} pull nwgh
+wip = log --graph --rev=wip --template=wip
+smart-annotate = annotate -w --skip ignored_changesets
 
 [revsetalias]
 HEAD = .
+wip = (parents(not public()) or not public() or . or (head() and branch(default))) and (not obsolete() or orphan()^) and not closed() and not (fxheads() - date(-90))
+ignored_changesets = desc("ignore-this-changeset") or extdata(get_ignored_changesets)
+[rebase]
+experimental.inmemory = yes
+[templates]
+wip = '{label("wip.branch", if(branches,"{branches} "))}{label(ifeq(graphnode,"x","wip.obsolete","wip.{phase}"),"{rev}:{node|short}")}{label("wip.user", " {author|user}")}{label("wip.tags", if(tags," {tags}"))}{label("wip.tags", if(fxheads," {fxheads}"))}{if(bookmarks," ")}{label("wip.bookmarks", if(bookmarks,bookmarks))}{label(ifcontains(rev, revset("parents()"), "wip.here"), " {desc|firstline}")}'
+[extdata]
+get_ignored_changesets = shell:cat `hg root`/.hg-annotate-ignore-revs 2> /dev/null || true
 
 %include ~/.local/hgrc
