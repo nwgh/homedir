@@ -40,3 +40,5 @@
 	ff = only
 [include]
 	path = ~/.local/gitconfig
+[init]
+	defaultBranch = default
