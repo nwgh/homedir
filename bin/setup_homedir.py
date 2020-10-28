@@ -72,7 +72,7 @@ def __safelink(src, dst, act=True, verbose=False):
         if verbose:
             p('%s -> %s' % (dst, src))
         if act:
-            created_paths.add(dirname)
+            created_paths.add(dst)
             os.symlink(src, dst)
     elif verbose:
         p('%s already exists, not creating link' % (dst,))
