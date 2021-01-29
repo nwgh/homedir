@@ -69,7 +69,9 @@ nnoremap <leader>v :edit $MYVIMRC<CR>
 set encoding=utf-8
 
 " Connect to the system clipboard
-set clipboard=unnamed
+if len($TMUX) == 0
+    set clipboard=unnamed
+endif
 
 " Set up colors how I like
 set background=dark
