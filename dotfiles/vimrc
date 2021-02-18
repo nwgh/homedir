@@ -73,9 +73,6 @@ if len($TMUX) == 0
     set clipboard=unnamed
 endif
 
-" Set up colors how I like
-set background=dark
-
 " Bring in machine-local customizations
 if filereadable(glob("~/.local/vimrc"))
     so ~/.local/vimrc
