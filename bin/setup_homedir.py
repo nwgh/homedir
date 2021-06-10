@@ -46,6 +46,11 @@ def __dir_sort(a, b):
         return 1
     return 0
 
+if sys.version_info.major == 3:
+    sort_kwargs = {'key': functools.cmp_to_key(__dir_sort)}
+else:
+    sort_kwargs = {'cmp': __dir_sort}
+
 
 def __listdir_nodot(directory):
     """Like os.listdir, but omits any files beginning with .
@@ -103,7 +108,7 @@ def setup_homedir(destdir, srcdir, act=True, verbose=False):
         for f in dotfiles:
             dst = os.path.join(destdir, '.%s' % (f,))
             src = os.path.join(dotfiledir, f)
-            created_paths.union(__safelink(src, dst, act=act, verbose=verbose))
+            created_paths = created_paths.union(__safelink(src, dst, act=act, verbose=verbose))
     elif verbose:
         p('No dotfiledir found')
 
@@ -128,7 +133,7 @@ def setup_homedir(destdir, srcdir, act=True, verbose=False):
             # Get rid of links that are no longer part of the homedir. If it's
             # a directory, remove it only if it's empty.
             old_paths = list(paths.difference(created_paths))
-            old_paths.sort(cmp=__dir_sort)
+            old_paths.sort(**sort_kwargs)
             for path in paths:
                 if os.path.islink(path) and not os.path.exists(path):
                     os.unlink(path)
@@ -138,7 +143,7 @@ def setup_homedir(destdir, srcdir, act=True, verbose=False):
                         os.rmdir(d)
 
         created_paths = list(created_paths)
-        created_paths.sort(cmp=__dir_sort)
+        created_paths.sort(**sort_kwargs)
         with open(manifest, 'w') as f:
             f.write('\n'.join(created_paths))
     if verbose:
