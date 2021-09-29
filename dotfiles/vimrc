@@ -28,6 +28,7 @@ set ruler " Show line/column at the bottom
 set nobackup " Don't keep backups around after write succeeds
 set writebackup " But do write them while writing a buffer, just in case
 set cursorline " Hilight the current line
+set number " Show line numbers
 
 " see :help smartindent for inoremap details
 set smartindent " Smart auto indentation
