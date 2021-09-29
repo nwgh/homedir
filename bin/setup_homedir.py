@@ -123,7 +123,7 @@ def setup_homedir(destdir, srcdir, act=True, verbose=False):
     if verbose:
         p('%s %s to %s' % (prefix, srcdir, source_stamp))
 
-    manifest = os.path.join(srcdir, '.manifest')
+    manifest = os.path.join(destdir, '.homedir_setup_manifest')
     if act:
         if os.path.exists(manifest):
             with open(manifest) as f:
