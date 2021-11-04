@@ -48,3 +48,9 @@ fixdirs() {
     popd +1
     cd "${OLD_CWD}"
 }
+
+if type nvi > /dev/null 2>&1 ; then
+    alias vi=nvi
+elif type vim > /dev/null 2>&1 ; then
+    alias vi='vim -u NONE'
+fi
