@@ -49,8 +49,14 @@ fixdirs() {
     cd "${OLD_CWD}"
 }
 
+# Use a plain vi when I do |vi|
 if type nvi > /dev/null 2>&1 ; then
     alias vi=nvi
 elif type vim > /dev/null 2>&1 ; then
     alias vi='vim -u NONE'
+fi
+
+# Use a fancy vim when I do |vim|
+if type nvim > /dev/null 2>&1 ; then
+    alias vim=nvim
 fi
