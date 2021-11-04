@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [[ "${TERM_PROGRAM}" = "vscode" ]] ; then
+    exec code --reuse-window --wait "$@"
+elif type nvi > /dev/null 2>&1 ; then
+    exec nvi "$@"
+elif type vim > /dev/null 2>&1 ; then
+    exec vim -u NONE "$@"
+fi
+
+# Fallback to plain vi, which should be everywhere
+exec vi "$@"
