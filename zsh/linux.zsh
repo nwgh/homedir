@@ -8,6 +8,9 @@ alias ll='/bin/ls -Al --color=auto'
 open() {
     xdg-open "$@" 2>>/tmp/open-${USER}
 }
+pbcopy() {
+    gpaste-client add
+}
 export NWGH_ZSH_CONFIG="linux"
 
 if [ -d "$HOME/.linuxbrew" ] ; then
