@@ -1,0 +1,22 @@
+#!/bin/bash
+case $PINENTRY_USER_DATA in
+mac)
+    exec /usr/local/bin/pinentry-mac "$@"
+    ;;
+gnome3)
+    exec /usr/bin/pinentry-gnome3 "$@"
+    ;;
+esac
+
+# If we get here, fallback to the default pinentry based on OS
+case "$(uname)" in
+"Linux")
+    exec /usr/bin/pinentry "$@"
+    ;;
+"Darwin")
+    exec /usr/local/bin/pinentry "$@"
+    ;;
+esac
+
+# And if we get here, is all busted
+exit 1

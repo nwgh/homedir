@@ -20,6 +20,10 @@ if [ "$TERM" = "xterm" ] ; then
 fi
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
+# Use pinentry for ssh-askpass
+export SSH_ASKPASS="${NWGH_CONFIG_PATH}/bin/ssh-askpass-pinentry"
+export SSH_ASKPASS_REQUIRE=force
+
 chpwd_functions=()
 precmd_functions=()
 export chpwd_functions precmd_functions
