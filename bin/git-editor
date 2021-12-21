@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-if [[ "${TERM_PROGRAM}" = "vscode" ]] ; then
+if [[ "${TERM_PROGRAM}" = "vscode" && -z "${SSH_CONNECTION}" ]] ; then
     exec code --reuse-window --wait "$@"
 elif type nvi > /dev/null 2>&1 ; then
     exec nvi "$@"
