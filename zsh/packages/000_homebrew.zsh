@@ -4,3 +4,6 @@ fi
 if [ -d /usr/local/share/man ] ; then
     export MANPATH=/usr/local/share/man:$MANPATH
 fi
+if [ -d /home/linuxbrew/.linuxbrew/bin ] ; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
