@@ -1,22 +1,21 @@
 #!/bin/bash
-case $PINENTRY_USER_DATA in
-mac)
-    exec /usr/local/bin/pinentry-mac "$@"
-    ;;
-gnome3)
-    exec /usr/bin/pinentry-gnome3 "$@"
-    ;;
-esac
-
-# If we get here, fallback to the default pinentry based on OS
 case "$(uname)" in
-"Linux")
-    exec /usr/bin/pinentry "$@"
-    ;;
 "Darwin")
-    exec /usr/local/bin/pinentry "$@"
+    PINENTRY_GUI=/usr/local/bin/pinentry-mac
+    PINENTRY_TERM=/usr/local/bin/pinentry-curses
+    ;;
+"Linux")
+    PINENTRY_GUI=/usr/bin/pinentry-gnome3
+    PINENTRY_TERM=/usr/bin/pinentry-curses
+    ;;
+*)
+    echo "Don't know how to askpass on $(uname)"
+    exit 1
     ;;
 esac
 
-# And if we get here, is all busted
-exit 1
+if [[ -n "$SSH_CONNECTION" ]] ; then
+    # We've connected via ssh, so no GUI available
+    exec ${PINENTRY_TERM} "$@"
+fi
+exec ${PINENTRY_GUI} "$@"
