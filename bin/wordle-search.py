@@ -30,10 +30,10 @@ if args.contains and args.not_contains:
 pipeline = [f"grep -i '^{args.pattern}$' /usr/share/dict/words"]
 if args.contains:
     for c in args.contains:
-        pipeline.append(f'grep {c}')
+        pipeline.append(f'grep -i {c}')
 if args.not_contains:
     for c in args.not_contains:
-        pipeline.append(f'grep -v {c}')
+        pipeline.append(f'grep -i -v {c}')
 
 cmd = ' | '.join(pipeline)
 os.system(cmd)
