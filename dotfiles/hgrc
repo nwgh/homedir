@@ -22,6 +22,7 @@ topic =
 blackbox = 
 fsmonitor = 
 absorb = 
+hggit = 
 
 [diff]
 git = 1
