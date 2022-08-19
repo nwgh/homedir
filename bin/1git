@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+export GIT_SSH=1ssh
+exec git "$@"
