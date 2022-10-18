@@ -20,9 +20,7 @@ shelve =
 evolve = 
 topic = 
 blackbox = 
-fsmonitor = 
 absorb = 
-hggit = 
 
 [diff]
 git = 1
