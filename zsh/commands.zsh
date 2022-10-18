@@ -49,11 +49,21 @@ fixdirs() {
     cd "${OLD_CWD}"
 }
 
+vim_empty() {
+    vim -u NONE "$@"
+}
+
 # Use a plain vi when I do |vi|
 if type nvi > /dev/null 2>&1 ; then
-    alias vi=nvi
+    vi() {
+        nvi "$@"
+    }
+    export EDITOR=nvi
 elif type vim > /dev/null 2>&1 ; then
-    alias vi='vim -u NONE'
+    vi() {
+        vim_empty "$@"
+    }
+    export EDITOR=vim_empty
 fi
 
 # Use a fancy vim when I do |vim|
