@@ -19,6 +19,7 @@ if [ "$TERM" = "xterm" ] ; then
 	export TERM=xterm-256color
 fi
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 chpwd_functions=()
 precmd_functions=()
