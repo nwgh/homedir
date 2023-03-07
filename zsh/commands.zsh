@@ -70,3 +70,8 @@ fi
 if type nvim > /dev/null 2>&1 ; then
     alias vim=nvim
 fi
+
+# Alias for doing mdns lookups
+mdig() {
+    dig -p 5353 @224.0.0.251 "$@"
+}
