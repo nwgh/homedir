@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """setup_homedir.py
 
 A simple script for setting up a home directory from an SCM repository.
