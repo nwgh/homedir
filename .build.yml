@@ -1,0 +1,16 @@
+image: alpine/edge
+secrets:
+  - 22778b6d-b3a1-4079-a0ad-89e4d6442ac7
+environment:
+  GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=no
+sources:
+  - https://git.sr.ht/~nwgh/homedir
+tasks:
+  - setup: |
+      echo 'cd homedir' >> ~/.buildenv
+  - check: |
+      # Only mirror if this is a build of main
+      if [ "$(git rev-parse origin/main)" != "$(git rev-parse HEAD)" ] ; then complete-build ; fi
+  - mirror: |
+      git push git@gitlab.com:nwgh/nwgh.gitlab.io.git HEAD:main
+      git push git@github.com:nwgh/nwgh.github.io.git HEAD:main
