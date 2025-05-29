@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-echo -e "SETDESC ${1:-Passphrase for SSH KEY}\nGETPIN\n" | "${NWGH_CONFIG_PATH}/bin/pinentry-wrapper" -T /dev/tty -C utf-8 | grep '^D ' | sed -e 's/^D //g' | tr -d '\n' | python3 -c 'import sys, urllib.parse; sys.stdout.write(urllib.parse.unquote(sys.stdin.read()))'
