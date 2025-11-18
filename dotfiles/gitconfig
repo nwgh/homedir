@@ -39,8 +39,6 @@
 	prune = true
 [pull]
 	ff = only
-[include]
-	path = ~/.local/gitconfig
 [init]
 	defaultBranch = main
 [difftool "sourcetree"]
@@ -56,3 +54,5 @@
 	smtpuser = nwgh@fastmail.fm
 [credential]
 	helper = op
+[include]
+	path = ~/.local/gitconfig
