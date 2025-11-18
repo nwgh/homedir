@@ -49,3 +49,10 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[sendemail]
+	smtpserver = smtp.fastmail.com
+	smtpencryption = ssl
+	smtpserverport = 465
+	smtpuser = nwgh@fastmail.fm
+[credential]
+	helper = op
