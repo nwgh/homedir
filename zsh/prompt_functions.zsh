@@ -10,8 +10,10 @@ function make_sshprompt {
 
 function make_virtualenvprompt {
     virtualenv_prompt=""
-    if [ -n "$VIRTUAL_ENV" ] ; then
-        virtualenv_prompt="($(basename "$VIRTUAL_ENV"))"
+    if [ -z "$VIRTUAL_ENV_PROMPT" ] ; then
+        if [ -n "$VIRTUAL_ENV" ] ; then
+            virtualenv_prompt="($(basename "$VIRTUAL_ENV"))"
+        fi
     fi
     echo -e "$virtualenv_prompt"
 }
