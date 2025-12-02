@@ -2,7 +2,7 @@ if ! which pyenv > /dev/null 2>&1 ; then
   function _pyvenv_is_venv()
   {
     local path="${1}"
-    local cfg="${path}/pyenv.cfg"
+    local cfg="${path}/pyvenv.cfg"
     local act="${path}/bin/activate"
     # A valid environment is constituted by a pyenv.cfg configuration as
     # well as an activate file. We omit sanity checks such as those for
@@ -14,7 +14,7 @@ if ! which pyenv > /dev/null 2>&1 ; then
 
   function _pyvenv_find_venv()
   {
-    local path=$(readlink --canonicalize-existing "${1}")
+    local path=$(/usr/bin/readlink -f "${1}")
 
     # As long as we are dealing with a valid (existing) directory, we
     # check it for being a Python venv. If it is we are done.
@@ -42,7 +42,7 @@ if ! which pyenv > /dev/null 2>&1 ; then
         break
       fi
 
-      path=$(readlink -e "${path}/../")
+      path=$(/usr/bin/readlink -f "${path}/../")
     done
   }
 
