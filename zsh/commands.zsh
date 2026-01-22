@@ -75,3 +75,7 @@ fi
 mdig() {
     dig -p 5353 @224.0.0.251 "$@"
 }
+
+# Allow me to remove colour from things that put colour out regardless
+alias decolorize=sed -r "s/\\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
+alias decolourize=sed -r "s/\\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
