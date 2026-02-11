@@ -60,10 +60,16 @@ if ! which pyenv > /dev/null 2>&1 ; then
       # nothing to be done.
       if [ "${venv}" != "${VIRTUAL_ENV:-}" ]; then
         if [ -n "${VIRTUAL_ENV:-}" ]; then
-          # A deactivate function is provided by any activated venv. Note
-          # that we invoke it with a single (empty) argument because it
-          # unconditionally uses ${1} which is otherwise undefined.
-          deactivate ""
+          if type deactivate > /dev/null 2>&1 ; then
+            # A deactivate function is provided by any activated venv. Note
+            # that we invoke it with a single (empty) argument because it
+            # unconditionally uses ${1} which is otherwise undefined.
+            deactivate ""
+          else
+            # This is a bug case where we somehow got this variable set
+            # WITHOUT actually having an active venv.
+            unset VIRTUAL_ENV
+          fi
         fi
 
         source "${venv}/bin/activate"
@@ -72,7 +78,13 @@ if ! which pyenv > /dev/null 2>&1 ; then
       # If we did not find a valid environment we still might want to
       # deactivate the current one, if any.
       if [ -n "${VIRTUAL_ENV:-}" ]; then
-        deactivate ""
+        if type deactivate > /dev/null 2>&1 ; then
+          deactivate ""
+        else
+          # This is a bug case where we somehow got this variable set
+          # WITHOUT actually having an active venv.
+          unset VIRTUAL_ENV
+        fi
       fi
     fi
   }
